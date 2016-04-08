@@ -10,7 +10,7 @@ public class PrefabReference : ScriptableObjectSingleton<PrefabReference>
 		[SerializeField] public GameObject prefab;
 		[SerializeField] public int id;
 	}
-
+	
 	public static IEnumerable<Prefab> Prefabs
 	{
 		get
