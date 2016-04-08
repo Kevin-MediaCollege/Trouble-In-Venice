@@ -1,10 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A basic entity
+/// </summary>
 [RequireComponent(typeof(LocalEvents))]
 public class Entity : MonoBehaviour
 {
+	/// <summary>
+	/// Get an enumerable of all registered entities.
+	/// </summary>
 	public static IEnumerable<Entity> All
 	{
 		get
@@ -16,6 +21,10 @@ public class Entity : MonoBehaviour
 	private static HashSet<Entity> all = new HashSet<Entity>();
 
 	private LocalEvents events;
+
+	/// <summary>
+	/// The event dispactcher of this entity.
+	/// </summary>
 	public IEventDispatcher Events
 	{
 		get
@@ -60,16 +69,29 @@ public class Entity : MonoBehaviour
 	}
 	#endregion
 
+	/// <summary>
+	/// Add a tag to the entity.
+	/// </summary>
+	/// <param name="tag">The new tag.</param>
 	public void AddTag(string tag)
 	{
 		tags.Add(tag);
 	}
 
+	/// <summary>
+	/// Remove a tag from the entity.
+	/// </summary>
+	/// <param name="tag">The tag to remove.</param>
 	public void RemoveTag(string tag)
 	{
 		tags.Remove(tag);
 	}
 
+	/// <summary>
+	/// Check if this entity has the specified tag.
+	/// </summary>
+	/// <param name="tag">The tag to check.</param>
+	/// <returns>Whether or not this entity has the specified tag.</returns>
 	public bool HasTag(string tag)
 	{
 		return tags.Contains(tag);
