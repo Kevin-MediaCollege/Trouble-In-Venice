@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 /// <summary>
 /// The grid of a board, there can only be one grid at a time
-/// </summary>
-public class Grid : IDependency
+/// </summary
+public class Grid : MonoBehaviour
 {
-	public const int GRID_SIZE = 3;
+	public const int SIZE = 3;
 
 	/// <summary>
 	/// Get all nodes in the grid
@@ -19,94 +20,21 @@ public class Grid : IDependency
 		}
 	}
 
-	/// <summary>
-	/// Get the starting node in the grid
-	/// </summary>
-	public GridNode Start
-	{
-		get
-		{
-			foreach(GridNode node in nodes)
-			{
-				if(node.Type == GridNodeType.Start)
-				{
-					return node;
-				}
-			}
-
-			return null;
-		}
-	}
-
-	/// <summary>
-	/// Get the end point in the grid
-	/// </summary>
-	public GridNode End
-	{
-		get
-		{
-			foreach(GridNode node in nodes)
-			{
-				if(node.Type == GridNodeType.End)
-				{
-					return node;
-				}
-			}
-
-			return null;
-		}
-	}
-
 	private HashSet<GridNode> nodes;
 	private Dictionary<Vector3, GridNode> nodePositionCache;
 
-	private GameObject gridHelper;
-
-	public Grid()
+	protected void Awake()
 	{
-		gridHelper = new GameObject("Grid Helper");
-		GridHelper helper = gridHelper.AddComponent<GridHelper>();
-		helper.SetGrid(this);
-
 		nodes = new HashSet<GridNode>();
 		nodePositionCache = new Dictionary<Vector3, GridNode>();
 	}
 
-	/// <summary>
-	/// Create a new grid
-	/// </summary>
-	/// <param name="nodeData">The node data of the grid</param>
-	public void Create(IEnumerable<GridNodeData> nodeData)
+	public void AddNode(GridNode node)
 	{
-		if(nodes.Count > 0 || nodePositionCache.Count > 0)
-		{
-			Debug.LogWarning("Grid has not been cleaned up before creating a new grid");
-			Destroy();
-		}		
-
-		foreach(GridNodeData node in nodeData)
-		{
-			GridNode current = new GridNode(this, node);
-
-			nodes.Add(current);
-			nodePositionCache.Add(node.Position, current);
-		}
+		nodes.Add(node);
+		nodePositionCache.Add(node.Position, node);
 	}
 
-	/// <summary>
-	/// Destroy the current grid
-	/// </summary>
-	public void Destroy()
-	{
-		nodes.Clear();
-		nodePositionCache.Clear();
-	}
-
-	/// <summary>
-	/// Attempt to get the node at the specified position
-	/// </summary>
-	/// <param name="position">The position of the node</param>
-	/// <returns></returns>
 	public GridNode GetNodeAt(Vector3 position)
 	{
 		if(!nodePositionCache.ContainsKey(position))
@@ -115,5 +43,31 @@ public class Grid : IDependency
 		}
 
 		return nodePositionCache[position];
+	}
+
+	public GridNode GetStart()
+	{
+		foreach(GridNode node in Nodes)
+		{
+			if(node.IsStart)
+			{
+				return node;
+			}
+		}
+
+		return null;
+	}
+
+	public GridNode GetEnd()
+	{
+		foreach(GridNode node in Nodes)
+		{
+			if(node.IsEnd)
+			{
+				return node;
+			}
+		}
+
+		return null;
 	}
 }
