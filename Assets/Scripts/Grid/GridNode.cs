@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(GridNodeDebug))]
+[RequireComponent(typeof(GridNodeCollider))]
 public class GridNode : MonoBehaviour
 {
 	public Vector3 Position
@@ -83,19 +83,36 @@ public class GridNode : MonoBehaviour
 	{
 		Grid grid = GetComponentInParent<Grid>();
 		grid.AddNode(this);
+
+		Instantiate(Resources.Load("test"), transform.position, Quaternion.identity);
 	}
 
 	protected void OnDrawGizmos()
 	{
+		if(!enabled)
+		{
+			return;
+		}
+
 		Gizmos.color = type == GridNodeType.Normal ? Color.gray : type == GridNodeType.Start ? Color.green : Color.red;
 		Gizmos.DrawCube(transform.position, new Vector3(1, 0.25f, 1));
 
-		Gizmos.color = Color.blue;
 		foreach(GridNode neighbour in neighbours)
 		{
 			if(neighbour.enabled)
 			{
+				Vector3 distance = (neighbour.transform.position - transform.position);
+				Vector3 direction = distance.normalized;
+
+				bool isValid = distance.sqrMagnitude == 9;
+
+				Gizmos.color = isValid ? Color.blue : Color.red;
 				Gizmos.DrawLine(transform.position, neighbour.transform.position);
+
+				if(isValid)
+				{
+					GizmosUtils.DrawArrowXZ(transform.position + (distance * 0.2f), direction / 2, 0.3f, 0.3f);
+				}
 			}
 		}
 	}
@@ -114,6 +131,19 @@ public class GridNode : MonoBehaviour
 		{
 			neighbours.Remove(node);
 		}
+	}
+
+	public bool IsNeighbour(GridNode node)
+	{
+		foreach(GridNode neighbour in neighbours)
+		{
+			if(neighbour == node)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private GridNode GetNeighbour(Vector3 direction)
