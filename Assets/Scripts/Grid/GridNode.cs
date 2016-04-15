@@ -99,7 +99,7 @@ public class GridNode : MonoBehaviour
 
 		foreach(GridNode neighbour in neighbours)
 		{
-			if(neighbour.enabled)
+			if(neighbour != null && neighbour.enabled)
 			{
 				Vector3 distance = (neighbour.transform.position - transform.position);
 				Vector3 direction = distance.normalized;

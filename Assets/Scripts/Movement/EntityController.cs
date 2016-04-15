@@ -6,10 +6,23 @@ public class EntityController : MonoBehaviour
 	public GridNode CurrentNode { private set; get; }
 
 	[SerializeField] private Direction direction;
+	[SerializeField] private LayerMask gridNodeLayer;
 
 	protected void Start()
 	{
-		CurrentNode = FindObjectOfType<Grid>().GetNodeAt(new Vector3(transform.position.x, 0, transform.position.z));
+		Ray ray = new Ray(transform.position, Vector3.down);
+		RaycastHit hit;
+
+		if(Physics.Raycast(ray, out hit, 5, gridNodeLayer))
+		{
+			GridNode gridNode = hit.collider.GetComponent<GridNode>();
+
+			if(gridNode != null)
+			{
+				CurrentNode = gridNode;
+				Debug.Log(CurrentNode);
+			}
+		}
 	}
 
 	protected void OnDrawGizmos()
