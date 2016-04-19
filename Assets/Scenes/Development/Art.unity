@@ -282,8 +282,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 306276128}
-  m_LocalRotation: {x: -0.00000003421455, y: 0.9238796, z: -0.38268334, w: -0.000000082601275}
-  m_LocalPosition: {x: -0, y: 7.4, z: 6.08}
+  m_LocalRotation: {x: 0.38268346, y: 0, z: 0, w: 0.9238795}
+  m_LocalPosition: {x: -0, y: 7.4, z: -5.92}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1731313762}
@@ -367,7 +367,7 @@ GameObject:
   - 4: {fileID: 492735560}
   - 215: {fileID: 492735559}
   m_Layer: 0
-  m_Name: Reflection Probe (1)
+  m_Name: Reflection Probe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc6bd71cb8e5340af64f225bbff594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 3
+  direction: 1
   gridNodeLayer:
     serializedVersion: 2
     m_Bits: 256

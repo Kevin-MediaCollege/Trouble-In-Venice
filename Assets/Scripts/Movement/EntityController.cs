@@ -54,10 +54,14 @@ public class EntityController : MonoBehaviour
 		LookAt(direction);
 
 		GridNode targetNode = GetTargetNode(direction);
-		Vector3 targetPosition = new Vector3(targetNode.transform.position.x, transform.position.y, targetNode.transform.position.z);
 
-		transform.position = targetPosition;
-		CurrentNode = targetNode;
+		if(targetNode != null)
+		{
+			Vector3 targetPosition = new Vector3(targetNode.transform.position.x, transform.position.y, targetNode.transform.position.z);
+
+			transform.position = targetPosition;
+			CurrentNode = targetNode;
+		}
 	}
 
 	public void LookAt(Direction direction)
