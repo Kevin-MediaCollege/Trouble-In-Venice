@@ -39,11 +39,19 @@ public class GameCamera : MonoBehaviour
 	private CameraInput cameraInput;
 	public Text text;
 
+	private float currentAngle;
+	private float currentRotation;
+	private float currentZoom;
+
 	protected void Awake () 
 	{
 		cutscene = false;
 		cameraInput = new CameraInput ();
 		StartCoroutine ("cutsceneAnimation");
+
+		currentAngle = startAngle;
+		currentRotation = startRotation;
+		currentZoom = startZoom;
 	}
 
 	//KEVIN: moet gecalled worden door een start game event?
@@ -69,6 +77,16 @@ public class GameCamera : MonoBehaviour
 		{
 			cameraInput.UpdateInput();
 
+			currentAngle -= cameraInput.moveY * 0.02f * (currentZoom);//* (currentZoom * 0.08f);
+			currentAngle = currentAngle < minAngle ? minAngle : currentAngle > maxAngle ? maxAngle : currentAngle;
+
+			currentRotation += cameraInput.moveX * 0.02f * (currentZoom);// * (currentZoom * 0.08f);
+			currentRotation %= 360f;
+
+			currentZoom -= cameraInput.deltaZoom / 40f;
+			currentZoom = currentZoom < minZoom ? minZoom : currentZoom > maxZoom ? maxZoom : currentZoom;
+
+			setCameraPosition(currentAngle, currentRotation, currentZoom);
 			text.text = cameraInput.debugString;
 		}
 	}
@@ -81,16 +99,19 @@ public class GameCamera : MonoBehaviour
 		}
 		else if(cutsceneUpdateInEditor)
 		{
-			transform.rotation = SettingsToQuaternion (cutsceneAngle, cutsceneRotation);
-			cam.transform.localPosition = new Vector3 (0f, 0f, cutsceneZoom);
-			cam.transform.LookAt (transform);
+			setCameraPosition(cutsceneAngle, cutsceneRotation, cutsceneZoom);
 		}
 		else if(startUpdateInEditor)
 		{
-			transform.rotation = SettingsToQuaternion (startAngle, startRotation);
-			cam.transform.localPosition = new Vector3 (0f, 0f, startZoom);
-			cam.transform.LookAt (transform);
+			setCameraPosition(startAngle, startRotation, startZoom);
 		}
+	}
+
+	public void setCameraPosition(float _angle, float _rotation, float _zoom)
+	{
+		transform.rotation = SettingsToQuaternion (_angle, _rotation);
+		cam.transform.localPosition = new Vector3 (0f, 0f, _zoom);
+		cam.transform.LookAt (transform);
 	}
 
 	private Quaternion SettingsToQuaternion(float _angle, float _rotation)

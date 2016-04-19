@@ -32,11 +32,15 @@ public class CameraInput
 		Touch[] touches = Input.touches;
 		if (touches.Length > 1)
 		{
-			if (touches [0].phase != TouchPhase.Began && touches [1].phase != TouchPhase.Began) 
+			if (touches [0].phase == TouchPhase.Began || touches [1].phase == TouchPhase.Began) 
+			{
+				dist = MathHelper.dis2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
+			}
+			else if (touches [0].phase != TouchPhase.Began && touches [1].phase != TouchPhase.Began) 
 			{
 				float currentDist = MathHelper.dis2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
 				deltaZoom = (currentDist - dist);
-				debugString = "Phase=Zoom Change=" + deltaZoom + " Dist=" + currentDist;
+				debugString = "Phase=Zoom Change=" + Mathf.FloorToInt(deltaZoom) + " Dist=" + Mathf.FloorToInt(currentDist);
 				dist = currentDist;
 			}
 		} 
@@ -44,16 +48,16 @@ public class CameraInput
 		{
 			if (touches [0].phase == TouchPhase.Began)
 			{
-				prevX = 0f;
-				prevY = 0f;
+				prevX = (touches[0].position.x / Screen.width) * 1920f;
+				prevY = (touches[0].position.y / Screen.height) * 1080f;
 			}
 			else if(touches [0].phase == TouchPhase.Moved)
 			{
-				float currentX = touches[0].position.x;
-				float currentY = touches[0].position.y;
+				float currentX = (touches[0].position.x / Screen.width) * 1920f;
+				float currentY = (touches[0].position.y / Screen.height) * 1080f;
 				moveX = currentX - prevX;
 				moveY = currentY - prevY;
-				debugString = "Phase=Move X=" + currentX + " Y=" + currentY + " MX=" + moveX + " MY=" + moveY;
+				debugString = "Phase=Move X=" + Mathf.FloorToInt(currentX) + " Y=" + Mathf.FloorToInt(currentY) + " MX=" + Mathf.FloorToInt(moveX) + " MY=" + Mathf.FloorToInt(moveY);
 				prevX = currentX;
 				prevY = currentY;
 			}
