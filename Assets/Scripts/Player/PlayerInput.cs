@@ -3,17 +3,37 @@ using System.Collections;
 
 public class PlayerInput : MonoBehaviour
 {
-	[SerializeField] private LayerMask gridNodeLayer;
 	[SerializeField] private EntityController controller;
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
 	private Vector2 swipeDirection;
 	private Vector2 startPosition;
 #endif
 
+	private bool canMove;
+
+	protected void OnEnable()
+	{
+		GlobalEvents.AddListener<PickupStartEvent>(OnPickupStartEvent);
+		GlobalEvents.AddListener<PickupStopEvent>(OnPickupStopEvent);
+
+		canMove = true;
+	}
+
+	protected void OnDisable()
+	{
+		GlobalEvents.RemoveListener<PickupStartEvent>(OnPickupStartEvent);
+		GlobalEvents.RemoveListener<PickupStopEvent>(OnPickupStopEvent);
+	}
+
 	protected void Update()
 	{
-#if UNITY_ANDROID
+		if(!canMove)
+		{
+			return;
+		}
+
+#if UNITY_ANDROID && !UNITY_EDITOR
 		if(Input.touchCount > 0)
 		{
 			Touch touch = Input.GetTouch(0);
@@ -59,23 +79,15 @@ public class PlayerInput : MonoBehaviour
 
 	private void HandleTap(Vector2 position)
 	{
-		Ray ray = Camera.main.ScreenPointToRay(position);
-		RaycastHit hit;
+		GridNode node = GridUtils.GetNodeFromScreenPosition(position);
 
-		Debug.DrawRay(ray.origin, ray.direction * 100, Color.gray, 2);
-
-		if(Physics.Raycast(ray, out hit, 100, gridNodeLayer))
+		if(node != null)
 		{
-			GridNode node = hit.collider.GetComponent<GridNode>();
+			Direction? direction = controller.GetDirectionTo(node);
 
-			if(node != null)
+			if(direction != null)
 			{
-				Direction? direction = controller.GetDirectionTo(node);
-
-				if(direction != null)
-				{
-					controller.Move(direction.Value);
-				}
+				controller.Move(direction.Value);
 			}
 		}
 	}
@@ -110,5 +122,15 @@ public class PlayerInput : MonoBehaviour
 				controller.Move(Direction.Down);
 			}
 		}
+	}
+
+	private void OnPickupStartEvent(PickupStartEvent evt)
+	{
+		canMove = false;
+	}
+
+	private void OnPickupStopEvent(PickupStopEvent evt)
+	{
+		canMove = true;
 	}
 }

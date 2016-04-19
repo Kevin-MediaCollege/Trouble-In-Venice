@@ -6,14 +6,13 @@ public class EntityController : MonoBehaviour
 	public GridNode CurrentNode { private set; get; }
 
 	[SerializeField] private Direction direction;
-	[SerializeField] private LayerMask gridNodeLayer;
 
 	protected void Start()
 	{
 		Ray ray = new Ray(transform.position, Vector3.down);
 		RaycastHit hit;
 
-		if(Physics.Raycast(ray, out hit, 5, gridNodeLayer))
+		if(Physics.Raycast(ray, out hit, 5))
 		{
 			GridNode gridNode = hit.collider.GetComponent<GridNode>();
 
