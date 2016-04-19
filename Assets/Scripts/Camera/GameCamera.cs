@@ -1,6 +1,7 @@
 ﻿using DG;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameCamera : MonoBehaviour 
@@ -35,10 +36,13 @@ public class GameCamera : MonoBehaviour
 	public float startZoom = 10f;
 
 	private bool cutscene;
+	private CameraInput cameraInput;
+	public Text text;
 
 	protected void Awake () 
 	{
 		cutscene = false;
+		cameraInput = new CameraInput ();
 		StartCoroutine ("cutsceneAnimation");
 	}
 
@@ -47,15 +51,26 @@ public class GameCamera : MonoBehaviour
 	{
 		cutscene = true;
 
-		transform.rotation = SettingsToQuaternion (cutsceneAngle, cutsceneRotation);
+		float fixedAngle = cutsceneAngle;
+		fixedAngle = fixedAngle > startAngle - 180f ? fixedAngle - 360f : fixedAngle < startAngle + 180f ? fixedAngle + 360f : fixedAngle;
+		transform.rotation = SettingsToQuaternion (fixedAngle, cutsceneRotation);
 		transform.DORotateQuaternion (SettingsToQuaternion (startAngle, startRotation), 5f).SetEase(Ease.InOutCubic);
 		cam.transform.DOLocalMoveZ (startZoom, 5f, false).SetEase(Ease.InOutCubic);
 
 		yield return new WaitForSeconds (5f);
 
 		cutscene = false;
+		//StartCoroutine ("cutsceneAnimation");
+	}
 
-		StartCoroutine ("cutsceneAnimation");
+	protected void Update()
+	{
+		if(!cutscene)
+		{
+			cameraInput.UpdateInput();
+
+			text.text = cameraInput.debugString;
+		}
 	}
 
 	protected void OnValidate()
