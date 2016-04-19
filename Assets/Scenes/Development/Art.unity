@@ -113,6 +113,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9648c5b1627e104d9422c67859358fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 1780691028}
+  - {fileID: 137020191}
+  - {fileID: 429470580}
+  - {fileID: 2052369591}
+  - {fileID: 1751494062}
+  - {fileID: 1298603892}
+  - {fileID: 1464134728}
+  - {fileID: 650984824}
+  - {fileID: 998115063}
+  - {fileID: 1164998738}
 --- !u!4 &40476506
 Transform:
   m_ObjectHideFlags: 0

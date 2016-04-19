@@ -2,6 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(GridNodeCollider))]
+[ExecuteInEditMode]
 public class GridNode : MonoBehaviour
 {
 	public Vector3 Position
@@ -81,10 +82,24 @@ public class GridNode : MonoBehaviour
 	
 	protected void Start()
 	{
-		Grid grid = GetComponentInParent<Grid>();
-		grid.AddNode(this);
+		if(!Application.isPlaying)
+		{
+			Grid grid = GetComponentInParent<Grid>();
+			grid.AddNode(this);
+		}
+		else
+		{
+			Instantiate(Resources.Load("test"), transform.position, Quaternion.identity);
+		}
+	}
 
-		Instantiate(Resources.Load("test"), transform.position, Quaternion.identity);
+	protected void OnDestroy()
+	{
+		if(!Application.isPlaying)
+		{
+			Grid grid = GetComponentInParent<Grid>();
+			grid.RemoveNode(this);
+		}
 	}
 
 	protected void OnDrawGizmos()

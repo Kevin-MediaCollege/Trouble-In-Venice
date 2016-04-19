@@ -20,7 +20,6 @@ public class EntityController : MonoBehaviour
 			if(gridNode != null)
 			{
 				CurrentNode = gridNode;
-				Debug.Log(CurrentNode);
 			}
 		}
 	}

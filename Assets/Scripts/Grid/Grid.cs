@@ -20,19 +20,30 @@ public class Grid : MonoBehaviour
 		}
 	}
 
-	private HashSet<GridNode> nodes;
+	[HideInInspector, SerializeField] private List<GridNode> nodes;
 	private Dictionary<Vector3, GridNode> nodePositionCache;
 
 	protected void Awake()
 	{
-		nodes = new HashSet<GridNode>();
 		nodePositionCache = new Dictionary<Vector3, GridNode>();
+
+		foreach(GridNode node in nodes)
+		{
+			nodePositionCache.Add(node.Position, node);
+		}
 	}
 
 	public void AddNode(GridNode node)
 	{
-		nodes.Add(node);
-		nodePositionCache.Add(node.Position, node);
+		if(!nodes.Contains(node))
+		{
+			nodes.Add(node);
+		}
+	}
+
+	public void RemoveNode(GridNode node)
+	{
+		nodes.Remove(node);
 	}
 
 	public GridNode GetNodeAt(Vector3 position)
