@@ -6,15 +6,15 @@ public class Pickup : MonoBehaviour
 {
 	[SerializeField, TypeDropdown(typeof(PickupBehaviour))] private string behaviour;
 
-	private EntityController playerController;
-	private EntityController entityController;
+	private EntityNodeTracker playerController;
+	private EntityNodeTracker entityController;
 
 	protected void OnEnable()
 	{
 		Entity player = EntityUtils.GetEntityWithTag("Player");
-		playerController = player.GetComponent<EntityController>();
+		playerController = player.GetComponent<EntityNodeTracker>();
 
-		entityController = GetComponent<EntityController>();
+		entityController = GetComponent<EntityNodeTracker>();
 	}
 
 	protected void Update()

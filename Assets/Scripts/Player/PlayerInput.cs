@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerInput : MonoBehaviour
 {
-	[SerializeField] private EntityController controller;
+	[SerializeField] private EntityMovement movement;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 	private Vector2 swipeDirection;
@@ -60,21 +60,26 @@ public class PlayerInput : MonoBehaviour
 		
 		if(Input.GetKeyDown(KeyCode.UpArrow))
 		{
-			controller.Move(Direction.Up);
+			movement.Move(Direction.Up);
 		}
 		else if(Input.GetKeyDown(KeyCode.LeftArrow))
 		{
-			controller.Move(Direction.Left);
+			movement.Move(Direction.Left);
 		}
 		else if(Input.GetKeyDown(KeyCode.DownArrow))
 		{
-			controller.Move(Direction.Down);
+			movement.Move(Direction.Down);
 		}
 		else if(Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			controller.Move(Direction.Right);
+			movement.Move(Direction.Right);
 		}
 #endif
+	}
+
+	protected void Reset()
+	{
+		movement = GetComponent<EntityMovement>();
 	}
 
 	private void HandleTap(Vector2 position)
@@ -83,11 +88,11 @@ public class PlayerInput : MonoBehaviour
 
 		if(node != null)
 		{
-			Direction? direction = controller.GetDirectionTo(node);
+			Direction? direction = movement.GetDirectionTo(node);
 
 			if(direction != null)
 			{
-				controller.Move(direction.Value);
+				movement.Move(direction.Value);
 			}
 		}
 	}
@@ -100,12 +105,12 @@ public class PlayerInput : MonoBehaviour
 			// Swipe right
 			if(direction.x > 0)
 			{
-				controller.Move(Direction.Right);
+				movement.Move(Direction.Right);
 			}
 			// Swipe left
 			else if(direction.x < 0)
 			{
-				controller.Move(Direction.Left);
+				movement.Move(Direction.Left);
 			}
 		}
 		// Swipe vertical
@@ -114,12 +119,12 @@ public class PlayerInput : MonoBehaviour
 			// Swipe up
 			if(direction.y > 0)
 			{
-				controller.Move(Direction.Up);
+				movement.Move(Direction.Up);
 			}
 			// Swipe down
 			else if(direction.y < 0)
 			{
-				controller.Move(Direction.Down);
+				movement.Move(Direction.Down);
 			}
 		}
 	}

@@ -1,26 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EntityController : MonoBehaviour
+public enum Direction
 {
-	public GridNode CurrentNode { private set; get; }
+	Up,
+	Left,
+	Down,
+	Right
+}
 
+public class EntityMovement : MonoBehaviour
+{
+	[SerializeField] private EntityNodeTracker nodeTracker;
 	[SerializeField] private Direction direction;
 
-	protected void Start()
+	protected void Reset()
 	{
-		Ray ray = new Ray(transform.position, Vector3.down);
-		RaycastHit hit;
-
-		if(Physics.Raycast(ray, out hit, 5))
-		{
-			GridNode gridNode = hit.collider.GetComponent<GridNode>();
-
-			if(gridNode != null)
-			{
-				CurrentNode = gridNode;
-			}
-		}
+		nodeTracker = GetComponent<EntityNodeTracker>();
 	}
 
 	protected void OnDrawGizmos()
@@ -58,7 +54,7 @@ public class EntityController : MonoBehaviour
 			Vector3 targetPosition = new Vector3(targetNode.transform.position.x, transform.position.y, targetNode.transform.position.z);
 
 			transform.position = targetPosition;
-			CurrentNode = targetNode;
+			nodeTracker.CurrentNode = targetNode;
 		}
 	}
 
@@ -69,15 +65,15 @@ public class EntityController : MonoBehaviour
 
 	public Direction? GetDirectionTo(GridNode node)
 	{
-		if(!CurrentNode.IsNeighbour(node))
+		if(!nodeTracker.CurrentNode.IsNeighbour(node))
 		{
 			return null;
 		}
 
-		Vector3 direction = (node.transform.position - CurrentNode.transform.position);
+		Vector3 direction = (node.transform.position - nodeTracker.CurrentNode.transform.position);
 		Vector3 directionN = direction.normalized;
 		float distance2 = direction.sqrMagnitude;
-		
+
 		if(distance2 != 9f)
 		{
 			return null;
@@ -109,13 +105,13 @@ public class EntityController : MonoBehaviour
 		switch(direction)
 		{
 		case Direction.Up:
-			return CurrentNode.NeighbourUp;
+			return nodeTracker.CurrentNode.NeighbourUp;
 		case Direction.Left:
-			return CurrentNode.NeighbourLeft;
+			return nodeTracker.CurrentNode.NeighbourLeft;
 		case Direction.Down:
-			return CurrentNode.NeighbourDown;
+			return nodeTracker.CurrentNode.NeighbourDown;
 		case Direction.Right:
-			return CurrentNode.NeighbourRight;
+			return nodeTracker.CurrentNode.NeighbourRight;
 		default:
 			return null;
 		}

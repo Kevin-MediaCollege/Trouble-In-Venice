@@ -529,7 +529,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc6bd71cb8e5340af64f225bbff594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
 --- !u!114 &791723399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1980,6 +1979,7 @@ GameObject:
   - 114: {fileID: 1731313758}
   - 114: {fileID: 1731313757}
   - 114: {fileID: 1731313756}
+  - 114: {fileID: 1731313764}
   - 114: {fileID: 1731313763}
   m_Layer: 0
   m_Name: Player
@@ -1999,7 +1999,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc6bd71cb8e5340af64f225bbff594, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 1
 --- !u!114 &1731313757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2093,7 +2092,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9bc08a2a20407241a9a966c8695368c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controller: {fileID: 1731313756}
+  movement: {fileID: 1731313764}
+--- !u!114 &1731313764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1731313755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23678e35d7a782e448101299cd068ac0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeTracker: {fileID: 1731313756}
+  direction: 1
 --- !u!1 &1751494061
 GameObject:
   m_ObjectHideFlags: 0
