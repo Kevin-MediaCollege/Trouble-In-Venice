@@ -9,6 +9,7 @@ public enum Direction
 	Right
 }
 
+[RequireComponent(typeof(EntityNodeTracker))]
 public class EntityMovement : MonoBehaviour
 {
 	[SerializeField] private EntityNodeTracker nodeTracker;
@@ -47,7 +48,7 @@ public class EntityMovement : MonoBehaviour
 	{
 		LookAt(direction);
 
-		GridNode targetNode = GetTargetNode(direction);
+		GridNode targetNode = nodeTracker.GetNodeInDirection(direction);
 
 		if(targetNode != null)
 		{
@@ -61,59 +62,5 @@ public class EntityMovement : MonoBehaviour
 	public void LookAt(Direction direction)
 	{
 		this.direction = direction;
-	}
-
-	public Direction? GetDirectionTo(GridNode node)
-	{
-		if(!nodeTracker.CurrentNode.IsNeighbour(node))
-		{
-			return null;
-		}
-
-		Vector3 direction = (node.transform.position - nodeTracker.CurrentNode.transform.position);
-		Vector3 directionN = direction.normalized;
-		float distance2 = direction.sqrMagnitude;
-
-		if(distance2 != 9f)
-		{
-			return null;
-		}
-
-		if(directionN == Vector3.forward)
-		{
-			return Direction.Up;
-		}
-		else if(directionN == Vector3.left)
-		{
-			return Direction.Left;
-		}
-		else if(directionN == Vector3.back)
-		{
-			return Direction.Down;
-		}
-		else if(directionN == Vector3.right)
-		{
-			return Direction.Right;
-		}
-
-		Debug.LogError("Invalid direction: " + directionN);
-		return null;
-	}
-
-	private GridNode GetTargetNode(Direction direction)
-	{
-		switch(direction)
-		{
-		case Direction.Up:
-			return nodeTracker.CurrentNode.NeighbourUp;
-		case Direction.Left:
-			return nodeTracker.CurrentNode.NeighbourLeft;
-		case Direction.Down:
-			return nodeTracker.CurrentNode.NeighbourDown;
-		case Direction.Right:
-			return nodeTracker.CurrentNode.NeighbourRight;
-		default:
-			return null;
-		}
 	}
 }

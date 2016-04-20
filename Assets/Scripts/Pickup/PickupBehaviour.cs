@@ -1,35 +1,55 @@
 ﻿using System.Collections;
+using UnityEngine;
 
-public abstract class PickupBehaviour
+public abstract class PickupBehaviour : MonoBehaviour
 {
-	private CoroutineRunner coroutineRunner;
-	private bool running;
+	[SerializeField] protected EntityNodeTracker nodeTracker;
 
-	public PickupBehaviour()
+	private bool activated;
+
+	protected void OnEnable()
 	{
-		coroutineRunner = Dependency.Get<CoroutineRunner>();
-		coroutineRunner.StartCoroutine(InternalUpdate());
+		nodeTracker = GetComponent<EntityNodeTracker>();
 	}
 
-	protected virtual IEnumerator Update()
+	protected void LateUpdate()
 	{
-		yield return null;
-	}
-
-	protected void Stop()
-	{
-		running = false;
-
-		GlobalEvents.Invoke(new PickupStopEvent());
-	}
-
-	private IEnumerator InternalUpdate()
-	{
-		running = true;
-
-		while(running)
+		if(activated)
 		{
-			yield return coroutineRunner.StartCoroutine(Update());
+			OnUpdate();
 		}
+	}
+
+	protected void Reset()
+	{
+		nodeTracker = GetComponent<EntityNodeTracker>();
+	}
+
+	public void Activate()
+	{
+		GlobalEvents.Invoke(new PickupStartEvent());
+
+		activated = true;
+		OnActivate();
+	}
+
+	public void Deactivate()
+	{
+		GlobalEvents.Invoke(new PickupStopEvent());
+
+		activated = false;
+		OnDeactivate();
+	}
+
+	protected virtual void OnActivate()
+	{
+	}
+
+	protected virtual void OnDeactivate()
+	{
+	}
+
+	protected virtual void OnUpdate()
+	{
 	}
 }

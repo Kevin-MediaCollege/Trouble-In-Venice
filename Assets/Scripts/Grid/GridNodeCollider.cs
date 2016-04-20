@@ -8,7 +8,7 @@ public class GridNodeCollider : MonoBehaviour
 		if(GetComponent<Collider>() == null)
 		{
 			BoxCollider bc = gameObject.AddComponent<BoxCollider>();
-			bc.size = new Vector3(1, 0.25f, 1);
+			bc.size = new Vector3(2, 2, 2);
 		}
 	}
 }

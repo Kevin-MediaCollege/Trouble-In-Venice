@@ -9,7 +9,7 @@ public class GridNode : MonoBehaviour
 	{
 		get
 		{
-			return new Vector3(Mathf.RoundToInt(transform.position.x), 0, Mathf.RoundToInt(transform.position.z)) / Grid.SIZE;
+			return new Vector3(Mathf.RoundToInt(transform.position.x / Grid.SIZE), 0, Mathf.RoundToInt(transform.position.z / Grid.SIZE));
 		}
 	}
 
