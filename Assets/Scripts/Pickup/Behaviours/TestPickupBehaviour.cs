@@ -1,23 +1,39 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class TestPickupBehaviour : PickupBehaviour
 {
-	protected override IEnumerator Update()
-	{
-		// Wait for mouse button press
-		while(!Input.GetMouseButtonDown(0))
-		{
-			yield return null;
-		}
+	private IEnumerable<GridNode> nodes;
 
-		GridNode node = GridUtils.GetNodeFromScreenPosition(Input.mousePosition);
-		if(node != null)
+	protected override void OnActivate()
+	{
+		nodes = GridUtils.GetNodesAround(nodeTracker.CurrentNode);
+	}
+
+	protected override void OnUpdate()
+	{
+		HighlightNodes(Color.blue);
+
+		// Wait for mouse button press
+		if(Input.GetMouseButtonDown(0))
 		{
-			Debug.Log("Threw pickup to: " + node.GridPosition);
-			Stop();
+			GridNode node = GridUtils.GetNodeFromScreenPosition(Input.mousePosition);
+			if(node != null)
+			{
+				HighlightNodes(Color.white);
+				node.GetComponentInChildren<Renderer>().material.color = Color.yellow;
+
+				Deactivate();
+			}
+		}
+	}
+
+	private void HighlightNodes(Color color)
+	{
+		foreach(GridNode node in nodes)
+		{
+			Renderer renderer = node.GetComponentInChildren<Renderer>();
+			renderer.material.color = color;
 		}
 	}
 }

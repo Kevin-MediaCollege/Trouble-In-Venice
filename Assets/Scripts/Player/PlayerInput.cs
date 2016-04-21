@@ -3,14 +3,21 @@ using System.Collections;
 
 public class PlayerInput : MonoBehaviour
 {
-	[SerializeField] private EntityController controller;
+	[SerializeField] private EntityNodeTracker nodeTracker;
+	[SerializeField] private EntityMovement movement;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 	private Vector2 swipeDirection;
 	private Vector2 startPosition;
+
+	private bool moving;
+
+	// DEBUG
+	private Renderer nodeRenderer;
+	// DEBUG
 #endif
 
-	private bool canMove;
+	private bool canMove;	
 
 	protected void OnEnable()
 	{
@@ -37,19 +44,58 @@ public class PlayerInput : MonoBehaviour
 		if(Input.touchCount > 0)
 		{
 			Touch touch = Input.GetTouch(0);
-			
-			switch(touch.phase)
+
+			if(touch.phase == TouchPhase.Began)
 			{
-			case TouchPhase.Began:
-				startPosition = touch.position;
-				swipeDirection = Vector2.zero;
-				break;
-			case TouchPhase.Moved:
-				swipeDirection = touch.position - startPosition;
-				break;
-			case TouchPhase.Ended:
-				HandleSwipe(swipeDirection);
-				break;
+				if(GridUtils.GetNodeFromScreenPosition(touch.position) == nodeTracker.CurrentNode)
+				{
+					// DEBUG
+					nodeTracker.CurrentNode.GetComponentInChildren<Renderer>().material.color = Color.green;
+					// DEBUG
+
+					startPosition = touch.position;
+					swipeDirection = Vector2.zero;
+					moving = true;
+				}
+			}
+			else
+			{
+				if(moving)
+				{
+					if(touch.phase == TouchPhase.Moved)
+					{
+						swipeDirection = touch.position - startPosition;
+
+						// DEBUG						
+						if(nodeRenderer != null)
+						{
+							nodeRenderer.material.color = Color.white;
+						}
+
+						GridNode node = nodeTracker.GetNodeInDirection(GetSwipeDirection(swipeDirection));
+						if(node != null)
+						{
+							nodeRenderer = node.GetComponentInChildren<Renderer>();
+							nodeRenderer.material.color = Color.red;
+						}
+						// DEBUG
+					}
+					else if(touch.phase == TouchPhase.Ended)
+					{
+						// DEBUG
+						nodeTracker.CurrentNode.GetComponentInChildren<Renderer>().material.color = Color.white;
+
+						if(nodeRenderer != null)
+						{
+							nodeRenderer.material.color = Color.white;
+							nodeRenderer = null;
+						}						
+						// DEBUG
+
+						HandleSwipe(swipeDirection);
+						moving = false;
+					}
+				}
 			}
 		}
 #else
@@ -60,21 +106,26 @@ public class PlayerInput : MonoBehaviour
 		
 		if(Input.GetKeyDown(KeyCode.UpArrow))
 		{
-			controller.Move(Direction.Up);
+			movement.Move(Direction.Up);
 		}
 		else if(Input.GetKeyDown(KeyCode.LeftArrow))
 		{
-			controller.Move(Direction.Left);
+			movement.Move(Direction.Left);
 		}
 		else if(Input.GetKeyDown(KeyCode.DownArrow))
 		{
-			controller.Move(Direction.Down);
+			movement.Move(Direction.Down);
 		}
 		else if(Input.GetKeyDown(KeyCode.RightArrow))
 		{
-			controller.Move(Direction.Right);
+			movement.Move(Direction.Right);
 		}
 #endif
+	}
+
+	protected void Reset()
+	{
+		movement = GetComponent<EntityMovement>();
 	}
 
 	private void HandleTap(Vector2 position)
@@ -83,16 +134,16 @@ public class PlayerInput : MonoBehaviour
 
 		if(node != null)
 		{
-			Direction? direction = controller.GetDirectionTo(node);
+			Direction? direction = nodeTracker.GetDirectionTo(node);
 
 			if(direction != null)
 			{
-				controller.Move(direction.Value);
+				movement.Move(direction.Value);
 			}
 		}
 	}
 
-	private void HandleSwipe(Vector2 direction)
+	private Direction GetSwipeDirection(Vector2 direction)
 	{
 		// Swipe horizontal
 		if(Mathf.Abs(direction.x) >= Mathf.Abs(direction.y))
@@ -100,12 +151,12 @@ public class PlayerInput : MonoBehaviour
 			// Swipe right
 			if(direction.x > 0)
 			{
-				controller.Move(Direction.Right);
+				return Direction.Right;
 			}
 			// Swipe left
 			else if(direction.x < 0)
 			{
-				controller.Move(Direction.Left);
+				return Direction.Left;
 			}
 		}
 		// Swipe vertical
@@ -114,14 +165,24 @@ public class PlayerInput : MonoBehaviour
 			// Swipe up
 			if(direction.y > 0)
 			{
-				controller.Move(Direction.Up);
+				return Direction.Up;
 			}
 			// Swipe down
 			else if(direction.y < 0)
 			{
-				controller.Move(Direction.Down);
+				return Direction.Down;
 			}
 		}
+
+		// Should never happen
+		Debug.LogError("Invalid swipe direction");
+		return Direction.Up;
+	}
+
+	private void HandleSwipe(Vector2 direction)
+	{
+		Direction swipeDirection = GetSwipeDirection(direction);
+		movement.Move(swipeDirection);
 	}
 
 	private void OnPickupStartEvent(PickupStartEvent evt)

@@ -1,15 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
-[CustomEditor(typeof(EntityController))]
-public class EntityPositioner : Editor
+[CustomEditor(typeof(EntityNodeTracker))]
+public class EntityNodeTrackerEditor : Editor
 {
 	protected void OnSceneGUI()
 	{
 		if(!Application.isPlaying)
 		{
-			EntityController ec = target as EntityController;
+			EntityNodeTracker ec = target as EntityNodeTracker;
 
 			Grid grid = FindObjectOfType<Grid>();
 			GridNode nearest = null;
@@ -29,6 +28,7 @@ public class EntityPositioner : Editor
 			if(nearest != null)
 			{
 				ec.transform.position = new Vector3(nearest.transform.position.x, ec.transform.position.y, nearest.transform.position.z);
+				ec.CurrentNode = nearest;
 			}
 		}
 	}

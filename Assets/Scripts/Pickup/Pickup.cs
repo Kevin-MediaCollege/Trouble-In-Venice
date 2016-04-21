@@ -1,35 +1,37 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 
 public class Pickup : MonoBehaviour
 {
-	[SerializeField, TypeDropdown(typeof(PickupBehaviour))] private string behaviour;
+	[SerializeField] private PickupBehaviour behaviour;
 
-	private EntityController playerController;
-	private EntityController entityController;
+	private EntityNodeTracker playerController;
+	private EntityNodeTracker entityController;
 
 	protected void OnEnable()
 	{
 		Entity player = EntityUtils.GetEntityWithTag("Player");
-		playerController = player.GetComponent<EntityController>();
-
-		entityController = GetComponent<EntityController>();
+		playerController = player.GetComponent<EntityNodeTracker>();
+		entityController = GetComponent<EntityNodeTracker>();
 	}
 
 	protected void Update()
 	{
 		if(playerController.CurrentNode == entityController.CurrentNode)
 		{
-			Type type = Type.GetType(behaviour);
+			behaviour.Activate();
 
-			if(type != null)
+			Renderer[] renderers = GetComponentsInChildren<Renderer>();
+			foreach(Renderer renderer in renderers)
 			{
-				PickupBehaviour instance = Activator.CreateInstance(type) as PickupBehaviour;
-				GlobalEvents.Invoke(new PickupStartEvent(instance));
+				renderer.enabled = false;
 			}
-			
-			Destroy(gameObject);
+
+			enabled = false;
 		}
+	}
+
+	protected void Reset()
+	{
+		behaviour = GetComponent<PickupBehaviour>();
 	}
 }

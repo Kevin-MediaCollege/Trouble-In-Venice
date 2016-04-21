@@ -9,5 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Development/GridTest.unity
   - enabled: 0
     path: Assets/Scenes/Development/Art.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Test/Ted.unity
+  - enabled: 1
+    path: Assets/Scenes/Development/Art 1.unity
