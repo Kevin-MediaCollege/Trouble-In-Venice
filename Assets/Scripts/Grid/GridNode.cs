@@ -5,11 +5,11 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class GridNode : MonoBehaviour
 {
-	public Vector3 Position
+	public Vector3 GridPosition
 	{
 		get
 		{
-			return new Vector3(Mathf.RoundToInt(transform.position.x), 0, Mathf.RoundToInt(transform.position.z)) / Grid.SIZE;
+			return new Vector3(Mathf.RoundToInt(transform.position.x / Grid.SIZE), 0, Mathf.RoundToInt(transform.position.z / Grid.SIZE));
 		}
 	}
 
@@ -89,7 +89,8 @@ public class GridNode : MonoBehaviour
 		}
 		else
 		{
-			Instantiate(Resources.Load("test"), transform.position, Quaternion.identity);
+			GameObject go = Instantiate(Resources.Load("test"), transform.position, Quaternion.identity) as GameObject;
+			go.transform.SetParent(transform);
 		}
 	}
 
@@ -98,7 +99,11 @@ public class GridNode : MonoBehaviour
 		if(!Application.isPlaying)
 		{
 			Grid grid = GetComponentInParent<Grid>();
-			grid.RemoveNode(this);
+
+			if(grid != null)
+			{
+				grid.RemoveNode(this);
+			}
 		}
 	}
 
@@ -167,7 +172,7 @@ public class GridNode : MonoBehaviour
 		{
 			if(neighbour != null)
 			{
-				if(neighbour.Position == (Position + direction))
+				if(neighbour.GridPosition == (GridPosition + direction))
 				{
 					if(neighbour.enabled)
 					{

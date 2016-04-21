@@ -29,7 +29,7 @@ public class Grid : MonoBehaviour
 
 		foreach(GridNode node in nodes)
 		{
-			nodePositionCache.Add(node.Position, node);
+			nodePositionCache.Add(node.GridPosition, node);
 		}
 	}
 

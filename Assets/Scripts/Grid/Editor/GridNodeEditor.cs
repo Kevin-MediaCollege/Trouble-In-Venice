@@ -68,6 +68,7 @@ public class GridNodeEditor : Editor
 	{
 		serializedObject.Update();
 
+		EditorGUILayout.LabelField("Grid Position: " + (target as GridNode).GridPosition);
 		EditorGUILayout.PropertyField(prop_type);
 		neighbours.DoLayoutList();
 
@@ -130,7 +131,11 @@ public class GridNodeEditor : Editor
 	{
 		GridNode targetNode = prop_neighbours.GetArrayElementAtIndex(reorderableList.index).objectReferenceValue as GridNode;
 
-		targetNode.RemoveNeighbour(node);
+		if(targetNode != null)
+		{
+			targetNode.RemoveNeighbour(node);
+		}
+
 		node.RemoveNeighbour(targetNode);
 
 		SceneView.RepaintAll();
