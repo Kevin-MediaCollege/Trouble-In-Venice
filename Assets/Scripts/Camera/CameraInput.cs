@@ -6,11 +6,12 @@ public class CameraInput
 	public float deltaZoom;
 	public float moveX;
 	public float moveY;
-	public string debugString;
 
 	private float prevX;
 	private float prevY;
 	private float dist;
+
+	private bool isMoving;
 
 	public CameraInput()
 	{
@@ -21,6 +22,8 @@ public class CameraInput
 		prevX = 0f;
 		prevY = 0f;
 		dist = 0f;
+
+		isMoving = false;
 	}
 
 	public void UpdateInput()
@@ -29,18 +32,31 @@ public class CameraInput
 		moveX = 0f;
 		moveY = 0f;
 
+		#if UNITY_ANDROID
+
+
+			
+		#endif
+
 		Touch[] touches = Input.touches;
 		if (touches.Length > 1)
 		{
 			if (touches [0].phase == TouchPhase.Began || touches [1].phase == TouchPhase.Began) 
 			{
-				dist = MathHelper.dis2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
+				if(!isTouchingPlayer(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
+				{
+					dist = MathHelper.dis2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
+					isMoving = true;
+				}
+				else
+				{
+					isMoving = false;
+				}
 			}
-			else if (touches [0].phase != TouchPhase.Began && touches [1].phase != TouchPhase.Began) 
+			else if (touches [0].phase != TouchPhase.Began && touches [1].phase != TouchPhase.Began && isMoving) 
 			{
 				float currentDist = MathHelper.dis2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
 				deltaZoom = (currentDist - dist);
-				debugString = "Phase=Zoom Change=" + Mathf.FloorToInt(deltaZoom) + " Dist=" + Mathf.FloorToInt(currentDist);
 				dist = currentDist;
 			}
 		} 
@@ -57,18 +73,43 @@ public class CameraInput
 				float currentY = (touches[0].position.y / Screen.height) * 1080f;
 				moveX = currentX - prevX;
 				moveY = currentY - prevY;
-				debugString = "Phase=Move X=" + Mathf.FloorToInt(currentX) + " Y=" + Mathf.FloorToInt(currentY) + " MX=" + Mathf.FloorToInt(moveX) + " MY=" + Mathf.FloorToInt(moveY);
 				prevX = currentX;
 				prevY = currentY;
 			}
 		}
-		else 
+
+		deltaZoom = Input.mouseScrollDelta.y * 20f;
+		if(Input.GetKeyDown(KeyCode.Mouse0))
 		{
-			debugString = "Phase=Null";
+			if(!isTouchingPlayer(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
+			{
+				prevX = (Input.mousePosition.x / Screen.width) * 1920f;
+				prevY = (Input.mousePosition.y / Screen.height) * 1080f;
+				isMoving = true;
+			}
+			else
+			{
+				isMoving = false;
+			}
+		}
+		else if(Input.GetKey(KeyCode.Mouse0) && isMoving)
+		{
+			float currentX = (Input.mousePosition.x / Screen.width) * 1920f;
+			float currentY = (Input.mousePosition.y / Screen.height) * 1080f;
+			moveX = currentX - prevX;
+			moveY = currentY - prevY;
+			prevX = currentX;
+			prevY = currentY;
 		}
 	}
+
+	public bool isTouchingPlayer(Vector2 _pos)
+	{
+		Entity e = EntityUtils.GetEntityWithTag ("Player");
+		if(e != null && GridUtils.GetNodeFromScreenPosition(_pos) == e.GetComponent<EntityNodeTracker>().CurrentNode)
+		{
+			return true;
+		}
+		return false;
+	}
 }
-	
-#if UNITY_ANDROID
-#else
-#endif

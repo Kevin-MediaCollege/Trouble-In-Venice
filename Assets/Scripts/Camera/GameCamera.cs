@@ -37,7 +37,6 @@ public class GameCamera : MonoBehaviour
 
 	private bool cutscene;
 	private CameraInput cameraInput;
-	public Text text;
 
 	private float currentAngle;
 	private float currentRotation;
@@ -54,21 +53,23 @@ public class GameCamera : MonoBehaviour
 		currentZoom = startZoom;
 	}
 
-	//KEVIN: moet gecalled worden door een start game event?
 	public IEnumerator cutsceneAnimation()
 	{
 		cutscene = true;
 
-		float fixedAngle = cutsceneAngle;
-		fixedAngle = fixedAngle > startAngle - 180f ? fixedAngle - 360f : fixedAngle < startAngle + 180f ? fixedAngle + 360f : fixedAngle;
-		transform.rotation = SettingsToQuaternion (fixedAngle, cutsceneRotation);
+		float fixedRotation = cutsceneRotation;
+
+		if(fixedRotation > startRotation + 180f) { Debug.Log("-360f" + " fixed=" + fixedRotation + " startRotation=" + startRotation); }
+		if(fixedRotation < startRotation - 180f) { Debug.Log("+360f" + " fixed=" + fixedRotation + " startRotation=" + startRotation); }
+
+		fixedRotation = fixedRotation > startRotation + 180f ? fixedRotation - 360f : fixedRotation < startRotation - 180f ? fixedRotation + 360f : fixedRotation;
+		transform.rotation = SettingsToQuaternion (cutsceneAngle, fixedRotation);
 		transform.DORotateQuaternion (SettingsToQuaternion (startAngle, startRotation), 5f).SetEase(Ease.InOutCubic);
 		cam.transform.DOLocalMoveZ (startZoom, 5f, false).SetEase(Ease.InOutCubic);
 
 		yield return new WaitForSeconds (5f);
 
 		cutscene = false;
-		//StartCoroutine ("cutsceneAnimation");
 	}
 
 	protected void Update()
@@ -87,7 +88,6 @@ public class GameCamera : MonoBehaviour
 			currentZoom = currentZoom < minZoom ? minZoom : currentZoom > maxZoom ? maxZoom : currentZoom;
 
 			setCameraPosition(currentAngle, currentRotation, currentZoom);
-			text.text = cameraInput.debugString;
 		}
 	}
 
