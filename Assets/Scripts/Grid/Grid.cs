@@ -21,17 +21,6 @@ public class Grid : MonoBehaviour
 	}
 
 	[HideInInspector, SerializeField] private List<GridNode> nodes;
-	private Dictionary<Vector3, GridNode> nodePositionCache;
-
-	protected void Awake()
-	{
-		nodePositionCache = new Dictionary<Vector3, GridNode>();
-
-		foreach(GridNode node in nodes)
-		{
-			nodePositionCache.Add(node.GridPosition, node);
-		}
-	}
 
 	public void AddNode(GridNode node)
 	{
@@ -44,41 +33,5 @@ public class Grid : MonoBehaviour
 	public void RemoveNode(GridNode node)
 	{
 		nodes.Remove(node);
-	}
-
-	public GridNode GetNodeAt(Vector3 position)
-	{
-		if(!nodePositionCache.ContainsKey(position))
-		{
-			return null;
-		}
-
-		return nodePositionCache[position];
-	}
-
-	public GridNode GetStart()
-	{
-		foreach(GridNode node in Nodes)
-		{
-			if(node.IsStart)
-			{
-				return node;
-			}
-		}
-
-		return null;
-	}
-
-	public GridNode GetEnd()
-	{
-		foreach(GridNode node in Nodes)
-		{
-			if(node.IsEnd)
-			{
-				return node;
-			}
-		}
-
-		return null;
 	}
 }

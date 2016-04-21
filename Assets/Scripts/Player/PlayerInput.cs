@@ -5,24 +5,22 @@ public class PlayerInput : MonoBehaviour
 {
 	[SerializeField] private EntityNodeTracker nodeTracker;
 	[SerializeField] private EntityMovement movement;
-
-#if UNITY_ANDROID && !UNITY_EDITOR
-	private Vector2 swipeDirection;
-	private Vector2 startPosition;
-
-	private bool moving;
-
+	
 	// DEBUG
 	private Renderer nodeRenderer;
 	// DEBUG
-#endif
 
+	private SwipeHandle swipeHandle;
 	private bool canMove;	
 
 	protected void OnEnable()
 	{
 		GlobalEvents.AddListener<PickupStartEvent>(OnPickupStartEvent);
 		GlobalEvents.AddListener<PickupStopEvent>(OnPickupStopEvent);
+
+		GlobalEvents.AddListener<SwipeBeganEvent>(OnSwipeBeganEvent);
+		GlobalEvents.AddListener<SwipeUpdateEvent>(OnSwipeUpdateEvent);
+		GlobalEvents.AddListener<SwipeEndedEvent>(OnSwipeEndedEvent);
 
 		canMove = true;
 	}
@@ -31,6 +29,62 @@ public class PlayerInput : MonoBehaviour
 	{
 		GlobalEvents.RemoveListener<PickupStartEvent>(OnPickupStartEvent);
 		GlobalEvents.RemoveListener<PickupStopEvent>(OnPickupStopEvent);
+
+		GlobalEvents.RemoveListener<SwipeBeganEvent>(OnSwipeBeganEvent);
+		GlobalEvents.RemoveListener<SwipeUpdateEvent>(OnSwipeUpdateEvent);
+		GlobalEvents.RemoveListener<SwipeEndedEvent>(OnSwipeEndedEvent);
+	}
+
+	private void OnSwipeBeganEvent(SwipeBeganEvent evt)
+	{
+		if(canMove && GridUtils.GetNodeFromScreenPosition(evt.Handle.StartPosition) == nodeTracker.CurrentNode)
+		{
+			swipeHandle = evt.Handle;
+			swipeHandle.IsConsumed = true;
+
+			// DEBUG
+			nodeTracker.CurrentNode.GetComponentInChildren<Renderer>().material.color = Color.green;
+			// DEBUG
+		}
+	}
+
+	private void OnSwipeUpdateEvent(SwipeUpdateEvent evt)
+	{
+		if(evt.Handle == swipeHandle)
+		{
+			// DEBUG						
+			if(nodeRenderer != null)
+			{
+				nodeRenderer.material.color = Color.white;
+			}
+
+			GridNode node = nodeTracker.GetNodeInDirection(GetSwipeDirection(swipeHandle.StartPosition - swipeHandle.LastPosition));
+			if(node != null)
+			{
+				nodeRenderer = node.GetComponentInChildren<Renderer>();
+				nodeRenderer.material.color = Color.red;
+			}
+			// DEBUG
+		}
+	}
+
+	private void OnSwipeEndedEvent(SwipeEndedEvent evt)
+	{
+		if(evt.Handle == swipeHandle)
+		{
+			// DEBUG
+			nodeTracker.CurrentNode.GetComponentInChildren<Renderer>().material.color = Color.white;
+
+			if(nodeRenderer != null)
+			{
+				nodeRenderer.material.color = Color.white;
+				nodeRenderer = null;
+			}
+			// DEBUG
+
+			HandleSwipe(swipeHandle.StartPosition - swipeHandle.LastPosition);
+			swipeHandle = null;
+		}
 	}
 
 	protected void Update()
@@ -40,70 +94,6 @@ public class PlayerInput : MonoBehaviour
 			return;
 		}
 
-#if UNITY_ANDROID && !UNITY_EDITOR
-		if(Input.touchCount > 0)
-		{
-			Touch touch = Input.GetTouch(0);
-
-			if(touch.phase == TouchPhase.Began)
-			{
-				if(GridUtils.GetNodeFromScreenPosition(touch.position) == nodeTracker.CurrentNode)
-				{
-					// DEBUG
-					nodeTracker.CurrentNode.GetComponentInChildren<Renderer>().material.color = Color.green;
-					// DEBUG
-
-					startPosition = touch.position;
-					swipeDirection = Vector2.zero;
-					moving = true;
-				}
-			}
-			else
-			{
-				if(moving)
-				{
-					if(touch.phase == TouchPhase.Moved)
-					{
-						swipeDirection = touch.position - startPosition;
-
-						// DEBUG						
-						if(nodeRenderer != null)
-						{
-							nodeRenderer.material.color = Color.white;
-						}
-
-						GridNode node = nodeTracker.GetNodeInDirection(GetSwipeDirection(swipeDirection));
-						if(node != null)
-						{
-							nodeRenderer = node.GetComponentInChildren<Renderer>();
-							nodeRenderer.material.color = Color.red;
-						}
-						// DEBUG
-					}
-					else if(touch.phase == TouchPhase.Ended)
-					{
-						// DEBUG
-						nodeTracker.CurrentNode.GetComponentInChildren<Renderer>().material.color = Color.white;
-
-						if(nodeRenderer != null)
-						{
-							nodeRenderer.material.color = Color.white;
-							nodeRenderer = null;
-						}						
-						// DEBUG
-
-						HandleSwipe(swipeDirection);
-						moving = false;
-					}
-				}
-			}
-		}
-#else
-		if(Input.GetMouseButtonDown(0))
-		{
-			HandleTap(Input.mousePosition);
-		}
-		
 		if(Input.GetKeyDown(KeyCode.UpArrow))
 		{
 			movement.Move(Direction.Up);
@@ -120,7 +110,6 @@ public class PlayerInput : MonoBehaviour
 		{
 			movement.Move(Direction.Right);
 		}
-#endif
 	}
 
 	protected void Reset()
@@ -173,9 +162,7 @@ public class PlayerInput : MonoBehaviour
 				return Direction.Down;
 			}
 		}
-
-		// Should never happen
-		Debug.LogError("Invalid swipe direction");
+		
 		return Direction.Up;
 	}
 

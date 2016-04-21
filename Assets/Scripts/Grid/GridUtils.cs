@@ -21,18 +21,58 @@ public static class GridUtils
 	{
 		List<GridNode> result = new List<GridNode>();
 
-		result.Add(Grid.GetNodeAt(node.GridPosition + new Vector3( 0, 0,  1))); // Up
-		result.Add(Grid.GetNodeAt(node.GridPosition + new Vector3(-1, 0,  1))); // Up-left
-		result.Add(Grid.GetNodeAt(node.GridPosition + new Vector3(-1, 0,  0))); // Left
-		result.Add(Grid.GetNodeAt(node.GridPosition + new Vector3(-1, 0, -1))); // Down-left
-		result.Add(Grid.GetNodeAt(node.GridPosition + new Vector3( 0, 0, -1))); // Down
-		result.Add(Grid.GetNodeAt(node.GridPosition + new Vector3( 1, 0, -1))); // Down-right
-		result.Add(Grid.GetNodeAt(node.GridPosition + new Vector3( 1, 0,  0))); // Right
-		result.Add(Grid.GetNodeAt(node.GridPosition + new Vector3( 1, 0,  1))); // Up-right
+		result.Add(GetNodeAt(node.GridPosition + new Vector3( 0, 0,  1))); // Up
+		result.Add(GetNodeAt(node.GridPosition + new Vector3(-1, 0,  1))); // Up-left
+		result.Add(GetNodeAt(node.GridPosition + new Vector3(-1, 0,  0))); // Left
+		result.Add(GetNodeAt(node.GridPosition + new Vector3(-1, 0, -1))); // Down-left
+		result.Add(GetNodeAt(node.GridPosition + new Vector3( 0, 0, -1))); // Down
+		result.Add(GetNodeAt(node.GridPosition + new Vector3( 1, 0, -1))); // Down-right
+		result.Add(GetNodeAt(node.GridPosition + new Vector3( 1, 0,  0))); // Right
+		result.Add(GetNodeAt(node.GridPosition + new Vector3( 1, 0,  1))); // Up-right
 
 		// Remove all null-entries
 		result.RemoveAll(element => element == null);
 		return result;
+	}
+
+	public static GridNode GetNodeAt(Vector3 position)
+	{
+		foreach(GridNode node in Grid.Nodes)
+		{
+			Bounds bounds = node.GetComponent<Collider>().bounds;
+			if(bounds.Contains(position))
+			{
+				return node;
+			}
+		}
+
+		return null;
+	}
+
+	public static GridNode GetStart()
+	{
+		foreach(GridNode node in Grid.Nodes)
+		{
+			if(node.IsStart)
+			{
+				return node;
+			}
+		}
+
+		return null;
+	}
+
+	public static GridNode GetEnd()
+	{
+		foreach(GridNode node in Grid.Nodes)
+		{
+			if(node.IsEnd)
+			{
+				return node;
+			}
+		}
+
+		return null;
 	}
 
 	public static GridNode GetNodeFromScreenPosition(Vector2 position)
