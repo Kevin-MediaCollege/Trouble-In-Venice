@@ -75,7 +75,22 @@ public static class GridUtils
 
 	public static GridNode GetNodeAtGUI(Vector2 position)
 	{
-		position = new Vector2(Mathf.Round(position.x / Grid.SIZE), Mathf.Round(position.y / Grid.SIZE));
-		return GetNodeAt(position);
+		Ray ray = Camera.main.ScreenPointToRay(position);
+		RaycastHit[] hits = Physics.RaycastAll(ray);
+
+		foreach(RaycastHit hit in hits)
+		{
+			if(hit.collider != null)
+			{
+				GridNode node = hit.collider.GetComponent<GridNode>();
+
+				if(node != null)
+				{
+					return node;
+				}
+			}
+		}
+
+		return null;
 	}
 }

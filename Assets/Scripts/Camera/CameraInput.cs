@@ -59,7 +59,7 @@ public class CameraInput
 			{
 				if (touches [0].phase == TouchPhase.Began)
 				{
-					if (!isTouchingPlayer (new Vector2 (touches [0].position.x, touches [0].position.y)))
+					if (!IsTouchingPlayer (new Vector2 (touches [0].position.x, touches [0].position.y)))
 					{
 						prevX = (touches [0].position.x / Screen.width) * 1920f;
 						prevY = (touches [0].position.y / Screen.height) * 1080f;
@@ -90,7 +90,7 @@ public class CameraInput
 			deltaZoom = Input.mouseScrollDelta.y * 20f;
 			if(Input.GetKeyDown(KeyCode.Mouse0))
 			{
-				if(!isTouchingPlayer(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
+				if(!IsTouchingPlayer(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
 				{
 					prevX = (Input.mousePosition.x / Screen.width) * 1920f;
 					prevY = (Input.mousePosition.y / Screen.height) * 1080f;
@@ -117,13 +117,14 @@ public class CameraInput
 		}
 	}
 
-	public bool isTouchingPlayer(Vector2 _pos)
+	public bool IsTouchingPlayer(Vector2 _pos)
 	{
-		Entity e = EntityUtils.GetEntityWithTag ("Player");
+		Entity e = EntityUtils.GetEntityWithTag("Player");
 		if(e != null && GridUtils.GetNodeAtGUI(_pos) == e.GetComponent<EntityNodeTracker>().CurrentNode)
 		{
 			return true;
 		}
+
 		return false;
 	}
 }
