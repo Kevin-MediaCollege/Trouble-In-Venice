@@ -120,7 +120,7 @@ public class CameraInput
 	public bool isTouchingPlayer(Vector2 _pos)
 	{
 		Entity e = EntityUtils.GetEntityWithTag ("Player");
-		if(e != null && GridUtils.GetNodeFromScreenPosition(_pos) == e.GetComponent<EntityNodeTracker>().CurrentNode)
+		if(e != null && GridUtils.GetNodeAtGUI(_pos) == e.GetComponent<EntityNodeTracker>().CurrentNode)
 		{
 			return true;
 		}
