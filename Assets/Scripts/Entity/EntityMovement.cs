@@ -13,10 +13,8 @@ public class EntityMovement : MonoBehaviour
 
 	protected void OnDrawGizmos()
 	{
-		Vector3 gizmoDirection = Vector3.right;
-
 		Gizmos.color = Color.green;
-		GizmosUtils.DrawArrowXZ(transform.position + Vector3.up, gizmoDirection / 2, 0.3f, 0.5f);
+		GizmosUtils.DrawArrowXZ(transform.position + Vector3.up, transform.forward / 2, 0.3f, 0.5f);
 	}
 
 	public void Move(Vector2 direction)
@@ -35,6 +33,7 @@ public class EntityMovement : MonoBehaviour
 
 	public void LookAt(Vector2 direction)
 	{
-		transform.LookAt(transform.position + new Vector3(direction.x, transform.position.y, direction.y));
+		Quaternion rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y));
+		transform.rotation = rotation;
 	}
 }
