@@ -109,6 +109,16 @@ public class GridNode : MonoBehaviour
 		}
 	}
 
+	public void RemoveAllConnections()
+	{
+		foreach(GridNode connection in connections)
+		{
+			connection.RemoveConnection(this);
+		}
+
+		connections.Clear();
+	}
+
 	public void RemoveConnection(GridNode node)
 	{
 		connections.Remove(node);

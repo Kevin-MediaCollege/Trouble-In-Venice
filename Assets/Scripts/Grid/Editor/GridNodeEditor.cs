@@ -62,7 +62,13 @@ public class GridNodeEditor : Editor
 				}
 			}
 
-			node.transform.position = nearest + (Vector3.up * node.transform.position.y);
+			Vector3 newPosition = nearest + (Vector3.up * node.transform.position.y);
+
+			if(node.transform.position != newPosition)
+			{
+				node.RemoveAllConnections();
+				node.transform.position = newPosition;
+			}
 		}
 	}
 
