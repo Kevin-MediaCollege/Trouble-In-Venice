@@ -7,7 +7,7 @@ public class TestPickupBehaviour : PickupBehaviour
 
 	protected override void OnActivate()
 	{
-		nodes = GridUtils.GetNodesAround(nodeTracker.CurrentNode);
+		nodes = GridUtils.GetNeighbours(nodeTracker.CurrentNode);
 	}
 
 	protected override void OnUpdate()
@@ -17,7 +17,7 @@ public class TestPickupBehaviour : PickupBehaviour
 		// Wait for mouse button press
 		if(Input.GetMouseButtonDown(0))
 		{
-			GridNode node = GridUtils.GetNodeFromScreenPosition(Input.mousePosition);
+			GridNode node = GridUtils.GetNodeAtGUI(Input.mousePosition);
 			if(node != null)
 			{
 				HighlightNodes(Color.white);

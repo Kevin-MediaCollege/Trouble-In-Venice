@@ -1,142 +1,156 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
+using System.Collections.Generic;
 
 [CustomEditor(typeof(GridNode))]
 public class GridNodeEditor : Editor
 {
-	private ReorderableList neighbours;
+	private ReorderableList connections;
 
 	private SerializedProperty prop_type;
-	private SerializedProperty prop_neighbours;
-
-	private GridNode node;
-	private bool selecting;
+	private SerializedProperty prop_connections;
 
 	protected void OnEnable()
 	{
 		prop_type = serializedObject.FindProperty("type");
-		prop_neighbours = serializedObject.FindProperty("neighbours");
+		prop_connections = serializedObject.FindProperty("connections");
 
-		neighbours = new ReorderableList(serializedObject, prop_neighbours, false, true, true, true);
-		neighbours.drawHeaderCallback += OnDrawHeader;
-		neighbours.drawElementCallback += OnDrawElement;
-		neighbours.onAddCallback += OnAdd;
-		neighbours.onRemoveCallback += OnRemove;
-
-		node = target as GridNode;
-	}
-
-	protected void OnSceneGUI()
-	{
-		if(Event.current.type == EventType.MouseDown)
-		{
-			if(Event.current.button == 1)
-			{
-				if(selecting)
-				{
-					Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-					RaycastHit hit;
-
-					if(Physics.Raycast(ray, out hit, 1000))
-					{
-						GridNode targetNode = hit.collider.GetComponent<GridNode>();
-
-						if(targetNode != null && targetNode != node)
-						{
-							node.AddNeighbour(targetNode);
-							targetNode.AddNeighbour(node);
-
-							selecting = false;
-							neighbours.displayAdd = true;
-						}
-					}
-				}
-			}
-		}
-		else if(Event.current.type == EventType.KeyDown)
-		{
-			if(selecting)
-			{
-				selecting = false;
-				neighbours.displayAdd = true;
-			}
-		}
+		connections = new ReorderableList(serializedObject, prop_connections, false, true, true, true);
+		connections.drawHeaderCallback += OnDrawHeader;
+		connections.drawElementCallback += OnDrawElement;
+		connections.onAddDropdownCallback += OnAddDropdown;
+		connections.onRemoveCallback += OnRemove;
 	}
 
 	public override void OnInspectorGUI()
 	{
 		serializedObject.Update();
-
-		EditorGUILayout.LabelField("Grid Position: " + (target as GridNode).GridPosition);
+		
 		EditorGUILayout.PropertyField(prop_type);
-		neighbours.DoLayoutList();
+		connections.DoLayoutList();
+
+		List<GridNode> c = new List<GridNode>(GridUtils.GetNeighbours(target as GridNode));
+		connections.displayAdd = prop_connections.arraySize != c.Count;
 
 		serializedObject.ApplyModifiedProperties();
 	}
 
+	protected void OnSceneGUI()
+	{
+		if(!Application.isPlaying)
+		{
+			GridNode node = target as GridNode;
+
+			Vector3 nearest = Vector3.zero;
+			float nearestDistance = float.PositiveInfinity;
+
+			for(int x = -Grid.WIDTH; x < Grid.WIDTH + 1; x++)
+			{
+				for(int z = -Grid.HEIGHT; z < Grid.HEIGHT + 1; z++)
+				{
+					Vector3 nodePosition = new Vector3(node.transform.position.x, 0, node.transform.position.z);
+					Vector3 position = new Vector3(x + 1.5f, 0, z + 1.5f) * Grid.SIZE;
+
+					float distance = (position - nodePosition).sqrMagnitude;
+
+					if(distance < nearestDistance)
+					{
+						nearest = position;
+						nearestDistance = distance;
+					}
+				}
+			}
+
+			Vector3 newPosition = nearest + (Vector3.up * node.transform.position.y);
+
+			if(node.transform.position != newPosition)
+			{
+				node.RemoveAllConnections();
+				node.transform.position = newPosition;
+			}
+		}
+	}
+
 	private void OnDrawHeader(Rect position)
 	{
-		EditorGUI.LabelField(position, "Neighbours");
+		EditorGUI.LabelField(position, "Connections");
 	}
 
 	private void OnDrawElement(Rect position, int index, bool isActive, bool isFocused)
 	{
-		SerializedProperty element = prop_neighbours.GetArrayElementAtIndex(index);
+		SerializedProperty element = prop_connections.GetArrayElementAtIndex(index);
+
+		GridNode node1 = target as GridNode;
+		GridNode node2 = element.objectReferenceValue as GridNode;
 
 		position.y += 3;
 		position.height = EditorGUIUtility.singleLineHeight;
 
-		string side = "Invalid";
-		if(node.NeighbourUp == element.objectReferenceValue)
+		Vector2 direction = (node2.GridPosition - node1.GridPosition).normalized;
+		string label = "Invalid";
+
+		if(direction == Vector2.up)
 		{
-			side = "Up";
+			label = "Up";
 		}
-		else if(node.NeighbourLeft == element.objectReferenceValue)
+		else if(direction == Vector2.left)
 		{
-			side = "Left";
+			label = "Left";
 		}
-		else if(node.NeighbourDown == element.objectReferenceValue)
+		else if(direction == Vector2.down)
 		{
-			side = "Down";
+			label = "Down";
 		}
-		else if(node.NeighbourRight == element.objectReferenceValue)
+		else if(direction == Vector2.right)
 		{
-			side = "Right";
+			label = "Right";
 		}
 
-		float width = position.width;
-		position.width = 80;
-		EditorGUI.LabelField(position, side);
-
-		GUI.enabled = false;
-
-		position.x += 80;
-		position.width = width - 80;
-		EditorGUI.PropertyField(position, element, GUIContent.none);
-
-		GUI.enabled = true;
+		EditorGUI.LabelField(position, label);
 	}
 
-	private void OnAdd(ReorderableList reorderableList)
+	private void OnAddDropdown(Rect rect, ReorderableList reorderableList)
 	{
-		if(!selecting)
+		GenericMenu menu = new GenericMenu();
+		GridNode node = target as GridNode;
+
+		AddGenericMenuElement(menu, node, "Up", Vector2.up);
+		AddGenericMenuElement(menu, node, "Left", Vector2.left);
+		AddGenericMenuElement(menu, node, "Down", Vector2.down);
+		AddGenericMenuElement(menu, node, "Right", Vector2.right);
+
+		menu.ShowAsContext();
+	}
+
+	private void AddGenericMenuElement(GenericMenu menu, GridNode source, string text, Vector2 direction)
+	{
+		GridNode node = GridUtils.GetNodeAt(source.GridPosition + direction);
+
+		if(node != null && !source.HasConnection(node))
 		{
-			selecting = true;
-			neighbours.displayAdd = false;
+			menu.AddItem(new GUIContent(text), false, OnAdd, direction);
 		}
+	}
+
+	private void OnAdd(object direction)
+	{
+		GridNode node1 = target as GridNode;
+		GridNode node2 = GridUtils.GetNodeAt(node1.GridPosition + (Vector2)direction);
+
+		node1.AddConnection(node2);
+		node2.AddConnection(node1);
+
+		SceneView.RepaintAll();
 	}
 
 	private void OnRemove(ReorderableList reorderableList)
 	{
-		GridNode targetNode = prop_neighbours.GetArrayElementAtIndex(reorderableList.index).objectReferenceValue as GridNode;
+		GridNode node1 = target as GridNode;
+		GridNode node2 = prop_connections.GetArrayElementAtIndex(reorderableList.index).objectReferenceValue as GridNode;
 
-		if(targetNode != null)
-		{
-			targetNode.RemoveNeighbour(node);
-		}
-
-		node.RemoveNeighbour(targetNode);
+		node1.RemoveConnection(node2);
+		node2.RemoveConnection(node1);
 
 		SceneView.RepaintAll();
 	}

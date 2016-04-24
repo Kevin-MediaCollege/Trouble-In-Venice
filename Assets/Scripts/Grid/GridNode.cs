@@ -1,15 +1,22 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(GridNodeCollider))]
+public enum GridNodeType
+{
+	Start,
+	End,
+	Normal
+}
+
 [ExecuteInEditMode]
+[RequireComponent(typeof(BoxCollider))]
 public class GridNode : MonoBehaviour
 {
-	public Vector3 GridPosition
+	public Vector2 GridPosition
 	{
 		get
 		{
-			return new Vector3(Mathf.RoundToInt(transform.position.x / Grid.SIZE), 0, Mathf.RoundToInt(transform.position.z / Grid.SIZE));
+			return new Vector2(Mathf.Round((transform.position.x - 1.5f) / Grid.SIZE), Mathf.Round((transform.position.z - 1.5f) / Grid.SIZE));
 		}
 	}
 
@@ -18,46 +25,6 @@ public class GridNode : MonoBehaviour
 		get
 		{
 			return type;
-		}
-	}
-
-	public IEnumerable<GridNode> Neighbours
-	{
-		get
-		{
-			return neighbours;
-		}
-	}
-
-	public GridNode NeighbourUp
-	{
-		get
-		{
-			return GetNeighbour(Vector3.forward);
-		}
-	}
-
-	public GridNode NeighbourLeft
-	{
-		get
-		{
-			return GetNeighbour(Vector3.left);
-		}
-	}
-
-	public GridNode NeighbourDown
-	{
-		get
-		{
-			return GetNeighbour(Vector3.back);
-		}
-	}
-
-	public GridNode NeighbourRight
-	{
-		get
-		{
-			return GetNeighbour(Vector3.right);
 		}
 	}
 
@@ -78,8 +45,8 @@ public class GridNode : MonoBehaviour
 	}
 
 	[SerializeField] private GridNodeType type;
-	[SerializeField] private List<GridNode> neighbours;
-	
+	[SerializeField] private List<GridNode> connections;
+
 	protected void Start()
 	{
 		if(!Application.isPlaying)
@@ -87,10 +54,21 @@ public class GridNode : MonoBehaviour
 			Grid grid = GetComponentInParent<Grid>();
 			grid.AddNode(this);
 		}
-		else
+	}
+
+	protected void OnValidate()
+	{
+		switch(type)
 		{
-			GameObject go = Instantiate(Resources.Load("test"), transform.position, Quaternion.identity) as GameObject;
-			go.transform.SetParent(transform);
+		case GridNodeType.Start:
+			GetComponent<SpriteRenderer>().color = Color.green;
+			break;
+		case GridNodeType.Normal:
+			GetComponent<SpriteRenderer>().color = Color.white;
+			break;
+		case GridNodeType.End:
+			GetComponent<SpriteRenderer>().color = Color.red;
+			break;
 		}
 	}
 
@@ -107,81 +85,48 @@ public class GridNode : MonoBehaviour
 		}
 	}
 
-	protected void OnDrawGizmos()
+	protected void OnDrawGizmosSelected()
 	{
-		if(!enabled)
+		GetComponentInParent<Grid>().DrawGizmos();
+	}
+
+	public void DrawGizmos()
+	{
+		Gizmos.color = Color.blue;
+
+		foreach(GridNode connection in connections)
 		{
-			return;
-		}
-
-		Gizmos.color = type == GridNodeType.Normal ? Color.gray : type == GridNodeType.Start ? Color.green : Color.red;
-		Gizmos.DrawCube(transform.position, new Vector3(1, 0.25f, 1));
-
-		foreach(GridNode neighbour in neighbours)
-		{
-			if(neighbour != null && neighbour.enabled)
-			{
-				Vector3 distance = (neighbour.transform.position - transform.position);
-				Vector3 direction = distance.normalized;
-
-				bool isValid = distance.sqrMagnitude == 9;
-
-				Gizmos.color = isValid ? Color.blue : Color.red;
-				Gizmos.DrawLine(transform.position, neighbour.transform.position);
-
-				if(isValid)
-				{
-					GizmosUtils.DrawArrowXZ(transform.position + (distance * 0.2f), direction / 2, 0.3f, 0.3f);
-				}
-			}
+			Gizmos.DrawLine(transform.position, connection.transform.position);
 		}
 	}
 
-	public void AddNeighbour(GridNode node)
+#if UNITY_EDITOR
+	public void AddConnection(GridNode node)
 	{
-		if(!neighbours.Contains(node))
+		if(!connections.Contains(node))
 		{
-			neighbours.Add(node);
+			connections.Add(node);
 		}
 	}
 
-	public void RemoveNeighbour(GridNode node)
+	public void RemoveAllConnections()
 	{
-		if(neighbours.Contains(node))
+		foreach(GridNode connection in connections)
 		{
-			neighbours.Remove(node);
-		}
-	}
-
-	public bool IsNeighbour(GridNode node)
-	{
-		foreach(GridNode neighbour in neighbours)
-		{
-			if(neighbour == node)
-			{
-				return true;
-			}
+			connection.RemoveConnection(this);
 		}
 
-		return false;
+		connections.Clear();
 	}
 
-	private GridNode GetNeighbour(Vector3 direction)
+	public void RemoveConnection(GridNode node)
 	{
-		foreach(GridNode neighbour in Neighbours)
-		{
-			if(neighbour != null)
-			{
-				if(neighbour.GridPosition == (GridPosition + direction))
-				{
-					if(neighbour.enabled)
-					{
-						return neighbour;
-					}
-				}
-			}
-		}
-
-		return null;
+		connections.Remove(node);
 	}
+
+	public bool HasConnection(GridNode node)
+	{
+		return connections.Contains(node);
+	}
+#endif
 }
