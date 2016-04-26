@@ -28,7 +28,7 @@ public class PlayerInput : MonoBehaviour
 		movement = GetComponent<EntityMovement>();
 	}
 
-	private Vector2 GetSwipeTarget()
+	private Vector2 GetSwipeDirection()
 	{
 		Vector2 current = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.Position));
 		float swipeRotation = MathHelper.PointToRotation (swipeHandle.StartPosition, swipeHandle.LastPosition);
@@ -82,8 +82,7 @@ public class PlayerInput : MonoBehaviour
 	{
 		if(_evt.Handle == swipeHandle)
 		{
-			Vector2 node = GetSwipeTarget();
-			//movement.Move(nodeTracker.CurrentNode.GridPosition + GetSwipeTarget().GridPosition);
+			movement.Move(GetSwipeDirection());
 			swipeHandle = null;
 		}
 	}
