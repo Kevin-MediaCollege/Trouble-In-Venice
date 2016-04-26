@@ -87,7 +87,7 @@ public class GameCamera : MonoBehaviour
 			currentZoom -= cameraInput.deltaZoom / 40f;
 			currentZoom = currentZoom < minZoom ? minZoom : currentZoom > maxZoom ? maxZoom : currentZoom;
 
-			SetCameraPosition(currentAngle, currentRotation, currentZoom);
+			setCameraPosition(currentAngle, currentRotation, currentZoom);
 		}
 	}
 
@@ -99,15 +99,15 @@ public class GameCamera : MonoBehaviour
 		}
 		else if(cutsceneUpdateInEditor)
 		{
-			SetCameraPosition(cutsceneAngle, cutsceneRotation, cutsceneZoom);
+			setCameraPosition(cutsceneAngle, cutsceneRotation, cutsceneZoom);
 		}
 		else if(startUpdateInEditor)
 		{
-			SetCameraPosition(startAngle, startRotation, startZoom);
+			setCameraPosition(startAngle, startRotation, startZoom);
 		}
 	}
 
-	public void SetCameraPosition(float _angle, float _rotation, float _zoom)
+	public void setCameraPosition(float _angle, float _rotation, float _zoom)
 	{
 		transform.rotation = SettingsToQuaternion (_angle, _rotation);
 		cam.transform.localPosition = new Vector3 (0f, 0f, _zoom);
