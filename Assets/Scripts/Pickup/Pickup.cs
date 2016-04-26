@@ -1,37 +1,72 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class Pickup : MonoBehaviour
+public abstract class Pickup : MonoBehaviour
 {
-	[SerializeField] private PickupBehaviour behaviour;
+	protected GridNode node;
 
-	private EntityNodeTracker playerController;
-	private EntityNodeTracker entityController;
+	protected bool used;
+
+	private EntityNodeTracker playerNodeTracker;
+	private bool active;
 
 	protected void OnEnable()
 	{
-		Entity player = EntityUtils.GetEntityWithTag("Player");
-		playerController = player.GetComponent<EntityNodeTracker>();
-		entityController = GetComponent<EntityNodeTracker>();
+		playerNodeTracker = EntityUtils.GetEntityWithTag("Player").GetComponent<EntityNodeTracker>();
+		node = GetComponent<EntityNodeTracker>().CurrentNode; 
 	}
 
-	protected void Update()
+	protected void LateUpdate()
 	{
-		if(playerController.CurrentNode == entityController.CurrentNode)
+		if(!active && playerNodeTracker.CurrentNode == node)
 		{
-			behaviour.Activate();
+			active = true;
+			used = false;
 
-			Renderer[] renderers = GetComponentsInChildren<Renderer>();
-			foreach(Renderer renderer in renderers)
+			SetRenderers(false);
+			OnActivate();
+		}
+		else if(active && playerNodeTracker.CurrentNode != node)
+		{
+			
+			active = false;
+			SetRenderers(true);
+		}
+
+		if(active && !used)
+		{
+			OnUpdate();
+
+			if(used)
 			{
-				renderer.enabled = false;
-			}
+				OnDeactivate();
 
-			enabled = false;
+				if(!enabled)
+				{
+					SetRenderers(false);
+				}
+			}
 		}
 	}
 
-	protected void Reset()
+	protected virtual void OnActivate()
 	{
-		behaviour = GetComponent<PickupBehaviour>();
+	}
+
+	protected virtual void OnDeactivate()
+	{
+	}
+
+	protected virtual void OnUpdate()
+	{
+	}
+
+	private void SetRenderers(bool _enabled)
+	{
+		Renderer[] renderers = GetComponentsInChildren<Renderer>();
+		foreach(Renderer renderer in renderers)
+		{
+			renderer.enabled = _enabled;
+		}
 	}
 }
