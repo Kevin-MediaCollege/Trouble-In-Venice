@@ -2,9 +2,9 @@
 {
 	public SwipeHandle Handle { private set; get; }
 
-	public SwipeBeganEvent(SwipeHandle handle)
+	public SwipeBeganEvent(SwipeHandle _handle)
 	{
-		Handle = handle;
+		Handle = _handle;
 	}
 }
 
@@ -12,9 +12,9 @@ public class SwipeUpdateEvent : IEvent
 {
 	public SwipeHandle Handle { private set; get; }
 
-	public SwipeUpdateEvent(SwipeHandle handle)
+	public SwipeUpdateEvent(SwipeHandle _handle)
 	{
-		Handle = handle;
+		Handle = _handle;
 	}
 }
 
@@ -22,8 +22,8 @@ public class SwipeEndedEvent : IEvent
 {
 	public SwipeHandle Handle { private set; get; }
 
-	public SwipeEndedEvent(SwipeHandle handle)
+	public SwipeEndedEvent(SwipeHandle _handle)
 	{
-		Handle = handle;
+		Handle = _handle;
 	}
 }

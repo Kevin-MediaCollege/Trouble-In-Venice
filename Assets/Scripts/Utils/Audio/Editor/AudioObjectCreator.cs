@@ -106,32 +106,32 @@ namespace Snakybo.Audio
 			}
 		}
 
-		private static AudioObjectSingle CreateAudioObjectSingleAtPath(string path)
+		private static AudioObjectSingle CreateAudioObjectSingleAtPath(string _path)
 		{
 			AudioObjectSingle asset = ScriptableObject.CreateInstance<AudioObjectSingle>();
 
-			AssetDatabase.CreateAsset(asset, path);
+			AssetDatabase.CreateAsset(asset, _path);
 			AssetDatabase.SaveAssets();
 
 			return asset;
 		}
 
-		private static AudioObjectMultiple CreateAudioObjectMultipleAtPath(string path, List<AudioObjectSingle> audioObjects = null)
+		private static AudioObjectMultiple CreateAudioObjectMultipleAtPath(string _path, List<AudioObjectSingle> _audioObjects = null)
 		{
 			AudioObjectMultiple asset = ScriptableObject.CreateInstance<AudioObjectMultiple>();
 
-			AssetDatabase.CreateAsset(asset, path);
+			AssetDatabase.CreateAsset(asset, _path);
 			AssetDatabase.SaveAssets();
 
-			if(audioObjects != null && audioObjects.Count > 0)
+			if(_audioObjects != null && _audioObjects.Count > 0)
 			{
 				SerializedObject so = new SerializedObject(asset);
 				SerializedProperty element = so.FindProperty("available");
 
-				for(int i = 0; i < audioObjects.Count; i++)
+				for(int i = 0; i < _audioObjects.Count; i++)
 				{
 					element.InsertArrayElementAtIndex(i);
-					element.GetArrayElementAtIndex(i).objectReferenceValue = audioObjects[i];
+					element.GetArrayElementAtIndex(i).objectReferenceValue = _audioObjects[i];
 				}
 
 				so.ApplyModifiedProperties();

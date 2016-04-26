@@ -72,28 +72,28 @@ public class Entity : MonoBehaviour
 	/// <summary>
 	/// Add a tag to the entity.
 	/// </summary>
-	/// <param name="tag">The new tag.</param>
-	public void AddTag(string tag)
+	/// <param name="_tag">The new tag.</param>
+	public void AddTag(string _tag)
 	{
-		tags.Add(tag);
+		tags.Add(_tag);
 	}
 
 	/// <summary>
 	/// Remove a tag from the entity.
 	/// </summary>
-	/// <param name="tag">The tag to remove.</param>
-	public void RemoveTag(string tag)
+	/// <param name="_tag">The tag to remove.</param>
+	public void RemoveTag(string _tag)
 	{
-		tags.Remove(tag);
+		tags.Remove(_tag);
 	}
 
 	/// <summary>
 	/// Check if this entity has the specified tag.
 	/// </summary>
-	/// <param name="tag">The tag to check.</param>
+	/// <param name="_tag">The tag to check.</param>
 	/// <returns>Whether or not this entity has the specified tag.</returns>
-	public bool HasTag(string tag)
+	public bool HasTag(string _tag)
 	{
-		return tags.Contains(tag);
+		return tags.Contains(_tag);
 	}
 }

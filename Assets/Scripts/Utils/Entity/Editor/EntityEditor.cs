@@ -28,17 +28,17 @@ public class EntityEditor : Editor
 		serializedObject.ApplyModifiedProperties();
 	}
 
-	private void OnDrawHeader(Rect position)
+	private void OnDrawHeader(Rect _position)
 	{
-		EditorGUI.LabelField(position, new GUIContent("Tags"));
+		EditorGUI.LabelField(_position, new GUIContent("Tags"));
 	}
 
-	private void OnDrawElement(Rect position, int index, bool isActive, bool isFocused)
+	private void OnDrawElement(Rect _position, int _index, bool _isActive, bool _isFocused)
 	{
-		position.y += 3;
-		position.height = EditorGUIUtility.singleLineHeight;
+		_position.y += 3;
+		_position.height = EditorGUIUtility.singleLineHeight;
 
-		SerializedProperty element = prop_startingTags.GetArrayElementAtIndex(index);
-		EditorGUI.PropertyField(position, element, new GUIContent("Tag " + (index + 1)));
+		SerializedProperty element = prop_startingTags.GetArrayElementAtIndex(_index);
+		EditorGUI.PropertyField(_position, element, new GUIContent("Tag " + (_index + 1)));
 	}
 }

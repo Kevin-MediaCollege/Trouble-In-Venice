@@ -9,9 +9,9 @@ using System;
 [CustomPropertyDrawer(typeof(TypeDropdownAttribute))]
 public class TypeDropdownDrawer : PropertyDrawer
 {
-	public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+	public override void OnGUI(Rect _position, SerializedProperty _property, GUIContent _label)
 	{
-		EditorGUI.BeginProperty(position, label, property);
+		EditorGUI.BeginProperty(_position, _label, _property);
 		TypeDropdownAttribute typeAttribute = attribute as TypeDropdownAttribute;
 		Type baseType = typeAttribute.BaseType;
 
@@ -19,7 +19,7 @@ public class TypeDropdownDrawer : PropertyDrawer
 
 		if(allTypes.Length <= 0)
 		{
-			EditorGUI.Popup(position, label.text, 0, new string[] { "No types of " + baseType.Name + " found" });
+			EditorGUI.Popup(_position, _label.text, 0, new string[] { "No types of " + baseType.Name + " found" });
 		}
 		else
 		{
@@ -27,9 +27,9 @@ public class TypeDropdownDrawer : PropertyDrawer
 
 			SerializedProperty stringProperty = null;
 
-			if(property.propertyType == SerializedPropertyType.String)
+			if(_property.propertyType == SerializedPropertyType.String)
 			{
-				stringProperty = property;
+				stringProperty = _property;
 			}
 
 			if(stringProperty != null)
@@ -37,13 +37,13 @@ public class TypeDropdownDrawer : PropertyDrawer
 				string currentType = stringProperty.stringValue;
 
 				int selected = string.IsNullOrEmpty(stringProperty.stringValue) ? 0 : Array.IndexOf(allTypes, currentType);
-				int newSelection = EditorGUI.Popup(position, label.text, selected, allTypes);
+				int newSelection = EditorGUI.Popup(_position, _label.text, selected, allTypes);
 
 				stringProperty.stringValue = allTypes[Mathf.Max(0, newSelection)];
 			}
 			else
 			{
-				GUI.Label(position, "The TypeDropDownAttribute only works on strings.");
+				GUI.Label(_position, "The TypeDropDownAttribute only works on strings.");
 			}
 		}
 

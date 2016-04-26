@@ -56,26 +56,26 @@ namespace Snakybo.Audio
 		[SerializeField] private bool bypassListenerEffects;
 		[SerializeField] private bool bypassReverbZones;
 
-		internal void ApplySettings(AudioSource audioSource)
+		internal void ApplySettings(AudioSource _audioSource)
 		{
-			audioSource.clip = audioClip;
-			audioSource.outputAudioMixerGroup = audioMixerGroup;
+			_audioSource.clip = audioClip;
+			_audioSource.outputAudioMixerGroup = audioMixerGroup;
 
-			audioSource.volume = volume;
-			audioSource.pitch = pitch;
-			audioSource.panStereo = stereoPan;
-			audioSource.spatialBlend = spatialBlend;
-			audioSource.reverbZoneMix = reverbZoneMix;
-			audioSource.loop = loop;
+			_audioSource.volume = volume;
+			_audioSource.pitch = pitch;
+			_audioSource.panStereo = stereoPan;
+			_audioSource.spatialBlend = spatialBlend;
+			_audioSource.reverbZoneMix = reverbZoneMix;
+			_audioSource.loop = loop;
 
-			audioSource.dopplerLevel = dopplerLevel;
-			audioSource.spread = spread;
-			audioSource.minDistance = minDistance;
-			audioSource.maxDistance = maxDistance;
+			_audioSource.dopplerLevel = dopplerLevel;
+			_audioSource.spread = spread;
+			_audioSource.minDistance = minDistance;
+			_audioSource.maxDistance = maxDistance;
 			
-			audioSource.bypassEffects = bypassEffects;
-			audioSource.bypassListenerEffects = bypassListenerEffects;
-			audioSource.bypassReverbZones = bypassReverbZones;
+			_audioSource.bypassEffects = bypassEffects;
+			_audioSource.bypassListenerEffects = bypassListenerEffects;
+			_audioSource.bypassReverbZones = bypassReverbZones;
 		}
 	}
 }

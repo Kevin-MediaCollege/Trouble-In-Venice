@@ -12,42 +12,42 @@ public static class Reflection
 	/// Get all types which derive from T.
 	/// </summary>
 	/// <typeparam name="T">The base type</typeparam>
-	/// <param name="checkInterfaces">Whether or not to check interfaces too.</param>
+	/// <param name="_checkInterfaces">Whether or not to check interfaces too.</param>
 	/// <returns>All types deriving from T.</returns>
-	public static IEnumerable<Type> AllTypesFrom<T>(bool checkInterfaces = false)
+	public static IEnumerable<Type> AllTypesFrom<T>(bool _checkInterfaces = false)
 	{
-		return AllTypesFrom(typeof(T), checkInterfaces);
+		return AllTypesFrom(typeof(T), _checkInterfaces);
 	}
 
 	/// <summary>
 	/// Get all types which derive from the specified type.
 	/// </summary>
-	/// <param name="type">The base type.</param>
-	/// <param name="checkInterfaces">Whether or not to check interface too.</param>
+	/// <param name="_type">The base type.</param>
+	/// <param name="_checkInterfaces">Whether or not to check interface too.</param>
 	/// <returns>All types deriving from the specified type.</returns>
-	public static IEnumerable<Type> AllTypesFrom(Type type, bool checkInterfaces = false)
+	public static IEnumerable<Type> AllTypesFrom(Type _type, bool _checkInterfaces = false)
 	{
 		Assembly projAssembly = Assembly.GetAssembly(typeof(Reflection));
 
 		return projAssembly.GetTypes().Where(t =>
 		{
-			if(t.IsInterface || t.IsAbstract || t == type)
+			if(t.IsInterface || t.IsAbstract || t == _type)
 			{
 				return false;
 			}
 
-			if(checkInterfaces)
+			if(_checkInterfaces)
 			{
 				foreach(Type interfaceType in t.GetInterfaces())
 				{
-					if(type.IsAssignableFrom(interfaceType))
+					if(_type.IsAssignableFrom(interfaceType))
 					{
 						return true;
 					}
 				}
 			}
 
-			return type.IsAssignableFrom(t);
+			return _type.IsAssignableFrom(t);
 		});
 	}
 
@@ -55,22 +55,22 @@ public static class Reflection
 	/// Get the names of all types which derive from T.
 	/// </summary>
 	/// <typeparam name="T">The base type.</typeparam>
-	/// <param name="checkInterfaces">Whether or not to check interfaces too.</param>
+	/// <param name="_checkInterfaces">Whether or not to check interfaces too.</param>
 	/// <returns>The names of all types deriving from T.</returns>
-	public static IEnumerable<string> AllTypeStringsFrom<T>(bool checkInterfaces = false)
+	public static IEnumerable<string> AllTypeStringsFrom<T>(bool _checkInterfaces = false)
 	{
-		return AllTypeStringsFrom(typeof(T), checkInterfaces);
+		return AllTypeStringsFrom(typeof(T), _checkInterfaces);
 	}
 
 	/// <summary>
 	/// Get the names of all types which derive from the specified type.
 	/// </summary>
-	/// <param name="type">The base type.</param>
-	/// <param name="checkInterfaces">Whether or not to check interface too.</param>
+	/// <param name="_type">The base type.</param>
+	/// <param name="_checkInterfaces">Whether or not to check interface too.</param>
 	/// <returns>The names of all types deriving from the specified type.</returns>
-	public static IEnumerable<string> AllTypeStringsFrom(Type type, bool checkInterfaces = false)
+	public static IEnumerable<string> AllTypeStringsFrom(Type _type, bool _checkInterfaces = false)
 	{
-		IEnumerable<Type> types = AllTypesFrom(type, checkInterfaces);
+		IEnumerable<Type> types = AllTypesFrom(_type, _checkInterfaces);
 		List<string> result = new List<string>();
 
 		foreach(Type t in types)

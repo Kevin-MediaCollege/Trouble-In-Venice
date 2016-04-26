@@ -69,53 +69,53 @@ public class Touchable : MonoBehaviour, IPointerDownHandler, IPointerExitHandler
 			NormalSprite = Image.sprite;
 	}
 
-	public virtual void OnPointerDown (PointerEventData eventData)
+	public virtual void OnPointerDown (PointerEventData _eventData)
 	{
 		if (!Interactable)
 			return;
 
 		SetState(TouchableState.Pressed);
-		pointers.Add(eventData.pointerId);
+		pointers.Add(_eventData.pointerId);
 
-		OnPointerDownEvent(this, eventData);
+		OnPointerDownEvent(this, _eventData);
 	}
 
-	public virtual void OnPointerUp (PointerEventData eventData)
+	public virtual void OnPointerUp (PointerEventData _eventData)
 	{
-		if (!pointers.Contains(eventData.pointerId))
+		if (!pointers.Contains(_eventData.pointerId))
 			return;
 
-		pointers.Remove(eventData.pointerId);
+		pointers.Remove(_eventData.pointerId);
 
 		if (!Interactable)
 			return;
 
 		SetState(TouchableState.Normal);
-		OnPointerUpEvent(this, eventData);
+		OnPointerUpEvent(this, _eventData);
 	}
 
-	public virtual void OnPointerEnter (PointerEventData eventData)
+	public virtual void OnPointerEnter (PointerEventData _eventData)
 	{
 		if (Interactable)
-			OnPointerEnterEvent(this, eventData);
+			OnPointerEnterEvent(this, _eventData);
 	}
 
-	public virtual void OnPointerExit (PointerEventData eventData)
+	public virtual void OnPointerExit (PointerEventData _eventData)
 	{
 		if (Interactable)
 		{
 			SetState(TouchableState.Normal);
-			OnPointerExitEvent(this, eventData);
+			OnPointerExitEvent(this, _eventData);
 		}
 	}
 
-	public virtual void OnDrag (PointerEventData eventData)
+	public virtual void OnDrag (PointerEventData _eventData)
 	{
-		if (!pointers.Contains(eventData.pointerId))
+		if (!pointers.Contains(_eventData.pointerId))
 			return;
 
 		if (Interactable)
-			OnPointerMoveEvent(this, eventData);
+			OnPointerMoveEvent(this, _eventData);
 	}
 
 	protected virtual void SetState(TouchableState _state)
@@ -141,15 +141,15 @@ public class Touchable : MonoBehaviour, IPointerDownHandler, IPointerExitHandler
 			Image.SetNativeSize();
 	}
 
-	public Vector3 GetCanvasPos(PointerEventData eventData)
+	public Vector3 GetCanvasPos(PointerEventData _eventData)
 	{
-		return Canvas.transform.InverseTransformPoint(GetWorldPos(eventData));
+		return Canvas.transform.InverseTransformPoint(GetWorldPos(_eventData));
 	}
 
-	public Vector3 GetWorldPos(PointerEventData eventData)
+	public Vector3 GetWorldPos(PointerEventData _eventData)
 	{
 		Vector2 pos;
-		RectTransformUtility.ScreenPointToLocalPointInRectangle(transform as RectTransform, eventData.position, Camera, out pos);
+		RectTransformUtility.ScreenPointToLocalPointInRectangle(transform as RectTransform, _eventData.position, Camera, out pos);
 
 		return transform.TransformPoint(pos);
 	}

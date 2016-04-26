@@ -15,60 +15,60 @@ public class GlobalEvents
 	/// <summary>
 	/// Static implementation of <see cref="EventDispatcher.AddListener(Type, Action)"/>
 	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="handler">The handler.</param>
-	public static void AddListener(Type type, Action handler)
+	/// <param name="_type">The type of the event.</param>
+	/// <param name="_handler">The handler.</param>
+	public static void AddListener(Type _type, Action _handler)
 	{
-		eventDispacher.AddListener(type, handler);
+		eventDispacher.AddListener(_type, _handler);
 	}
 
 	/// <summary>
 	/// Static implementation of <see cref="EventDispatcher.AddListener{T}(Action{T})"/>
 	/// </summary>
 	/// <typeparam name="T">The type of the event.</typeparam>
-	/// <param name="handler">The handler.</param>
-	public static void AddListener<T>(Action<T> handler) where T : IEvent
+	/// <param name="_handler">The handler.</param>
+	public static void AddListener<T>(Action<T> _handler) where T : IEvent
 	{
-		eventDispacher.AddListener(handler);
+		eventDispacher.AddListener(_handler);
 	}
 
 	/// <summary>
 	/// Static implementation of <see cref="EventDispatcher.RemoveListener(Type, Action)"/>
 	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="handler">The handler.</param>
-	public static void RemoveListener(Type type, Action handler)
+	/// <param name="_type">The type of the event.</param>
+	/// <param name="_handler">The handler.</param>
+	public static void RemoveListener(Type _type, Action _handler)
 	{
-		eventDispacher.RemoveListener(type, handler);
+		eventDispacher.RemoveListener(_type, _handler);
 	}
 
 	/// <summary>
 	/// Static implementation of <see cref="EventDispatcher.RemoveListener{T}(Action{T})"/>
 	/// </summary>
 	/// <typeparam name="T">he type of the event.</typeparam>
-	/// <param name="handler">The handler.</param>
-	public static void RemoveListener<T>(Action<T> handler) where T : IEvent
+	/// <param name="_handler">The handler.</param>
+	public static void RemoveListener<T>(Action<T> _handler) where T : IEvent
 	{
-		eventDispacher.RemoveListener(handler);
+		eventDispacher.RemoveListener(_handler);
 	}
 
 	/// <summary>
 	/// Static implementation of <see cref="EventDispatcher.Invoke(Type, object)"/>
 	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="evt">The event.</param>
-	public static void Invoke(Type type, object evt)
+	/// <param name="_type">The type of the event.</param>
+	/// <param name="_evt">The event.</param>
+	public static void Invoke(Type _type, object _evt)
 	{
-		eventDispacher.Invoke(type, evt);
+		eventDispacher.Invoke(_type, _evt);
 	}
 
 	/// <summary>
 	/// Static implementation of <see cref="EventDispatcher.Invoke{T}(T)"/>
 	/// </summary>
 	/// <typeparam name="T">The type of the event.</typeparam>
-	/// <param name="evt">The event.</param>
-	public static void Invoke<T>(T evt) where T : IEvent
+	/// <param name="_evt">The event.</param>
+	public static void Invoke<T>(T _evt) where T : IEvent
 	{
-		eventDispacher.Invoke(evt);
+		eventDispacher.Invoke(_evt);
 	}
 }

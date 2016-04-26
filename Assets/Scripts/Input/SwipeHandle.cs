@@ -4,13 +4,13 @@ using System.Collections.Generic;
 public class SwipeHandle
 {
 	public Vector2 StartPosition { get { return positions[0]; } }
-	public Vector2 StartPositionGUI { get { return new Vector2(StartPosition.x / Screen.width, StartPosition.y / Screen.height); } }
+	public Vector2 StartPositionViewport { get { return new Vector2(StartPosition.x / Screen.width, StartPosition.y / Screen.height); } }
 
 	public Vector2 LastPosition { get { return positions[positions.Count - 1]; } }
-	public Vector2 LastPositionGUI { get { return new Vector2(LastPosition.x / Screen.width, LastPosition.y / Screen.height); } }
+	public Vector2 LastPositionViewport { get { return new Vector2(LastPosition.x / Screen.width, LastPosition.y / Screen.height); } }
 
 	public Vector2 PreviousPosition { get { return positions[Mathf.Max(0, positions.Count - 2)]; } }
-	public Vector2 PreviousPositionGUI { get { return new Vector2(PreviousPosition.x / Screen.width, PreviousPosition.y / Screen.height); } }
+	public Vector2 PreviousPositionViewport { get { return new Vector2(PreviousPosition.x / Screen.width, PreviousPosition.y / Screen.height); } }
 
 	public Vector2 Velocity { private set; get; }
 
@@ -30,16 +30,16 @@ public class SwipeHandle
 		startTime = Time.time;
 	}
 
-	public void AddPosition(Vector2 position)
+	public void AddPosition(Vector2 _position)
 	{
-		positions.Add(position);
+		positions.Add(_position);
 
 		// Update velocity
 		Velocity = LastPosition - PreviousPosition;
 	}
 
-	public static implicit operator bool(SwipeHandle handle)
+	public static implicit operator bool(SwipeHandle _handle)
 	{
-		return !handle.IsComplete && !handle.IsConsumed;
+		return !_handle.IsComplete && !_handle.IsConsumed;
 	}
 }

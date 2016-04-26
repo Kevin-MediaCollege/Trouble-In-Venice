@@ -1,19 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum Direction
-{
-	Up,
-	Left,
-	Down,
-	Right
-}
-
 [RequireComponent(typeof(EntityNodeTracker))]
 public class EntityMovement : MonoBehaviour
 {
 	[SerializeField] private EntityNodeTracker nodeTracker;
-	[SerializeField] private Direction direction;
 
 	protected void Reset()
 	{
@@ -22,45 +13,27 @@ public class EntityMovement : MonoBehaviour
 
 	protected void OnDrawGizmos()
 	{
-		Vector3 gizmoDirection = Vector3.zero;
-
-		switch(direction)
-		{
-		case Direction.Up:
-			gizmoDirection = Vector3.forward;
-			break;
-		case Direction.Left:
-			gizmoDirection = Vector3.left;
-			break;
-		case Direction.Down:
-			gizmoDirection = Vector3.back;
-			break;
-		case Direction.Right:
-			gizmoDirection = Vector3.right;
-			break;
-		}
-
 		Gizmos.color = Color.green;
-		GizmosUtils.DrawArrowXZ(transform.position + Vector3.up, gizmoDirection / 2, 0.3f, 0.5f);
+		GizmosUtils.DrawArrowXZ(transform.position + Vector3.up, transform.forward / 2, 0.3f, 0.5f);
 	}
 
-	public void Move(Direction direction)
+	public void Move(Vector2 _direction)
 	{
-		LookAt(direction);
+		LookAt(_direction);
 
-		GridNode targetNode = nodeTracker.GetNodeInDirection(direction);
-
-		if(targetNode != null)
+		GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
+		if(target != null)
 		{
-			Vector3 targetPosition = new Vector3(targetNode.transform.position.x, transform.position.y, targetNode.transform.position.z);
+			nodeTracker.CurrentNode = target;
 
-			transform.position = targetPosition;
-			nodeTracker.CurrentNode = targetNode;
+			Vector3 position = nodeTracker.CurrentNode.transform.position;
+			transform.position = new Vector3(position.x, transform.position.y, position.z);
 		}
 	}
 
-	public void LookAt(Direction direction)
+	public void LookAt(Vector2 _direction)
 	{
-		this.direction = direction;
+		Quaternion rotation = Quaternion.LookRotation(new Vector3(_direction.x, 0, _direction.y));
+		transform.rotation = rotation;
 	}
 }

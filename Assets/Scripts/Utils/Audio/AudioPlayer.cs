@@ -72,13 +72,13 @@ namespace Snakybo.Audio
 				return null;
 			}
 
-			internal static IEnumerable<AudioChannel> GetOfType(AudioType type)
+			internal static IEnumerable<AudioChannel> GetOfType(AudioType _type)
 			{
 				HashSet<AudioChannel> result = new HashSet<AudioChannel>();
 
 				foreach(AudioChannel channel in channels)
 				{
-					if(channel.IsPlaying && channel.AudioObject.Type == type)
+					if(channel.IsPlaying && channel.AudioObject.Type == _type)
 					{
 						result.Add(channel);
 					}
@@ -88,20 +88,20 @@ namespace Snakybo.Audio
 			}
 		}
 
-		public static AudioChannel Play(this AudioObject audioObject)
+		public static AudioChannel Play(this AudioObject _audioObject)
 		{
-			if(audioObject == null)
+			if(_audioObject == null)
 			{
 				throw new ArgumentException("AudioObject is null");
 			}
 
-			if(audioObject is AudioObjectSingle)
+			if(_audioObject is AudioObjectSingle)
 			{
 				AudioChannel channel = AudioManager.GetNext();
 
 				if(channel != null)
 				{
-					channel.Play(audioObject as AudioObjectSingle);
+					channel.Play(_audioObject as AudioObjectSingle);
 					return channel;
 				}
 				else
@@ -109,9 +109,9 @@ namespace Snakybo.Audio
 					Debug.LogWarning("No free AudioChannels");
 				}
 			}
-			else if(audioObject is AudioObjectMultiple)
+			else if(_audioObject is AudioObjectMultiple)
 			{
-				AudioObjectMultiple group = audioObject as AudioObjectMultiple;
+				AudioObjectMultiple group = _audioObject as AudioObjectMultiple;
 				AudioObjectSingle next = group.Next();
 
 				if(next != null)
@@ -121,7 +121,7 @@ namespace Snakybo.Audio
 			}
 			else
 			{
-				Debug.LogError("Unknown AudioObject type: " + audioObject.GetType());
+				Debug.LogError("Unknown AudioObject type: " + _audioObject.GetType());
 			}
 
 			return null;
@@ -135,9 +135,9 @@ namespace Snakybo.Audio
 			}
 		}
 
-		public static void StopAll(AudioType type)
+		public static void StopAll(AudioType _type)
 		{
-			foreach(AudioChannel audioChannel in AudioManager.GetOfType(type))
+			foreach(AudioChannel audioChannel in AudioManager.GetOfType(_type))
 			{
 				audioChannel.Stop();
 			}
@@ -151,9 +151,9 @@ namespace Snakybo.Audio
 			}
 		}
 		
-		public static void PauseAll(AudioType type)
+		public static void PauseAll(AudioType _type)
 		{
-			foreach(AudioChannel audioChannel in AudioManager.GetOfType(type))
+			foreach(AudioChannel audioChannel in AudioManager.GetOfType(_type))
 			{
 				audioChannel.Pause();
 			}
@@ -167,9 +167,9 @@ namespace Snakybo.Audio
 			}
 		}
 
-		public static void UnPauseAll(AudioType type)
+		public static void UnPauseAll(AudioType _type)
 		{
-			foreach(AudioChannel audioChannel in AudioManager.GetOfType(type))
+			foreach(AudioChannel audioChannel in AudioManager.GetOfType(_type))
 			{
 				audioChannel.UnPause();
 			}

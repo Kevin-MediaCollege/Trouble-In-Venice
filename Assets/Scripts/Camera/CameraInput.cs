@@ -11,6 +11,7 @@ public class CameraInput
 	private float prevY;
 	private float dist;
 
+	private int touchMode;
 	private bool isMoving;
 
 	public CameraInput()
@@ -24,6 +25,7 @@ public class CameraInput
 		dist = 0f;
 
 		isMoving = false;
+		touchMode = 0;
 	}
 
 	public void UpdateInput()
@@ -33,9 +35,6 @@ public class CameraInput
 		moveY = 0f;
 
 		#if UNITY_ANDROID
-
-
-			
 		#endif
 
 		if(Application.isMobilePlatform)
@@ -45,44 +44,52 @@ public class CameraInput
 			{
 				if (touches [0].phase == TouchPhase.Began || touches [1].phase == TouchPhase.Began) 
 				{
-					dist = MathHelper.dis2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
-					isMoving = true;
-				}
-				else if (touches [0].phase != TouchPhase.Began && touches [1].phase != TouchPhase.Began && isMoving) 
+					dist = MathHelper.Dist2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
+					touchMode = 2;
+				} 
+				else if (touches [0].phase == TouchPhase.Ended || touches [1].phase == TouchPhase.Ended || touches [0].phase == TouchPhase.Canceled || touches [1].phase == TouchPhase.Canceled) 
 				{
-					float currentDist = MathHelper.dis2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
+					touchMode = 0;
+				} 
+				else if (touches [0].phase != TouchPhase.Began && touches [1].phase != TouchPhase.Began && touchMode == 2)
+				{
+					float currentDist = MathHelper.Dist2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
 					deltaZoom = (currentDist - dist);
 					dist = currentDist;
 				}
 			} 
-			else if (touches.Length == 1) 
+			else if (touches.Length == 1)
 			{
-				if (touches [0].phase == TouchPhase.Began)
+				if (touches [0].phase == TouchPhase.Began) 
 				{
-					if (!isTouchingPlayer (new Vector2 (touches [0].position.x, touches [0].position.y)))
+					if (!IsTouchingPlayer (new Vector2 (touches [0].position.x, touches [0].position.y)))
 					{
 						prevX = (touches [0].position.x / Screen.width) * 1920f;
 						prevY = (touches [0].position.y / Screen.height) * 1080f;
-						isMoving = true;
-					} 
-					else
+						touchMode = 1;
+					}
+					else 
 					{
-						isMoving = false;
+						touchMode = 0;
 					}
 				}
-				else if(touches [0].phase == TouchPhase.Moved && isMoving)
+				else if (touches [0].phase == TouchPhase.Moved && touchMode == 1)
 				{
-					float currentX = (touches[0].position.x / Screen.width) * 1920f;
-					float currentY = (touches[0].position.y / Screen.height) * 1080f;
+					float currentX = (touches [0].position.x / Screen.width) * 1920f;
+					float currentY = (touches [0].position.y / Screen.height) * 1080f;
 					moveX = currentX - prevX;
 					moveY = currentY - prevY;
 					prevX = currentX;
 					prevY = currentY;
-				}
-				else if(touches [0].phase == TouchPhase.Ended || touches [0].phase == TouchPhase.Canceled)
+				} 
+				else if (touches [0].phase == TouchPhase.Ended || touches [0].phase == TouchPhase.Canceled) 
 				{
-					isMoving = false;
+					touchMode = 0;
 				}
+			} 
+			else
+			{
+				touchMode = 0;
 			}
 		}
 		else
@@ -90,7 +97,7 @@ public class CameraInput
 			deltaZoom = Input.mouseScrollDelta.y * 20f;
 			if(Input.GetKeyDown(KeyCode.Mouse0))
 			{
-				if(!isTouchingPlayer(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
+				if(!IsTouchingPlayer(new Vector2(Input.mousePosition.x, Input.mousePosition.y)))
 				{
 					prevX = (Input.mousePosition.x / Screen.width) * 1920f;
 					prevY = (Input.mousePosition.y / Screen.height) * 1080f;
@@ -117,13 +124,14 @@ public class CameraInput
 		}
 	}
 
-	public bool isTouchingPlayer(Vector2 _pos)
+	public bool IsTouchingPlayer(Vector2 _pos)
 	{
-		Entity e = EntityUtils.GetEntityWithTag ("Player");
-		if(e != null && GridUtils.GetNodeFromScreenPosition(_pos) == e.GetComponent<EntityNodeTracker>().CurrentNode)
+		Entity e = EntityUtils.GetEntityWithTag("Player");
+		if(e != null && GridUtils.GetNodeAtGUI(_pos) == e.GetComponent<EntityNodeTracker>().CurrentNode)
 		{
 			return true;
 		}
+
 		return false;
 	}
 }
