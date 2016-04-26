@@ -8,12 +8,14 @@ public abstract class Pickup : MonoBehaviour
 	protected bool used;
 
 	private EntityNodeTracker playerNodeTracker;
+	private new Renderer renderer;
 	private bool active;
 
 	protected void OnEnable()
 	{
 		playerNodeTracker = EntityUtils.GetEntityWithTag("Player").GetComponent<EntityNodeTracker>();
-		node = GetComponent<EntityNodeTracker>().CurrentNode; 
+		node = GetComponent<EntityNodeTracker>().CurrentNode;
+		renderer = GetComponent<Renderer>();
 	}
 
 	protected void LateUpdate()
@@ -23,14 +25,14 @@ public abstract class Pickup : MonoBehaviour
 			active = true;
 			used = false;
 
-			SetRenderers(false);
+			renderer.enabled = false;
 			OnActivate();
 		}
 		else if(active && playerNodeTracker.CurrentNode != node)
 		{
 			
 			active = false;
-			SetRenderers(true);
+			renderer.enabled = true;
 		}
 
 		if(active && !used)
@@ -43,7 +45,7 @@ public abstract class Pickup : MonoBehaviour
 
 				if(!enabled)
 				{
-					SetRenderers(false);
+					renderer.enabled = false;
 				}
 			}
 		}
@@ -59,14 +61,5 @@ public abstract class Pickup : MonoBehaviour
 
 	protected virtual void OnUpdate()
 	{
-	}
-
-	private void SetRenderers(bool _enabled)
-	{
-		Renderer[] renderers = GetComponentsInChildren<Renderer>();
-		foreach(Renderer renderer in renderers)
-		{
-			renderer.enabled = _enabled;
-		}
 	}
 }

@@ -7,22 +7,25 @@ public class LinkPickupConnectionDoor : LinkPickupConnection
 	[SerializeField] private bool startOpen;
 
 	private EntityNodeTracker nodeTracker;
+	private new Renderer renderer;
 
 	protected void Awake()
 	{
 		nodeTracker = GetComponent<EntityNodeTracker>();
+		renderer = GetComponent<Renderer>();
+		
 		nodeTracker.CurrentNode.Active = startOpen;
-		GetComponent<Renderer>().enabled = !startOpen;
-	}
-
-	public override void OnPickup()
-	{
-		nodeTracker.CurrentNode.Active = !nodeTracker.CurrentNode.Active;
-		GetComponent<Renderer>().enabled = !GetComponent<Renderer>().enabled;
+		renderer.enabled = !startOpen;
 	}
 
 	protected void OnValidate()
 	{
 		GetComponent<Renderer>().enabled = !startOpen;
+	}
+
+	public override void OnPickup()
+	{
+		nodeTracker.CurrentNode.Active = !nodeTracker.CurrentNode.Active;		
+		renderer.enabled = !renderer.enabled;
 	}
 }
