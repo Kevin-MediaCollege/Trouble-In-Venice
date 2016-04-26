@@ -26,14 +26,22 @@ public class PlayerInput : MonoBehaviour
 	{
 		movement = GetComponent<EntityMovement>();
 	}
-	private void HandleTap(Vector2 _position)
-	{
-		
-	}
-	
-	private void HandleSwipe(Vector2 _direction)
-	{
 
+	private GridNode GetSwipeTarget()
+	{
+		Vector2 screenPoint1 = Camera.main.WorldToScreenPoint(nodeTracker.CurrentNode.Position);
+
+		Vector2 swipePoint1 = swipeHandle.StartPosition;
+		Vector2 swipePoint2 = swipeHandle.LastPosition;
+		
+		foreach(GridNode connection in nodeTracker.CurrentNode.Connections)
+		{
+			Vector2 screenPoint2 = Camera.main.WorldToScreenPoint(connection.Position);
+			
+
+		}
+
+		return null;
 	}
 
 	private void OnSwipeBeganEvent(SwipeBeganEvent _evt)
@@ -57,7 +65,8 @@ public class PlayerInput : MonoBehaviour
 	{
 		if(_evt.Handle == swipeHandle)
 		{
-			HandleSwipe(swipeHandle.StartPosition - swipeHandle.LastPosition);
+			GetSwipeTarget();
+			//movement.Move(nodeTracker.CurrentNode.GridPosition + GetSwipeTarget().GridPosition);
 			swipeHandle = null;
 		}
 	}

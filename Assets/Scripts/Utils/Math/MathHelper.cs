@@ -38,6 +38,11 @@ public static class MathHelper
 		return Mathf.Sqrt((_x1 - _x2) * (_x1 - _x2) + (_y1 - _y2) * (_y1 - _y2) + (_z1 - _z2) * (_z1 - _z2));
 	}
 
+	public static float PointToRotation(Vector2 v1, Vector2 v2)
+	{
+		return PointToRotation(v1.x, v1.y, v2.x, v2.y);
+	}
+
 	public static float PointToRotation(float _x1, float _y1, float _x2, float _y2)
 	{
 		return Mathf.Atan2((_y2 - _y1), (_x2 - _x1)) * 180f / Mathf.PI;

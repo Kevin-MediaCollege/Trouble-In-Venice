@@ -12,11 +12,27 @@ public enum GridNodeType
 [RequireComponent(typeof(BoxCollider))]
 public class GridNode : MonoBehaviour
 {
+	public IEnumerable<GridNode> Connections
+	{
+		get
+		{
+			return connections;
+		}
+	}
+
 	public Vector2 GridPosition
 	{
 		get
 		{
 			return new Vector2(Mathf.Round((transform.position.x - 1.5f) / Grid.SIZE), Mathf.Round((transform.position.z - 1.5f) / Grid.SIZE));
+		}
+	}
+
+	public Vector2 Position
+	{
+		get
+		{
+			return new Vector2(transform.position.x, transform.position.z);
 		}
 	}
 
