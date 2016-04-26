@@ -9,8 +9,8 @@ public class TypeDropdownAttribute : PropertyAttribute
 {
 	public Type BaseType { private set; get; }
 
-	public TypeDropdownAttribute(Type baseType)
+	public TypeDropdownAttribute(Type _baseType)
 	{
-		BaseType = baseType;
+		BaseType = _baseType;
 	}
 }

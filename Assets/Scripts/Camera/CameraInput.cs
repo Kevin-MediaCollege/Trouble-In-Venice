@@ -45,12 +45,12 @@ public class CameraInput
 			{
 				if (touches [0].phase == TouchPhase.Began || touches [1].phase == TouchPhase.Began) 
 				{
-					dist = MathHelper.dis2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
+					dist = MathHelper.Dist2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
 					isMoving = true;
 				}
 				else if (touches [0].phase != TouchPhase.Began && touches [1].phase != TouchPhase.Began && isMoving) 
 				{
-					float currentDist = MathHelper.dis2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
+					float currentDist = MathHelper.Dist2 (touches [0].position.x, touches [0].position.y, touches [1].position.x, touches [1].position.y);
 					deltaZoom = (currentDist - dist);
 					dist = currentDist;
 				}

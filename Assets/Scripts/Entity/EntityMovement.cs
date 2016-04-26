@@ -17,11 +17,11 @@ public class EntityMovement : MonoBehaviour
 		GizmosUtils.DrawArrowXZ(transform.position + Vector3.up, transform.forward / 2, 0.3f, 0.5f);
 	}
 
-	public void Move(Vector2 direction)
+	public void Move(Vector2 _direction)
 	{
-		LookAt(direction);
+		LookAt(_direction);
 
-		GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + direction);
+		GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
 		if(target != null)
 		{
 			nodeTracker.CurrentNode = target;
@@ -31,9 +31,9 @@ public class EntityMovement : MonoBehaviour
 		}
 	}
 
-	public void LookAt(Vector2 direction)
+	public void LookAt(Vector2 _direction)
 	{
-		Quaternion rotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.y));
+		Quaternion rotation = Quaternion.LookRotation(new Vector3(_direction.x, 0, _direction.y));
 		transform.rotation = rotation;
 	}
 }

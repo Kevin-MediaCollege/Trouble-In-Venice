@@ -23,60 +23,60 @@ public class LocalEvents : MonoBehaviour, IEventDispatcher
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.AddListener(Type, Action)"/>
 	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="handler">The handler.</param>
-	public void AddListener(Type type, Action handler)
+	/// <param name="_type">The type of the event.</param>
+	/// <param name="_handler">The handler.</param>
+	public void AddListener(Type _type, Action _handler)
 	{
-		EventDispatcher.AddListener(type, handler);
+		EventDispatcher.AddListener(_type, _handler);
 	}
 
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.AddListener{T}(Action{T})"/>
 	/// </summary>
 	/// <typeparam name="T">The type of the event.</typeparam>
-	/// <param name="handler">The handler.</param>
-	public void AddListener<T>(Action<T> handler) where T : IEvent
+	/// <param name="_handler">The handler.</param>
+	public void AddListener<T>(Action<T> _handler) where T : IEvent
 	{
-		EventDispatcher.AddListener(handler);
+		EventDispatcher.AddListener(_handler);
 	}
 
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.RemoveListener(Type, Action)"/>
 	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="handler">The handler.</param>
-	public void RemoveListener(Type type, Action handler)
+	/// <param name="_type">The type of the event.</param>
+	/// <param name="_handler">The handler.</param>
+	public void RemoveListener(Type _type, Action _handler)
 	{
-		EventDispatcher.RemoveListener(type, handler);
+		EventDispatcher.RemoveListener(_type, _handler);
 	}
 
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.RemoveListener{T}(Action{T})"/>
 	/// </summary>
 	/// <typeparam name="T">he type of the event.</typeparam>
-	/// <param name="handler">The handler.</param>
-	public void RemoveListener<T>(Action<T> handler) where T : IEvent
+	/// <param name="_handler">The handler.</param>
+	public void RemoveListener<T>(Action<T> _handler) where T : IEvent
 	{
-		EventDispatcher.RemoveListener(handler);
+		EventDispatcher.RemoveListener(_handler);
 	}
 
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.Invoke(Type, object)"/>
 	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="evt">The event.</param>
-	public void Invoke(Type type, object evt)
+	/// <param name="_type">The type of the event.</param>
+	/// <param name="_evt">The event.</param>
+	public void Invoke(Type _type, object _evt)
 	{
-		EventDispatcher.Invoke(type, evt);
+		EventDispatcher.Invoke(_type, _evt);
 	}
 
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.Invoke{T}(T)"/>
 	/// </summary>
 	/// <typeparam name="T">The type of the event.</typeparam>
-	/// <param name="evt">The event.</param>
-	public void Invoke<T>(T evt) where T : IEvent
+	/// <param name="_evt">The event.</param>
+	public void Invoke<T>(T _evt) where T : IEvent
 	{
-		EventDispatcher.Invoke(evt);
+		EventDispatcher.Invoke(_evt);
 	}
 }

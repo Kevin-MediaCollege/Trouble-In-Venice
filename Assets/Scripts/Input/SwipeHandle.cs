@@ -30,16 +30,16 @@ public class SwipeHandle
 		startTime = Time.time;
 	}
 
-	public void AddPosition(Vector2 position)
+	public void AddPosition(Vector2 _position)
 	{
-		positions.Add(position);
+		positions.Add(_position);
 
 		// Update velocity
 		Velocity = LastPosition - PreviousPosition;
 	}
 
-	public static implicit operator bool(SwipeHandle handle)
+	public static implicit operator bool(SwipeHandle _handle)
 	{
-		return !handle.IsComplete && !handle.IsConsumed;
+		return !_handle.IsComplete && !_handle.IsConsumed;
 	}
 }

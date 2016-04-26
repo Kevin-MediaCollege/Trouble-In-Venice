@@ -18,27 +18,27 @@ public class EventDispatcher : IEventDispatcher
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.AddListener(Type, Action)"/>
 	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="handler">The handler.</param>
-	public void AddListener(Type type, Action handler)
+	/// <param name="_type">The type of the event.</param>
+	/// <param name="_handler">The handler.</param>
+	public void AddListener(Type _type, Action _handler)
 	{
-		if(!eventCallbacks.ContainsKey(type))
+		if(!eventCallbacks.ContainsKey(_type))
 		{
-			eventCallbacks.Add(type, delegate { });
+			eventCallbacks.Add(_type, delegate { });
 		}
 
-		Action<object> handlerFunc = obj => { handler(); };
+		Action<object> handlerFunc = obj => { _handler(); };
 
-		eventCallbacks[type] += handlerFunc;
-		delegateLookup[handler] = handlerFunc;
+		eventCallbacks[_type] += handlerFunc;
+		delegateLookup[_handler] = handlerFunc;
 	}
 
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.AddListener{T}(Action{T})"/>
 	/// </summary>
 	/// <typeparam name="T">The type of the event.</typeparam>
-	/// <param name="handler">The handler.</param>
-	public void AddListener<T>(Action<T> handler) where T : IEvent
+	/// <param name="_handler">The handler.</param>
+	public void AddListener<T>(Action<T> _handler) where T : IEvent
 	{
 		Type type = typeof(T);
 
@@ -47,27 +47,27 @@ public class EventDispatcher : IEventDispatcher
 			eventCallbacks.Add(type, delegate { });
 		}
 
-		Action<object> handlerFunc = obj => { handler((T)obj); };
+		Action<object> handlerFunc = obj => { _handler((T)obj); };
 
 		eventCallbacks[type] += handlerFunc;
-		delegateLookup[handler] = handlerFunc;
+		delegateLookup[_handler] = handlerFunc;
 	}
 
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.RemoveListener(Type, Action)"/>
 	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="handler">The handler.</param>
-	public void RemoveListener(Type type, Action handler)
+	/// <param name="_type">The type of the event.</param>
+	/// <param name="_handler">The handler.</param>
+	public void RemoveListener(Type _type, Action _handler)
 	{
-		if(eventCallbacks.ContainsKey(type) && delegateLookup.ContainsKey(handler))
+		if(eventCallbacks.ContainsKey(_type) && delegateLookup.ContainsKey(_handler))
 		{
-			eventCallbacks[type] -= delegateLookup[handler];
-			delegateLookup.Remove(handler);
+			eventCallbacks[_type] -= delegateLookup[_handler];
+			delegateLookup.Remove(_handler);
 
-			if(eventCallbacks[type].GetInvocationList().Length == 1)
+			if(eventCallbacks[_type].GetInvocationList().Length == 1)
 			{
-				eventCallbacks.Remove(type);
+				eventCallbacks.Remove(_type);
 			}
 		}
 	}
@@ -76,15 +76,15 @@ public class EventDispatcher : IEventDispatcher
 	/// Implementation of <see cref="IEventDispatcher.RemoveListener{T}(Action{T})"/>
 	/// </summary>
 	/// <typeparam name="T">he type of the event.</typeparam>
-	/// <param name="handler">The handler.</param>
-	public void RemoveListener<T>(Action<T> handler) where T : IEvent
+	/// <param name="_handler">The handler.</param>
+	public void RemoveListener<T>(Action<T> _handler) where T : IEvent
 	{
 		Type type = typeof(T);
 
-		if(eventCallbacks.ContainsKey(type) && delegateLookup.ContainsKey(handler))
+		if(eventCallbacks.ContainsKey(type) && delegateLookup.ContainsKey(_handler))
 		{
-			eventCallbacks[type] -= delegateLookup[handler];
-			delegateLookup.Remove(handler);
+			eventCallbacks[type] -= delegateLookup[_handler];
+			delegateLookup.Remove(_handler);
 
 			if(eventCallbacks[type].GetInvocationList().Length == 1)
 			{
@@ -105,17 +105,17 @@ public class EventDispatcher : IEventDispatcher
 	/// <summary>
 	/// Implementation of <see cref="IEventDispatcher.Invoke(Type, object)"/>
 	/// </summary>
-	/// <param name="type">The type of the event.</param>
-	/// <param name="evt">The event.</param>
-	public void Invoke(Type type, object evt)
+	/// <param name="_type">The type of the event.</param>
+	/// <param name="_evt">The event.</param>
+	public void Invoke(Type _type, object _evt)
 	{
 		Action<object> handler;
 
-		if(eventCallbacks.TryGetValue(type, out handler))
+		if(eventCallbacks.TryGetValue(_type, out handler))
 		{
 			if(handler != null)
 			{
-				handler.Invoke(evt);
+				handler.Invoke(_evt);
 			}
 		}
 	}
@@ -124,10 +124,10 @@ public class EventDispatcher : IEventDispatcher
 	/// Implementation of <see cref="IEventDispatcher.Invoke{T}(T)"/>
 	/// </summary>
 	/// <typeparam name="T">The type of the event.</typeparam>
-	/// <param name="evt">The event.</param>
-	public void Invoke<T>(T evt) where T : IEvent
+	/// <param name="_evt">The event.</param>
+	public void Invoke<T>(T _evt) where T : IEvent
 	{
 		Type type = typeof(T);
-		Invoke(type, evt);
+		Invoke(type, _evt);
 	}
 }

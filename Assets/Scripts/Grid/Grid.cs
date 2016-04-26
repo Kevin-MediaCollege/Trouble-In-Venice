@@ -69,29 +69,29 @@ public class Grid : MonoBehaviour
 		}
 	}
 
-	public bool AddNode(GridNode node)
+	public bool AddNode(GridNode _node)
 	{
-		if(!nodes.Contains(node))
+		if(!nodes.Contains(_node))
 		{
-			nodes.Add(node);
+			nodes.Add(_node);
 			return true;
 		}
 
 		return false;
 	}
 
-	public void RemoveNode(GridNode node)
+	public void RemoveNode(GridNode _node)
 	{
-		nodes.Remove(node);
+		nodes.Remove(_node);
 	}
 
-	public GridNode GetNodeAt(Vector2 position)
+	public GridNode GetNodeAt(Vector2 _position)
 	{
 		if(nodeCache == null)
 		{
 			foreach(GridNode node in nodes)
 			{
-				if(node.GridPosition == position)
+				if(node.GridPosition == _position)
 				{
 					return node;
 				}
@@ -99,9 +99,9 @@ public class Grid : MonoBehaviour
 		}
 		else
 		{
-			if(nodeCache.ContainsKey(position))
+			if(nodeCache.ContainsKey(_position))
 			{
-				return nodeCache[position];
+				return nodeCache[_position];
 			}
 		}
 

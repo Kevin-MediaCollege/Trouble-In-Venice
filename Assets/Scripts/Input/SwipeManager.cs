@@ -21,9 +21,9 @@ public class SwipeManager : MonoBehaviour
 #endif
 	}
 
-	private Vector2 GetPosition(int id)
+	private Vector2 GetPosition(int _id)
 	{
-		if(id == -1)
+		if(_id == -1)
 		{
 			return Input.mousePosition;
 		}
@@ -31,7 +31,7 @@ public class SwipeManager : MonoBehaviour
 		{
 			foreach(Touch touch in Input.touches)
 			{
-				if(touch.fingerId == id)
+				if(touch.fingerId == _id)
 				{
 					return touch.position;
 				}
@@ -41,9 +41,9 @@ public class SwipeManager : MonoBehaviour
 		return Vector2.zero;
 	}
 
-	private bool IsTouching(int id)
+	private bool IsTouching(int _id)
 	{
-		if(id == -1)
+		if(_id == -1)
 		{
 			return Input.GetMouseButton(0);
 		}
@@ -51,7 +51,7 @@ public class SwipeManager : MonoBehaviour
 		{
 			foreach(Touch touch in Input.touches)
 			{
-				if(touch.fingerId == id && touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
+				if(touch.fingerId == _id && touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
 				{
 					return true;
 				}
@@ -61,25 +61,25 @@ public class SwipeManager : MonoBehaviour
 		return false;
 	}
 
-	private IEnumerator Track(int id, SwipeHandle handle)
+	private IEnumerator Track(int _id, SwipeHandle _handle)
 	{
 		bool notified = false;
 
-		while(IsTouching(id))
+		while(IsTouching(_id))
 		{
-			handle.AddPosition(GetPosition(id));
+			_handle.AddPosition(GetPosition(_id));
 
 			if(!notified)
 			{
-				GlobalEvents.Invoke(new SwipeBeganEvent(handle));
+				GlobalEvents.Invoke(new SwipeBeganEvent(_handle));
 				notified = true;
 			}
 
-			GlobalEvents.Invoke(new SwipeUpdateEvent(handle));		
+			GlobalEvents.Invoke(new SwipeUpdateEvent(_handle));		
 			yield return null;
 		}
 
-		handle.IsComplete = true;
-		GlobalEvents.Invoke(new SwipeEndedEvent(handle));
+		_handle.IsComplete = true;
+		GlobalEvents.Invoke(new SwipeEndedEvent(_handle));
 	}
 }

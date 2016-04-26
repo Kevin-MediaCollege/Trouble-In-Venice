@@ -92,9 +92,9 @@ namespace Snakybo.Audio
 			}
 		}
 
-		internal void Play(AudioObjectSingle audioObject)
+		internal void Play(AudioObjectSingle _audioObject)
 		{
-			AudioObject = audioObject;
+			AudioObject = _audioObject;
 			AudioObject.ApplySettings(audioSource);
 
 			audioSource.Play();

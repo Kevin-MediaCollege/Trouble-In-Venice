@@ -28,9 +28,9 @@ public class CoroutineRunner : IDependency
 		}
 	}
 
-	public Coroutine StartCoroutine(IEnumerator routine)
+	public Coroutine StartCoroutine(IEnumerator _routine)
 	{
-		return CoroutineRunnerHelper.StartCoroutine(routine);
+		return CoroutineRunnerHelper.StartCoroutine(_routine);
 	}
 
 	public void StopCoroutine(IEnumerator routine)

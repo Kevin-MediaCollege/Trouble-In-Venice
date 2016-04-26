@@ -5,8 +5,8 @@ public class EntityDeactivatedEvent : IEvent
 {
 	public Entity Entity { private set; get; }
 
-	public EntityDeactivatedEvent(Entity entity)
+	public EntityDeactivatedEvent(Entity _entity)
 	{
-		Entity = entity;
+		Entity = _entity;
 	}
 }

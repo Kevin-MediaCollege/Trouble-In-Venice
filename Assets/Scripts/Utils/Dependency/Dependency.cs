@@ -29,17 +29,17 @@ public class Dependency
 	/// <summary>
 	/// Attempt to retrieve a dependency.
 	/// </summary>
-	/// <param name="type">The dependency to retrieve.</typeparam>
+	/// <param name="_type">The dependency to retrieve.</typeparam>
 	/// <returns>The dependency of the specified type.</returns>
-	public static IDependency Get(Type type)
+	public static IDependency Get(Type _type)
 	{
-		if(dependencies.ContainsKey(type))
+		if(dependencies.ContainsKey(_type))
 		{
-			return dependencies[type];
+			return dependencies[_type];
 		}
 
-		IDependency dependency = Activator.CreateInstance(type) as IDependency;
-		dependencies.Add(type, dependency);
+		IDependency dependency = Activator.CreateInstance(_type) as IDependency;
+		dependencies.Add(_type, dependency);
 
 		return dependency;
 	}

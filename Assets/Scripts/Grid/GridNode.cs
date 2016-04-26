@@ -101,11 +101,11 @@ public class GridNode : MonoBehaviour
 	}
 
 #if UNITY_EDITOR
-	public void AddConnection(GridNode node)
+	public void AddConnection(GridNode _node)
 	{
-		if(!connections.Contains(node))
+		if(!connections.Contains(_node))
 		{
-			connections.Add(node);
+			connections.Add(_node);
 		}
 	}
 
@@ -119,14 +119,14 @@ public class GridNode : MonoBehaviour
 		connections.Clear();
 	}
 
-	public void RemoveConnection(GridNode node)
+	public void RemoveConnection(GridNode _node)
 	{
-		connections.Remove(node);
+		connections.Remove(_node);
 	}
 
-	public bool HasConnection(GridNode node)
+	public bool HasConnection(GridNode _node)
 	{
-		return connections.Contains(node);
+		return connections.Contains(_node);
 	}
 #endif
 }
