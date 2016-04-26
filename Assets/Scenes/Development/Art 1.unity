@@ -731,7 +731,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 306276128}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd70d448b18cfbc46af26466f752332c, type: 3}
   m_Name: 
@@ -744,7 +744,7 @@ MonoBehaviour:
   maxBlurSize: 2
   highResolution: 0
   blurType: 0
-  blurSampleCount: 2
+  blurSampleCount: 0
   nearBlur: 1
   foregroundOverlap: 1.66
   dofHdrShader: {fileID: 4800000, guid: acd613035ff3e455e8abf23fdc8c8c24, type: 3}
@@ -3358,6 +3358,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1547331424}
   - 114: {fileID: 1547331423}
+  - 114: {fileID: 1547331425}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -3388,6 +3389,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &1547331425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1547331422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd0b14494ed05541af6e1abe09b8b95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFPS: 30
 --- !u!1 &1605755409
 GameObject:
   m_ObjectHideFlags: 0
