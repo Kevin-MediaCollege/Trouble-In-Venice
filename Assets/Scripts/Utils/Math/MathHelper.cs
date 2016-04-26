@@ -47,4 +47,14 @@ public static class MathHelper
 	{
 		return Mathf.Atan2((_y2 - _y1), (_x2 - _x1)) * 180f / Mathf.PI;
 	}
+
+	public static Vector3 XYtoXZ(Vector2 _v2)
+	{
+		return new Vector3 (_v2.x, 0f, _v2.y);
+	}
+
+	public static Vector2 XZtoXY(Vector3 _v3)
+	{
+		return new Vector2 (_v3.x, _v3.z);
+	}
 }

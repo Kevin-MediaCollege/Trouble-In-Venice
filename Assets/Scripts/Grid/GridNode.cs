@@ -60,8 +60,15 @@ public class GridNode : MonoBehaviour
 		}
 	}
 
+	public bool Active { set; get; }
+
 	[SerializeField] private GridNodeType type;
 	[SerializeField] private List<GridNode> connections;
+
+	protected void Awake()
+	{
+		Active = true;
+	}
 
 	protected void Start()
 	{
@@ -108,11 +115,14 @@ public class GridNode : MonoBehaviour
 
 	public void DrawGizmos()
 	{
-		Gizmos.color = Color.blue;
-
-		foreach(GridNode connection in connections)
+		if(Active)
 		{
-			Gizmos.DrawLine(transform.position, connection.transform.position);
+			Gizmos.color = Color.blue;
+
+			foreach(GridNode connection in connections)
+			{
+				Gizmos.DrawLine(transform.position, connection.transform.position);
+			}
 		}
 	}
 

@@ -22,12 +22,12 @@ public class EntityMovement : MonoBehaviour
 		LookAt(_direction);
 
 		GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
-		if(target != null)
+		if(target != null && target.Active)
 		{
 			nodeTracker.CurrentNode = target;
 
-			Vector3 position = nodeTracker.CurrentNode.transform.position;
-			transform.position = new Vector3(position.x, transform.position.y, position.z);
+			Vector2 nodePosition = nodeTracker.CurrentNode.Position;
+			transform.position = new Vector3(nodePosition.x, transform.position.y, nodePosition.y);
 		}
 	}
 

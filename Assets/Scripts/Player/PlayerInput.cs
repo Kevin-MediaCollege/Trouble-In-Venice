@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -27,21 +28,73 @@ public class PlayerInput : MonoBehaviour
 		movement = GetComponent<EntityMovement>();
 	}
 
-	private GridNode GetSwipeTarget()
+	protected void Update()
 	{
-		Vector2 screenPoint1 = Camera.main.WorldToScreenPoint(nodeTracker.CurrentNode.Position);
-
-		Vector2 swipePoint1 = swipeHandle.StartPosition;
-		Vector2 swipePoint2 = swipeHandle.LastPosition;
-		
-		foreach(GridNode connection in nodeTracker.CurrentNode.Connections)
+		//===================== ARROW TEST MOVEMENT ==========================
+		float arrowRotion = Input.GetKeyDown (KeyCode.A) ? 180f : Input.GetKeyDown (KeyCode.W) ? 90f : Input.GetKeyDown (KeyCode.D) ? 1f : Input.GetKeyDown (KeyCode.S) ? -90f : 0f;
+		if (arrowRotion != 0f) 
 		{
-			Vector2 screenPoint2 = Camera.main.WorldToScreenPoint(connection.Position);
-			
+			Vector2 current = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.Position));
+			float swipeRotation = arrowRotion;
 
+			int x, y, i;
+			float closest = 80f;
+			Vector2 closestNode = Vector2.zero;
+
+			for(i = 0; i < 4; i++)
+			{
+				x = i == 1 ? 1 : i == 3 ? -1 : 0;
+				y = i == 0 ? 1 : i == 2 ? -1 : 0;
+
+				Vector2 neighbour = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.Position + new Vector2(x, y)));
+				float diff = GetRotationDifference (swipeRotation, MathHelper.PointToRotation (current, neighbour));
+
+				if(Mathf.Abs(diff) < Mathf.Abs(closest) && GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + new Vector2(x, y)) != null)
+				{
+					closest = diff;
+					closestNode = new Vector2 (x, y);
+				}
+			}
+
+			if(closestNode != Vector2.zero)
+			{
+				movement.Move(closestNode);
+			}
+		}
+		//====================================================================
+	}
+
+	private Vector2 GetSwipeDirection()
+	{
+		Vector2 current = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.Position));
+		float swipeRotation = MathHelper.PointToRotation (swipeHandle.StartPosition, swipeHandle.LastPosition);
+
+		int x, y, i;
+		float closest = 80f;
+		Vector2 closestNode = Vector2.zero;
+
+		for(i = 0; i < 4; i++)
+		{
+			x = i == 1 ? 1 : i == 3 ? -1 : 0;
+			y = i == 0 ? 1 : i == 2 ? -1 : 0;
+
+			Vector2 neighbour = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.Position + new Vector2(x, y)));
+			float diff = GetRotationDifference (swipeRotation, MathHelper.PointToRotation (current, neighbour));
+			
+			if(Mathf.Abs(diff) < Mathf.Abs(closest) && GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + new Vector2(x, y)) != null)
+			{
+				closest = diff;
+				closestNode = new Vector2 (x, y);
+			}
 		}
 
-		return null;
+		return closestNode;
+	}
+
+	private float GetRotationDifference(float _a, float _b)
+	{
+		_b += _b > _a + 180f ? -360f : _b < _a - 180f ? 360f : 0f;
+		return _a - _b;
 	}
 
 	private void OnSwipeBeganEvent(SwipeBeganEvent _evt)
@@ -65,8 +118,7 @@ public class PlayerInput : MonoBehaviour
 	{
 		if(_evt.Handle == swipeHandle)
 		{
-			GetSwipeTarget();
-			//movement.Move(nodeTracker.CurrentNode.GridPosition + GetSwipeTarget().GridPosition);
+			movement.Move(GetSwipeDirection());
 			swipeHandle = null;
 		}
 	}
