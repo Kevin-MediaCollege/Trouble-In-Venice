@@ -25,12 +25,12 @@ public abstract class ScriptableObjectSingleton<T> : ScriptableObject where T : 
 	/// <summary>
 	/// Create an asset of the scriptable object.
 	/// </summary>
-	/// <param name="title">The title of the save file planel window.</param>
-	/// <param name="defaultName">The default name of the asset.</param>
-	/// <param name="message">The message of the save file panel window.</param>
-	protected static void CreateAsset(string title, string defaultName, string message)
+	/// <param name="_title">The title of the save file planel window.</param>
+	/// <param name="_defaultName">The default name of the asset.</param>
+	/// <param name="_message">The message of the save file panel window.</param>
+	protected static void CreateAsset(string _title, string _defaultName, string _message)
 	{
-		string path = UnityEditor.EditorUtility.SaveFilePanelInProject(title, defaultName, "asset", message);
+		string path = UnityEditor.EditorUtility.SaveFilePanelInProject(_title, _defaultName, "asset", _message);
 
 		if(!string.IsNullOrEmpty(path))
 		{
@@ -41,12 +41,12 @@ public abstract class ScriptableObjectSingleton<T> : ScriptableObject where T : 
 	/// <summary>
 	/// Create an asset of the scriptable object at the specified path.
 	/// </summary>
-	/// <param name="path">The path to save the asset.</param>
-	protected static void CreateAssetAt(string path)
+	/// <param name="_path">The path to save the asset.</param>
+	protected static void CreateAssetAt(string _path)
 	{
 		T obj = CreateInstance<T>();
 
-		UnityEditor.AssetDatabase.CreateAsset(obj, path + ".asset");
+		UnityEditor.AssetDatabase.CreateAsset(obj, _path + ".asset");
 		UnityEditor.AssetDatabase.SaveAssets();
 
 		UnityEditor.Selection.activeObject = obj;

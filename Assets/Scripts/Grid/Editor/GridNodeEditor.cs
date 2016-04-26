@@ -72,20 +72,20 @@ public class GridNodeEditor : Editor
 		}
 	}
 
-	private void OnDrawHeader(Rect position)
+	private void OnDrawHeader(Rect _position)
 	{
-		EditorGUI.LabelField(position, "Connections");
+		EditorGUI.LabelField(_position, "Connections");
 	}
 
-	private void OnDrawElement(Rect position, int index, bool isActive, bool isFocused)
+	private void OnDrawElement(Rect _position, int _index, bool _isActive, bool _isFocused)
 	{
-		SerializedProperty element = prop_connections.GetArrayElementAtIndex(index);
+		SerializedProperty element = prop_connections.GetArrayElementAtIndex(_index);
 
 		GridNode node1 = target as GridNode;
 		GridNode node2 = element.objectReferenceValue as GridNode;
 
-		position.y += 3;
-		position.height = EditorGUIUtility.singleLineHeight;
+		_position.y += 3;
+		_position.height = EditorGUIUtility.singleLineHeight;
 
 		Vector2 direction = (node2.GridPosition - node1.GridPosition).normalized;
 		string label = "Invalid";
@@ -107,10 +107,10 @@ public class GridNodeEditor : Editor
 			label = "Right";
 		}
 
-		EditorGUI.LabelField(position, label);
+		EditorGUI.LabelField(_position, label);
 	}
 
-	private void OnAddDropdown(Rect rect, ReorderableList reorderableList)
+	private void OnAddDropdown(Rect _rect, ReorderableList _reorderableList)
 	{
 		GenericMenu menu = new GenericMenu();
 		GridNode node = target as GridNode;
@@ -123,20 +123,20 @@ public class GridNodeEditor : Editor
 		menu.ShowAsContext();
 	}
 
-	private void AddGenericMenuElement(GenericMenu menu, GridNode source, string text, Vector2 direction)
+	private void AddGenericMenuElement(GenericMenu _menu, GridNode _source, string _text, Vector2 _direction)
 	{
-		GridNode node = GridUtils.GetNodeAt(source.GridPosition + direction);
+		GridNode node = GridUtils.GetNodeAt(_source.GridPosition + _direction);
 
-		if(node != null && !source.HasConnection(node))
+		if(node != null && !_source.HasConnection(node))
 		{
-			menu.AddItem(new GUIContent(text), false, OnAdd, direction);
+			_menu.AddItem(new GUIContent(_text), false, OnAdd, _direction);
 		}
 	}
 
-	private void OnAdd(object direction)
+	private void OnAdd(object _direction)
 	{
 		GridNode node1 = target as GridNode;
-		GridNode node2 = GridUtils.GetNodeAt(node1.GridPosition + (Vector2)direction);
+		GridNode node2 = GridUtils.GetNodeAt(node1.GridPosition + (Vector2)_direction);
 
 		node1.AddConnection(node2);
 		node2.AddConnection(node1);
@@ -144,10 +144,10 @@ public class GridNodeEditor : Editor
 		SceneView.RepaintAll();
 	}
 
-	private void OnRemove(ReorderableList reorderableList)
+	private void OnRemove(ReorderableList _reorderableList)
 	{
 		GridNode node1 = target as GridNode;
-		GridNode node2 = prop_connections.GetArrayElementAtIndex(reorderableList.index).objectReferenceValue as GridNode;
+		GridNode node2 = prop_connections.GetArrayElementAtIndex(_reorderableList.index).objectReferenceValue as GridNode;
 
 		node1.RemoveConnection(node2);
 		node2.RemoveConnection(node1);
