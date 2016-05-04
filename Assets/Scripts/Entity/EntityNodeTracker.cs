@@ -15,4 +15,9 @@ public class EntityNodeTracker : MonoBehaviour
 	}
 
 	[SerializeField, HideInInspector] private GridNode currentNode;
+
+	protected void Start()
+	{
+		currentNode.AddEntity(GetComponent<Entity>());
+	}
 }

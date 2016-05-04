@@ -12,6 +12,12 @@ public enum GridNodeType
 [RequireComponent(typeof(BoxCollider))]
 public class GridNode : MonoBehaviour
 {
+	public delegate void OnEntityEntered(Entity _entity);
+	public event OnEntityEntered onEntityEnteredEvent = delegate { };
+
+	public delegate void OnEntityLeft(Entity _entity);
+	public event OnEntityLeft onEntityLeftEvent = delegate { };
+
 	public IEnumerable<GridNode> Connections
 	{
 		get
@@ -65,8 +71,12 @@ public class GridNode : MonoBehaviour
 	[SerializeField] private GridNodeType type;
 	[SerializeField] private List<GridNode> connections;
 
+	private HashSet<Entity> entities;
+
 	protected void Awake()
 	{
+		entities = new HashSet<Entity>();
+
 		Active = true;
 	}
 
@@ -79,21 +89,44 @@ public class GridNode : MonoBehaviour
 		}
 	}
 
+#if UNITY_EDITOR
 	protected void OnValidate()
 	{
-		switch(type)
+		SpriteRenderer sr = GetComponent<SpriteRenderer>();
+
+		if(type == GridNodeType.Start || type == GridNodeType.Normal)
 		{
-		case GridNodeType.Start:
-			GetComponent<SpriteRenderer>().color = Color.green;
-			break;
-		case GridNodeType.Normal:
-			GetComponent<SpriteRenderer>().color = Color.white;
-			break;
-		case GridNodeType.End:
-			GetComponent<SpriteRenderer>().color = Color.red;
-			break;
+			LevelCompleter levelCompleter = GetComponent<LevelCompleter>();
+			if(levelCompleter != null)
+			{
+				UnityEditor.EditorApplication.delayCall += () =>
+				{
+					DestroyImmediate(levelCompleter);
+				};
+			}
+
+			switch(type)
+			{
+			case GridNodeType.Start:
+				sr.color = Color.green;
+				break;
+			case GridNodeType.Normal:
+				sr.color = Color.white;
+				break;
+			}
+		}
+		else if(type == GridNodeType.End)
+		{
+			LevelCompleter levelCompleter = GetComponent<LevelCompleter>();
+			if(levelCompleter == null)
+			{
+				gameObject.AddComponent<LevelCompleter>();
+			}
+
+			sr.color = Color.red;
 		}
 	}
+#endif
 
 	protected void OnDestroy()
 	{
@@ -121,8 +154,29 @@ public class GridNode : MonoBehaviour
 
 			foreach(GridNode connection in connections)
 			{
+				if(connection == null)
+				{
+					continue;
+				}
+
 				Gizmos.DrawLine(transform.position, connection.transform.position);
 			}
+		}
+	}
+
+	public void AddEntity(Entity _entity)
+	{
+		if(entities.Add(_entity))
+		{
+			onEntityEnteredEvent(_entity);
+		}
+	}
+
+	public void RemoveEntity(Entity _entity)
+	{
+		if(entities.Remove(_entity))
+		{
+			onEntityLeftEvent(_entity);
 		}
 	}
 

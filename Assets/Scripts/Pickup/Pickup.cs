@@ -6,35 +6,27 @@ public abstract class Pickup : MonoBehaviour
 	protected GridNode node;
 
 	protected bool used;
-
-	private EntityNodeTracker playerNodeTracker;
+	
 	private new Renderer renderer;
 	private bool active;
 
 	protected void OnEnable()
 	{
-		playerNodeTracker = EntityUtils.GetEntityWithTag("Player").GetComponent<EntityNodeTracker>();
 		node = GetComponent<EntityNodeTracker>().CurrentNode;
 		renderer = GetComponent<Renderer>();
+
+		node.onEntityEnteredEvent += OnEntityEntered;
+		node.onEntityLeftEvent += OnEntityLeft;
+	}
+
+	private void OnDisable()
+	{
+		node.onEntityEnteredEvent -= OnEntityEntered;
+		node.onEntityLeftEvent -= OnEntityLeft;
 	}
 
 	protected void LateUpdate()
 	{
-		if(!active && playerNodeTracker.CurrentNode == node)
-		{
-			active = true;
-			used = false;
-
-			renderer.enabled = false;
-			OnActivate();
-		}
-		else if(active && playerNodeTracker.CurrentNode != node)
-		{
-			
-			active = false;
-			renderer.enabled = true;
-		}
-
 		if(active && !used)
 		{
 			OnUpdate();
@@ -51,6 +43,26 @@ public abstract class Pickup : MonoBehaviour
 		}
 	}
 
+	private void OnEntityEntered(Entity _entity)
+	{
+		if(_entity.HasTag("Player"))
+		{
+			active = true;
+			used = false;
+
+			renderer.enabled = false;
+			OnActivate();
+		}
+	}
+
+	private void OnEntityLeft(Entity _entity)
+	{
+		if(_entity.HasTag("Player"))
+		{
+			active = false;
+			renderer.enabled = true;
+		}
+	}
 	protected virtual void OnActivate()
 	{
 	}

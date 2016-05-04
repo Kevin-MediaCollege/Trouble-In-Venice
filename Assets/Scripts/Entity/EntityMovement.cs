@@ -4,7 +4,17 @@ using System.Collections;
 [RequireComponent(typeof(EntityNodeTracker))]
 public class EntityMovement : MonoBehaviour
 {
+	public delegate void OnMove(GridNode _old, GridNode _new);
+	public event OnMove onMoveEvent = delegate { };
+
 	[SerializeField] private EntityNodeTracker nodeTracker;
+
+	private Entity entity;
+
+	protected void Awake()
+	{
+		entity = GetComponent<Entity>();
+	}
 
 	protected void Reset()
 	{
@@ -24,10 +34,18 @@ public class EntityMovement : MonoBehaviour
 		GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
 		if(target != null && target.Active)
 		{
+			GridNode old = nodeTracker.CurrentNode;
+
 			nodeTracker.CurrentNode = target;
 
 			Vector2 nodePosition = nodeTracker.CurrentNode.Position;
 			transform.position = new Vector3(nodePosition.x, transform.position.y, nodePosition.y);
+
+			// (Un)register the entity
+			old.RemoveEntity(entity);
+			target.AddEntity(entity);
+
+			onMoveEvent(old, target);
 		}
 	}
 
