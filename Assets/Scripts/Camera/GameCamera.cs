@@ -58,10 +58,6 @@ public class GameCamera : MonoBehaviour
 		cutscene = true;
 
 		float fixedRotation = cutsceneRotation;
-
-		if(fixedRotation > startRotation + 180f) { Debug.Log("-360f" + " fixed=" + fixedRotation + " startRotation=" + startRotation); }
-		if(fixedRotation < startRotation - 180f) { Debug.Log("+360f" + " fixed=" + fixedRotation + " startRotation=" + startRotation); }
-
 		fixedRotation = fixedRotation > startRotation + 180f ? fixedRotation - 360f : fixedRotation < startRotation - 180f ? fixedRotation + 360f : fixedRotation;
 		transform.rotation = SettingsToQuaternion (cutsceneAngle, fixedRotation);
 		transform.DORotateQuaternion (SettingsToQuaternion (startAngle, startRotation), 5f).SetEase(Ease.InOutCubic);
