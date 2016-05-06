@@ -6,7 +6,7 @@ namespace Proeve
 {
 	/// <summary>
 	/// The grid of a board, there can only be one grid at a time
-	/// </summary
+	/// </summary>
 	public class Grid : MonoBehaviour
 	{
 		public const int WIDTH = 50;
@@ -25,8 +25,7 @@ namespace Proeve
 			}
 		}
 
-		[HideInInspector, SerializeField]
-		private List<GridNode> nodes;
+		[HideInInspector, SerializeField] private List<GridNode> nodes;
 		private Dictionary<Vector2, GridNode> nodeCache;
 
 		protected void Awake()
@@ -44,6 +43,9 @@ namespace Proeve
 			DrawGizmos();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void DrawGizmos()
 		{
 			Gizmos.color = Color.black;
@@ -72,6 +74,11 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_node"></param>
+		/// <returns></returns>
 		public bool AddNode(GridNode _node)
 		{
 			if(!nodes.Contains(_node))
@@ -83,11 +90,20 @@ namespace Proeve
 			return false;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_node"></param>
 		public void RemoveNode(GridNode _node)
 		{
 			nodes.Remove(_node);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_position"></param>
+		/// <returns></returns>
 		public GridNode GetNodeAt(Vector2 _position)
 		{
 			if(nodeCache == null)
