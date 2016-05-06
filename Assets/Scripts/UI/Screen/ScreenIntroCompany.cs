@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class ScreenIntroCompany : ScreenBase 
 {
@@ -80,8 +81,8 @@ public class ScreenIntroCompany : ScreenBase
 		overlayAlphaGroup.DOFade(1f, 0.6f);
 
 		yield return new WaitForSeconds(0.6f);
-
-		//TODO: switch to menu scene
+		
+		SceneManager.LoadSceneAsync("Menu");
 	}
 
 	public override string GetScreenName()
