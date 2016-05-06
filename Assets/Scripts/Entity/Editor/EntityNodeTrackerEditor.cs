@@ -4,6 +4,13 @@ using UnityEditor;
 [CustomEditor(typeof(EntityNodeTracker))]
 public class EntityNodeTrackerEditor : Editor
 {
+	private SerializedProperty prop_manualY;
+
+	protected void OnEnable()
+	{
+		prop_manualY = serializedObject.FindProperty("manualY");
+	}
+
 	protected void OnSceneGUI()
 	{
 		if(!Application.isPlaying)
@@ -27,7 +34,13 @@ public class EntityNodeTrackerEditor : Editor
 
 			if(nearest != null)
 			{
-				ec.transform.position = new Vector3(nearest.transform.position.x, ec.transform.position.y, nearest.transform.position.z);
+				float y = ec.transform.position.y;
+				if(!prop_manualY.boolValue)
+				{
+					y = nearest.transform.position.y + 1;
+				}
+
+				ec.transform.position = new Vector3(nearest.transform.position.x, y, nearest.transform.position.z);
 				ec.CurrentNode = nearest;
 			}
 		}

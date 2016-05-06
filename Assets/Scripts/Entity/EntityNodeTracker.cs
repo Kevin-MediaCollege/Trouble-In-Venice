@@ -15,6 +15,7 @@ public class EntityNodeTracker : MonoBehaviour
 	}
 
 	[SerializeField, HideInInspector] private GridNode currentNode;
+	[SerializeField] private bool manualY;
 
 	protected void Start()
 	{
