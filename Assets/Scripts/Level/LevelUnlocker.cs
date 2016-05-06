@@ -57,8 +57,8 @@ public class LevelUnlocker : IDependency
 		return true;
 	}
 
-	public bool IsUnlocked(int level)
+	public bool IsUnlocked(int _level)
 	{
-		return level <= unlockedLevelIndex;
+		return _level <= unlockedLevelIndex;
 	}
 }
