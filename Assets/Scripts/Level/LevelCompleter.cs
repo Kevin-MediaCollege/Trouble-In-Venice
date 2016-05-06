@@ -51,7 +51,7 @@ public class LevelCompleter : MonoBehaviour
 			}
 
 			// Go back to level select
-			SceneManager.LoadSceneAsync("Level Select");
+			SceneManager.LoadSceneAsync("Menu");
 		}
 	}
 }
