@@ -188,6 +188,11 @@ public class GridNode : MonoBehaviour
 		}
 	}
 
+	public bool HasConnection(GridNode _node)
+	{
+		return connections.Contains(_node);
+	}
+
 #if UNITY_EDITOR
 	public void AddConnection(GridNode _node)
 	{
@@ -210,11 +215,6 @@ public class GridNode : MonoBehaviour
 	public void RemoveConnection(GridNode _node)
 	{
 		connections.Remove(_node);
-	}
-
-	public bool HasConnection(GridNode _node)
-	{
-		return connections.Contains(_node);
 	}
 #endif
 }

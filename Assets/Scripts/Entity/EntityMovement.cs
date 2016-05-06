@@ -36,16 +36,19 @@ public class EntityMovement : MonoBehaviour
 		{
 			GridNode old = nodeTracker.CurrentNode;
 
-			nodeTracker.CurrentNode = target;
+			if(old.HasConnection(target))
+			{
+				nodeTracker.CurrentNode = target;
 
-			Vector2 nodePosition = nodeTracker.CurrentNode.Position;
-			transform.position = new Vector3(nodePosition.x, transform.position.y, nodePosition.y);
+				Vector3 nodePosition = nodeTracker.CurrentNode.Position;
+				transform.position = new Vector3(nodePosition.x, nodePosition.y + 1, nodePosition.z);
 
-			// (Un)register the entity
-			old.RemoveEntity(entity);
-			target.AddEntity(entity);
+				// (Un)register the entity
+				old.RemoveEntity(entity);
+				target.AddEntity(entity);
 
-			onMoveEvent(old, target);
+				onMoveEvent(old, target);
+			}
 		}
 	}
 
