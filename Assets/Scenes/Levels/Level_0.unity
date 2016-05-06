@@ -116,7 +116,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  connections: []
+  connections:
+  - {fileID: 344900288}
 --- !u!65 &115314983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -548,7 +549,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  connections: []
+  connections:
+  - {fileID: 1491806413}
+  - {fileID: 115314982}
+  - {fileID: 1714536021}
 --- !u!1001 &405115447
 Prefab:
   m_ObjectHideFlags: 0
@@ -1503,7 +1507,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  connections: []
+  connections:
+  - {fileID: 1847730405}
 --- !u!65 &594643641
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1703,7 +1708,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  connections: []
+  connections:
+  - {fileID: 1353520269}
 --- !u!65 &804731772
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1872,7 +1878,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  connections: []
+  connections:
+  - {fileID: 1353520269}
+  - {fileID: 1624929815}
 --- !u!1 &1332691485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,7 +1983,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  connections: []
+  connections:
+  - {fileID: 990236325}
+  - {fileID: 804731771}
 --- !u!65 &1353520270
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2076,7 +2086,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  connections: []
+  connections:
+  - {fileID: 1624929815}
+  - {fileID: 344900288}
 --- !u!4 &1491806414
 Transform:
   m_ObjectHideFlags: 0
@@ -2161,7 +2173,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  connections: []
+  connections:
+  - {fileID: 990236325}
+  - {fileID: 1491806413}
 --- !u!4 &1624929816
 Transform:
   m_ObjectHideFlags: 0
@@ -2277,7 +2291,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  connections: []
+  connections:
+  - {fileID: 344900288}
+  - {fileID: 1847730405}
 --- !u!65 &1714536022
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2490,7 +2506,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  connections: []
+  connections:
+  - {fileID: 1714536021}
+  - {fileID: 594643640}
 --- !u!65 &1847730406
 BoxCollider:
   m_ObjectHideFlags: 0
