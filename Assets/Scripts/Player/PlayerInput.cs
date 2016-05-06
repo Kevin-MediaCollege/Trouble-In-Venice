@@ -34,7 +34,7 @@ public class PlayerInput : MonoBehaviour
 		float arrowRotion = Input.GetKeyDown (KeyCode.A) ? 180f : Input.GetKeyDown (KeyCode.W) ? 90f : Input.GetKeyDown (KeyCode.D) ? 1f : Input.GetKeyDown (KeyCode.S) ? -90f : 0f;
 		if (arrowRotion != 0f) 
 		{
-			Vector2 current = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.Position));
+			Vector2 current = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.PositionXZ));
 			float swipeRotation = arrowRotion;
 
 			int x, y, i;
@@ -46,7 +46,7 @@ public class PlayerInput : MonoBehaviour
 				x = i == 1 ? 1 : i == 3 ? -1 : 0;
 				y = i == 0 ? 1 : i == 2 ? -1 : 0;
 
-				Vector2 neighbour = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.Position + new Vector2(x, y)));
+				Vector2 neighbour = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.PositionXZ + new Vector2(x, y)));
 				float diff = GetRotationDifference (swipeRotation, MathHelper.PointToRotation (current, neighbour));
 
 				if(Mathf.Abs(diff) < Mathf.Abs(closest) && GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + new Vector2(x, y)) != null)
@@ -66,7 +66,7 @@ public class PlayerInput : MonoBehaviour
 
 	private Vector2 GetSwipeDirection()
 	{
-		Vector2 current = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.Position));
+		Vector2 current = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.PositionXZ));
 		float swipeRotation = MathHelper.PointToRotation (swipeHandle.StartPosition, swipeHandle.LastPosition);
 
 		int x, y, i;
@@ -78,7 +78,7 @@ public class PlayerInput : MonoBehaviour
 			x = i == 1 ? 1 : i == 3 ? -1 : 0;
 			y = i == 0 ? 1 : i == 2 ? -1 : 0;
 
-			Vector2 neighbour = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.Position + new Vector2(x, y)));
+			Vector2 neighbour = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.PositionXZ + new Vector2(x, y)));
 			float diff = GetRotationDifference (swipeRotation, MathHelper.PointToRotation (current, neighbour));
 			
 			if(Mathf.Abs(diff) < Mathf.Abs(closest) && GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + new Vector2(x, y)) != null)

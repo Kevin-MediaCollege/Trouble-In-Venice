@@ -34,7 +34,15 @@ public class GridNode : MonoBehaviour
 		}
 	}
 
-	public Vector2 Position
+	public Vector3 Position
+	{
+		get
+		{
+			return transform.position;
+		}
+	}
+
+	public Vector2 PositionXZ
 	{
 		get
 		{
