@@ -42,12 +42,7 @@ public class LevelCompleter : MonoBehaviour
 			// Unlock the next level if required
 			if(!levelUnlocker.IsUnlocked(nextLevelIndex))
 			{
-				Debug.Log("Unlocking level " + nextLevelIndex);
 				levelUnlocker.Unlock(nextLevelIndex);
-			}
-			else
-			{
-				Debug.Log("Level " + nextLevelIndex + " has already been unlocked");
 			}
 
 			// Go back to level select
