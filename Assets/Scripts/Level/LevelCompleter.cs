@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class LevelCompleter : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class LevelCompleter : MonoBehaviour
 		{
 			int nextLevelIndex = levelIndex + 1;
 
+			// Unlock the next level if required
 			if(!levelUnlocker.IsUnlocked(nextLevelIndex))
 			{
 				Debug.Log("Unlocking level " + nextLevelIndex);
@@ -47,6 +49,9 @@ public class LevelCompleter : MonoBehaviour
 			{
 				Debug.Log("Level " + nextLevelIndex + " has already been unlocked");
 			}
+
+			// Go back to level select
+			SceneManager.LoadSceneAsync("Level Select");
 		}
 	}
 }
