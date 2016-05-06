@@ -1,45 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CoroutineRunner : IDependency
+namespace Utils
 {
-	private CoroutineRunnerHelper coroutineRunnerHelper;
-	private CoroutineRunnerHelper CoroutineRunnerHelper
+	public class CoroutineRunner : IDependency
 	{
-		get
+		private CoroutineRunnerHelper coroutineRunnerHelper;
+		private CoroutineRunnerHelper CoroutineRunnerHelper
 		{
-			if(coroutineRunnerHelper == null)
+			get
 			{
-				GameObject coroutineRunnerObject = new GameObject("CoroutineRunner");
-				//Object.DontDestroyOnLoad(coroutineRunnerObject);
+				if(coroutineRunnerHelper == null)
+				{
+					GameObject coroutineRunnerObject = new GameObject("CoroutineRunner");
+					//Object.DontDestroyOnLoad(coroutineRunnerObject);
 
-				coroutineRunnerHelper = coroutineRunnerObject.AddComponent<CoroutineRunnerHelper>();
+					coroutineRunnerHelper = coroutineRunnerObject.AddComponent<CoroutineRunnerHelper>();
+				}
+
+				return coroutineRunnerHelper;
 			}
-
-			return coroutineRunnerHelper;
 		}
-	}
 
-	public void Dispose()
-	{
-		if(coroutineRunnerHelper != null)
+		public void Dispose()
 		{
-			Object.Destroy(coroutineRunnerHelper.gameObject);
+			if(coroutineRunnerHelper != null)
+			{
+				Object.Destroy(coroutineRunnerHelper.gameObject);
+			}
 		}
-	}
 
-	public Coroutine StartCoroutine(IEnumerator _routine)
-	{
-		return CoroutineRunnerHelper.StartCoroutine(_routine);
-	}
+		public Coroutine StartCoroutine(IEnumerator _routine)
+		{
+			return CoroutineRunnerHelper.StartCoroutine(_routine);
+		}
 
-	public void StopCoroutine(IEnumerator routine)
-	{
-		CoroutineRunnerHelper.StopCoroutine(routine);
-	}
+		public void StopCoroutine(IEnumerator routine)
+		{
+			CoroutineRunnerHelper.StopCoroutine(routine);
+		}
 
-	public void StopCoroutine(Coroutine routine)
-	{
-		CoroutineRunnerHelper.StopCoroutine(routine);
+		public void StopCoroutine(Coroutine routine)
+		{
+			CoroutineRunnerHelper.StopCoroutine(routine);
+		}
 	}
 }

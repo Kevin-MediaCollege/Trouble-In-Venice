@@ -1,15 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SettingsWindowBase : MonoBehaviour {
+namespace Proeve
+{
+	public class SettingsWindowBase : MonoBehaviour
+	{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }

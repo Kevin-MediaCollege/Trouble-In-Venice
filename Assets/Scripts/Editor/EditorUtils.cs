@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using UnityEditor;
+using Utils;
 
-public static class EditorUtils
+namespace Proeve
 {
-	[MenuItem("Tools/Reset Unlocked Levels")]
-	private static void ResetUnlockedLevels()
+	public static class EditorUtils
 	{
-		Dependency.Get<LevelUnlocker>().Reset();
+		[MenuItem("Tools/Reset Unlocked Levels")]
+		private static void ResetUnlockedLevels()
+		{
+			Dependency.Get<LevelUnlocker>().Reset();
+		}
 	}
 }

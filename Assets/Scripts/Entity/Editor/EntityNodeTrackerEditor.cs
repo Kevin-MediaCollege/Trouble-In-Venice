@@ -1,47 +1,50 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(EntityNodeTracker))]
-public class EntityNodeTrackerEditor : Editor
+namespace Proeve
 {
-	private SerializedProperty prop_manualY;
-
-	protected void OnEnable()
+	[CustomEditor(typeof(EntityNodeTracker))]
+	public class EntityNodeTrackerEditor : Editor
 	{
-		prop_manualY = serializedObject.FindProperty("manualY");
-	}
+		private SerializedProperty prop_manualY;
 
-	protected void OnSceneGUI()
-	{
-		if(!Application.isPlaying)
+		protected void OnEnable()
 		{
-			EntityNodeTracker ec = target as EntityNodeTracker;
+			prop_manualY = serializedObject.FindProperty("manualY");
+		}
 
-			Grid grid = FindObjectOfType<Grid>();
-			GridNode nearest = null;
-			float nearestDistance = float.PositiveInfinity;
-
-			foreach(GridNode node in grid.Nodes)
+		protected void OnSceneGUI()
+		{
+			if(!Application.isPlaying)
 			{
-				float distance = (node.transform.position - ec.transform.position).sqrMagnitude;
+				EntityNodeTracker ec = target as EntityNodeTracker;
 
-				if(distance < nearestDistance)
+				Grid grid = FindObjectOfType<Grid>();
+				GridNode nearest = null;
+				float nearestDistance = float.PositiveInfinity;
+
+				foreach(GridNode node in grid.Nodes)
 				{
-					nearest = node;
-					nearestDistance = distance;
-				}
-			}
+					float distance = (node.transform.position - ec.transform.position).sqrMagnitude;
 
-			if(nearest != null)
-			{
-				float y = ec.transform.position.y;
-				if(!prop_manualY.boolValue)
+					if(distance < nearestDistance)
+					{
+						nearest = node;
+						nearestDistance = distance;
+					}
+				}
+
+				if(nearest != null)
 				{
-					y = nearest.transform.position.y + 1;
-				}
+					float y = ec.transform.position.y;
+					if(!prop_manualY.boolValue)
+					{
+						y = nearest.transform.position.y + 1;
+					}
 
-				ec.transform.position = new Vector3(nearest.transform.position.x, y, nearest.transform.position.z);
-				ec.CurrentNode = nearest;
+					ec.transform.position = new Vector3(nearest.transform.position.x, y, nearest.transform.position.z);
+					ec.CurrentNode = nearest;
+				}
 			}
 		}
 	}

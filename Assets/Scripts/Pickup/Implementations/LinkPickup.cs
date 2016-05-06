@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class LinkPickup : Pickup
+namespace Proeve
 {
-	[SerializeField] private LinkPickupConnection[] connections;
-
-	protected override void OnActivate()
+	public class LinkPickup : Pickup
 	{
-		foreach(LinkPickupConnection connection in connections)
+		[SerializeField] private LinkPickupConnection[] connections;
+
+		protected override void OnActivate()
 		{
-			connection.OnPickup();
+			foreach(LinkPickupConnection connection in connections)
+			{
+				connection.OnPickup();
+			}
 		}
 	}
 }

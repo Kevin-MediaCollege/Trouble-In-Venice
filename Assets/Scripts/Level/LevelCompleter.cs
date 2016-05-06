@@ -1,52 +1,56 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Utils;
 
-public class LevelCompleter : MonoBehaviour
+namespace Proeve
 {
-	private LevelUnlocker levelUnlocker;
-	private GridNode node;
-
-	private int levelIndex;
-
-	protected void Awake()
+	public class LevelCompleter : MonoBehaviour
 	{
-		string[] levelName = transform.root.gameObject.name.Split('_');
+		private LevelUnlocker levelUnlocker;
+		private GridNode node;
 
-		if(levelName.Length > 1)
+		private int levelIndex;
+
+		protected void Awake()
 		{
-			levelIndex = int.Parse(levelName[levelName.Length - 1]);
-			Debug.Log("Level index: " + levelIndex);
-		}
+			string[] levelName = transform.root.gameObject.name.Split('_');
 
-		levelUnlocker = Dependency.Get<LevelUnlocker>();
-		node = GetComponent<GridNode>();
-	}
-
-	protected void OnEnable()
-	{
-		node.onEntityEnteredEvent += OnEntityEntered;
-	}
-
-	protected void OnDisable()
-	{
-		node.onEntityEnteredEvent -= OnEntityEntered;
-	}
-
-	private void OnEntityEntered(Entity _entity)
-	{
-		if(_entity.HasTag("Player"))
-		{
-			int nextLevelIndex = levelIndex + 1;
-
-			// Unlock the next level if required
-			if(!levelUnlocker.IsUnlocked(nextLevelIndex))
+			if(levelName.Length > 1)
 			{
-				levelUnlocker.Unlock(nextLevelIndex);
+				levelIndex = int.Parse(levelName[levelName.Length - 1]);
+				Debug.Log("Level index: " + levelIndex);
 			}
 
-			// Go back to level select
-			SceneManager.LoadSceneAsync("Menu");
+			levelUnlocker = Dependency.Get<LevelUnlocker>();
+			node = GetComponent<GridNode>();
+		}
+
+		protected void OnEnable()
+		{
+			node.onEntityEnteredEvent += OnEntityEntered;
+		}
+
+		protected void OnDisable()
+		{
+			node.onEntityEnteredEvent -= OnEntityEntered;
+		}
+
+		private void OnEntityEntered(Entity _entity)
+		{
+			if(_entity.HasTag("Player"))
+			{
+				int nextLevelIndex = levelIndex + 1;
+
+				// Unlock the next level if required
+				if(!levelUnlocker.IsUnlocked(nextLevelIndex))
+				{
+					levelUnlocker.Unlock(nextLevelIndex);
+				}
+
+				// Go back to level select
+				SceneManager.LoadSceneAsync("Menu");
+			}
 		}
 	}
 }

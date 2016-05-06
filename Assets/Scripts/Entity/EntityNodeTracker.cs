@@ -1,24 +1,28 @@
 ﻿using UnityEngine;
+using Utils;
 
-public class EntityNodeTracker : MonoBehaviour
+namespace Proeve
 {
-	public GridNode CurrentNode
+	public class EntityNodeTracker : MonoBehaviour
 	{
-		set
+		public GridNode CurrentNode
 		{
-			currentNode = value;
+			set
+			{
+				currentNode = value;
+			}
+			get
+			{
+				return currentNode;
+			}
 		}
-		get
+
+		[SerializeField, HideInInspector] private GridNode currentNode;
+		[SerializeField] private bool manualY;
+
+		protected void Start()
 		{
-			return currentNode;
+			currentNode.AddEntity(GetComponent<Entity>());
 		}
-	}
-
-	[SerializeField, HideInInspector] private GridNode currentNode;
-	[SerializeField] private bool manualY;
-
-	protected void Start()
-	{
-		currentNode.AddEntity(GetComponent<Entity>());
 	}
 }

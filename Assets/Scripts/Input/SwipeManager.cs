@@ -1,85 +1,89 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Utils;
 
-public class SwipeManager : MonoBehaviour
+namespace Proeve
 {
-	protected void Update()
+	public class SwipeManager : MonoBehaviour
 	{
+		protected void Update()
+		{
 #if UNITY_ANDROID && !UNITY_EDITOR
-		foreach(Touch touch in Input.touches)
-		{
-			if(touch.phase == TouchPhase.Began)
+			foreach(Touch touch in Input.touches)
 			{
-				StartCoroutine(Track(touch.fingerId, new SwipeHandle()));
+				if(touch.phase == TouchPhase.Began)
+				{
+					StartCoroutine(Track(touch.fingerId, new SwipeHandle()));
+				}
 			}
-		}
 #else
-		if(Input.GetMouseButtonDown(0))
-		{
-			StartCoroutine(Track(-1, new SwipeHandle()));
-		}
+			if(Input.GetMouseButtonDown(0))
+			{
+				StartCoroutine(Track(-1, new SwipeHandle()));
+			}
 #endif
-	}
-
-	private Vector2 GetPosition(int _id)
-	{
-		if(_id == -1)
-		{
-			return Input.mousePosition;
 		}
-		else
+
+		private Vector2 GetPosition(int _id)
 		{
-			foreach(Touch touch in Input.touches)
+			if(_id == -1)
 			{
-				if(touch.fingerId == _id)
+				return Input.mousePosition;
+			}
+			else
+			{
+				foreach(Touch touch in Input.touches)
 				{
-					return touch.position;
+					if(touch.fingerId == _id)
+					{
+						return touch.position;
+					}
 				}
 			}
+
+			return Vector2.zero;
 		}
 
-		return Vector2.zero;
-	}
-
-	private bool IsTouching(int _id)
-	{
-		if(_id == -1)
+		private bool IsTouching(int _id)
 		{
-			return Input.GetMouseButton(0);
-		}
-		else
-		{
-			foreach(Touch touch in Input.touches)
+			if(_id == -1)
 			{
-				if(touch.fingerId == _id && touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
+				return Input.GetMouseButton(0);
+			}
+			else
+			{
+				foreach(Touch touch in Input.touches)
 				{
-					return true;
+					if(touch.fingerId == _id && touch.phase != TouchPhase.Ended && touch.phase != TouchPhase.Canceled)
+					{
+						return true;
+					}
 				}
 			}
+
+			return false;
 		}
 
-		return false;
-	}
-
-	private IEnumerator Track(int _id, SwipeHandle _handle)
-	{
-		bool notified = false;
-
-		while(IsTouching(_id))
+		private IEnumerator Track(int _id, SwipeHandle _handle)
 		{
-			_handle.AddPosition(GetPosition(_id));
+			bool notified = false;
 
-			if(!notified)
+			while(IsTouching(_id))
 			{
-				GlobalEvents.Invoke(new SwipeBeganEvent(_handle));
-				notified = true;
+				_handle.AddPosition(GetPosition(_id));
+
+				if(!notified)
+				{
+					GlobalEvents.Invoke(new SwipeBeganEvent(_handle));
+					notified = true;
+				}
+
+				GlobalEvents.Invoke(new SwipeUpdateEvent(_handle));
+				yield return null;
 			}
 
-			GlobalEvents.Invoke(new SwipeUpdateEvent(_handle));		
-			yield return null;
+			_handle.IsComplete = true;
+			GlobalEvents.Invoke(new SwipeEndedEvent(_handle));
 		}
-
-		_handle.IsComplete = true;
-		GlobalEvents.Invoke(new SwipeEndedEvent(_handle));
 	}
 }

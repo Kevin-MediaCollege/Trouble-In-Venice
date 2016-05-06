@@ -1,77 +1,81 @@
 ﻿using System;
 using UnityEngine;
+using Utils;
 
-public abstract class Pickup : MonoBehaviour
+namespace Proeve
 {
-	protected GridNode node;
-
-	protected bool used;
-	
-	private new Renderer renderer;
-	private bool active;
-
-	protected void OnEnable()
+	public abstract class Pickup : MonoBehaviour
 	{
-		node = GetComponent<EntityNodeTracker>().CurrentNode;
-		renderer = GetComponent<Renderer>();
+		protected GridNode node;
 
-		node.onEntityEnteredEvent += OnEntityEntered;
-		node.onEntityLeftEvent += OnEntityLeft;
-	}
+		protected bool used;
 
-	private void OnDisable()
-	{
-		node.onEntityEnteredEvent -= OnEntityEntered;
-		node.onEntityLeftEvent -= OnEntityLeft;
-	}
+		private new Renderer renderer;
+		private bool active;
 
-	protected void LateUpdate()
-	{
-		if(active && !used)
+		protected void OnEnable()
 		{
-			OnUpdate();
+			node = GetComponent<EntityNodeTracker>().CurrentNode;
+			renderer = GetComponent<Renderer>();
 
-			if(used)
+			node.onEntityEnteredEvent += OnEntityEntered;
+			node.onEntityLeftEvent += OnEntityLeft;
+		}
+
+		private void OnDisable()
+		{
+			node.onEntityEnteredEvent -= OnEntityEntered;
+			node.onEntityLeftEvent -= OnEntityLeft;
+		}
+
+		protected void LateUpdate()
+		{
+			if(active && !used)
 			{
-				OnDeactivate();
+				OnUpdate();
 
-				if(!enabled)
+				if(used)
 				{
-					renderer.enabled = false;
+					OnDeactivate();
+
+					if(!enabled)
+					{
+						renderer.enabled = false;
+					}
 				}
 			}
 		}
-	}
 
-	private void OnEntityEntered(Entity _entity)
-	{
-		if(_entity.HasTag("Player"))
+		private void OnEntityEntered(Entity _entity)
 		{
-			active = true;
-			used = false;
+			if(_entity.HasTag("Player"))
+			{
+				active = true;
+				used = false;
 
-			renderer.enabled = false;
-			OnActivate();
+				renderer.enabled = false;
+				OnActivate();
+			}
 		}
-	}
 
-	private void OnEntityLeft(Entity _entity)
-	{
-		if(_entity.HasTag("Player"))
+		private void OnEntityLeft(Entity _entity)
 		{
-			active = false;
-			renderer.enabled = true;
+			if(_entity.HasTag("Player"))
+			{
+				active = false;
+				renderer.enabled = true;
+			}
 		}
-	}
-	protected virtual void OnActivate()
-	{
-	}
+		protected virtual void OnActivate()
+		{
+		}
 
-	protected virtual void OnDeactivate()
-	{
-	}
+		protected virtual void OnDeactivate()
+		{
+		}
 
-	protected virtual void OnUpdate()
-	{
+		protected virtual void OnUpdate()
+		{
+		}
 	}
 }

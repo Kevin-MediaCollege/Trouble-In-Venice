@@ -1,99 +1,102 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// A basic entity
-/// </summary>
-[RequireComponent(typeof(LocalEvents))]
-public class Entity : MonoBehaviour
+namespace Utils
 {
 	/// <summary>
-	/// Get an enumerable of all registered entities.
+	/// A basic entity
 	/// </summary>
-	public static IEnumerable<Entity> All
+	[RequireComponent(typeof(LocalEvents))]
+	public class Entity : MonoBehaviour
 	{
-		get
+		/// <summary>
+		/// Get an enumerable of all registered entities.
+		/// </summary>
+		public static IEnumerable<Entity> All
 		{
-			return all;
-		}
-	}
-
-	private static HashSet<Entity> all = new HashSet<Entity>();
-
-	private LocalEvents events;
-
-	/// <summary>
-	/// The event dispactcher of this entity.
-	/// </summary>
-	public IEventDispatcher Events
-	{
-		get
-		{
-			if(events == null)
+			get
 			{
-				events = GetComponent<LocalEvents>();
+				return all;
 			}
-
-			return events;
 		}
-	}
 
-	[SerializeField] private string[] startingTags;
+		private static HashSet<Entity> all = new HashSet<Entity>();
 
-	private HashSet<string> tags;
+		private LocalEvents events;
 
-	#region Unity Callbacks
-	protected void Awake()
-	{
-		tags = new HashSet<string>();
-
-		// Add the starting tags
-		foreach(string tag in startingTags)
+		/// <summary>
+		/// The event dispactcher of this entity.
+		/// </summary>
+		public IEventDispatcher Events
 		{
-			tags.Add(tag);
+			get
+			{
+				if(events == null)
+				{
+					events = GetComponent<LocalEvents>();
+				}
+
+				return events;
+			}
 		}
-	}
 
-	protected void OnEnable()
-	{
-		all.Add(this);
+		[SerializeField] private string[] startingTags;
 
-		GlobalEvents.Invoke(new EntityActivatedEvent(this));
-	}
+		private HashSet<string> tags;
 
-	protected void OnDisable()
-	{
-		all.Remove(this);
+		#region Unity Callbacks
+		protected void Awake()
+		{
+			tags = new HashSet<string>();
 
-		GlobalEvents.Invoke(new EntityDeactivatedEvent(this));
-	}
-	#endregion
+			// Add the starting tags
+			foreach(string tag in startingTags)
+			{
+				tags.Add(tag);
+			}
+		}
 
-	/// <summary>
-	/// Add a tag to the entity.
-	/// </summary>
-	/// <param name="_tag">The new tag.</param>
-	public void AddTag(string _tag)
-	{
-		tags.Add(_tag);
-	}
+		protected void OnEnable()
+		{
+			all.Add(this);
 
-	/// <summary>
-	/// Remove a tag from the entity.
-	/// </summary>
-	/// <param name="_tag">The tag to remove.</param>
-	public void RemoveTag(string _tag)
-	{
-		tags.Remove(_tag);
-	}
+			GlobalEvents.Invoke(new EntityActivatedEvent(this));
+		}
 
-	/// <summary>
-	/// Check if this entity has the specified tag.
-	/// </summary>
-	/// <param name="_tag">The tag to check.</param>
-	/// <returns>Whether or not this entity has the specified tag.</returns>
-	public bool HasTag(string _tag)
-	{
-		return tags.Contains(_tag);
+		protected void OnDisable()
+		{
+			all.Remove(this);
+
+			GlobalEvents.Invoke(new EntityDeactivatedEvent(this));
+		}
+		#endregion
+
+		/// <summary>
+		/// Add a tag to the entity.
+		/// </summary>
+		/// <param name="_tag">The new tag.</param>
+		public void AddTag(string _tag)
+		{
+			tags.Add(_tag);
+		}
+
+		/// <summary>
+		/// Remove a tag from the entity.
+		/// </summary>
+		/// <param name="_tag">The tag to remove.</param>
+		public void RemoveTag(string _tag)
+		{
+			tags.Remove(_tag);
+		}
+
+		/// <summary>
+		/// Check if this entity has the specified tag.
+		/// </summary>
+		/// <param name="_tag">The tag to check.</param>
+		/// <returns>Whether or not this entity has the specified tag.</returns>
+		public bool HasTag(string _tag)
+		{
+			return tags.Contains(_tag);
+		}
 	}
 }

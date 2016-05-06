@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TargetFPS : MonoBehaviour
+namespace Utils
 {
-	[SerializeField] private int targetFPS;
-
-	protected void Awake()
+	public class TargetFPS : MonoBehaviour
 	{
-		Application.targetFrameRate = targetFPS;
+		[SerializeField] private int targetFPS;
+
+		protected void Awake()
+		{
+			Application.targetFrameRate = targetFPS;
+		}
 	}
 }

@@ -1,74 +1,77 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ScreenManager : MonoBehaviour
+namespace Proeve
 {
-	public static ScreenManager instance;
-
-	public ScreenBase[] screenList;
-	private int screenListLenght;
-	private ScreenBase currentScreen;
-
-	public string startScreen;
-	private bool switching;
-
-	void Awake()
+	public class ScreenManager : MonoBehaviour
 	{
-		instance = this;
-		switching = false;
-		screenListLenght = screenList.Length;
+		public static ScreenManager instance;
 
-		for(int i = 0; i < screenListLenght; i++)
+		public ScreenBase[] screenList;
+		private int screenListLenght;
+		private ScreenBase currentScreen;
+
+		public string startScreen;
+		private bool switching;
+
+		void Awake()
 		{
-			screenList[i].gameObject.SetActive(false);
-		}
-	}
+			instance = this;
+			switching = false;
+			screenListLenght = screenList.Length;
 
-	void Start()
-	{
-		SwitchScreen(startScreen);
-	}
-
-	public void SwitchScreen(string _screen)
-	{
-		ScreenBase nextScreen;
-		if(!switching && (nextScreen = GetScreenByName(_screen)) != null)
-		{
-			switching = true;
-			StartCoroutine(SetScreen(nextScreen));
-		}
-	}
-
-	private IEnumerator SetScreen(ScreenBase _screen)
-	{
-		if(currentScreen != null)
-		{
-			yield return currentScreen.OnScreenFadeout();
-			currentScreen.OnScreenExit();
-			currentScreen.gameObject.SetActive(false);
-			currentScreen = null;
-		}
-
-		yield return null;
-
-		currentScreen = _screen;
-		currentScreen.gameObject.SetActive(true);
-		currentScreen.OnScreenEnter();
-
-		switching = false;
-	}
-
-	private ScreenBase GetScreenByName(string _name)
-	{
-		for(int i = 0; i < screenListLenght; i++)
-		{
-			if(_name == screenList[i].GetScreenName())
+			for(int i = 0; i < screenListLenght; i++)
 			{
-				return screenList[i];
+				screenList[i].gameObject.SetActive(false);
 			}
 		}
 
-		Debug.LogError("screen name not found!");
-		return null;
+		void Start()
+		{
+			SwitchScreen(startScreen);
+		}
+
+		public void SwitchScreen(string _screen)
+		{
+			ScreenBase nextScreen;
+			if(!switching && (nextScreen = GetScreenByName(_screen)) != null)
+			{
+				switching = true;
+				StartCoroutine(SetScreen(nextScreen));
+			}
+		}
+
+		private IEnumerator SetScreen(ScreenBase _screen)
+		{
+			if(currentScreen != null)
+			{
+				yield return currentScreen.OnScreenFadeout();
+				currentScreen.OnScreenExit();
+				currentScreen.gameObject.SetActive(false);
+				currentScreen = null;
+			}
+
+			yield return null;
+
+			currentScreen = _screen;
+			currentScreen.gameObject.SetActive(true);
+			currentScreen.OnScreenEnter();
+
+			switching = false;
+		}
+
+		private ScreenBase GetScreenByName(string _name)
+		{
+			for(int i = 0; i < screenListLenght; i++)
+			{
+				if(_name == screenList[i].GetScreenName())
+				{
+					return screenList[i];
+				}
+			}
+
+			Debug.LogError("screen name not found!");
+			return null;
+		}
 	}
 }

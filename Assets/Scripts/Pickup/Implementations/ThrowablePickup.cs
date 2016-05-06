@@ -1,40 +1,43 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ThrowablePickup : Pickup
+namespace Proeve
 {
-	private List<GridNode> nodes;
-
-	protected override void OnActivate()
+	public class ThrowablePickup : Pickup
 	{
-		nodes = new List<GridNode>(GridUtils.GetNeighbours(node));
+		private List<GridNode> nodes;
 
-		HighlightNodes(Color.blue);
-	}
-
-	protected override void OnUpdate()
-	{
-		// Wait for mouse button press
-		if(Input.GetMouseButtonDown(0))
+		protected override void OnActivate()
 		{
-			GridNode node = GridUtils.GetNodeAtGUI(Input.mousePosition);
-			if(node != null && nodes.Contains(node))
-			{
-				HighlightNodes(Color.white);
-				node.GetComponentInChildren<Renderer>().material.color = Color.yellow;
+			nodes = new List<GridNode>(GridUtils.GetNeighbours(node));
 
-				used = true;
-				enabled = false;
+			HighlightNodes(Color.blue);
+		}
+
+		protected override void OnUpdate()
+		{
+			// Wait for mouse button press
+			if(Input.GetMouseButtonDown(0))
+			{
+				GridNode node = GridUtils.GetNodeAtGUI(Input.mousePosition);
+				if(node != null && nodes.Contains(node))
+				{
+					HighlightNodes(Color.white);
+					node.GetComponentInChildren<Renderer>().material.color = Color.yellow;
+
+					used = true;
+					enabled = false;
+				}
 			}
 		}
-	}
 
-	private void HighlightNodes(Color _color)
-	{
-		foreach(GridNode node in nodes)
+		private void HighlightNodes(Color _color)
 		{
-			Renderer renderer = node.GetComponentInChildren<Renderer>();
-			renderer.material.color = _color;
+			foreach(GridNode node in nodes)
+			{
+				Renderer renderer = node.GetComponentInChildren<Renderer>();
+				renderer.material.color = _color;
+			}
 		}
 	}
 }

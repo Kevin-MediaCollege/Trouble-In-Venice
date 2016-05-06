@@ -1,41 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using Utils;
 using UnityEngine.SceneManagement;
 
-public class LevelSelectionButton : MonoBehaviour
+namespace Proeve
 {
-	[SerializeField] private Button button;
-
-	protected void Start()
+	public class LevelSelectionButton : MonoBehaviour
 	{
-		string[] levelName = gameObject.name.Split('_');
-		if(levelName.Length > 1)
+		[SerializeField] private Button button;
+
+		protected void Start()
 		{
-			LevelUnlocker levelUnlocker = Dependency.Get<LevelUnlocker>();
-			int levelIndex = int.Parse(levelName[levelName.Length - 1]);
+			string[] levelName = gameObject.name.Split('_');
+			if(levelName.Length > 1)
+			{
+				LevelUnlocker levelUnlocker = Dependency.Get<LevelUnlocker>();
+				int levelIndex = int.Parse(levelName[levelName.Length - 1]);
 
-			button.interactable = levelUnlocker.IsUnlocked(levelIndex);
+				button.interactable = levelUnlocker.IsUnlocked(levelIndex);
+			}
 		}
-	}
 
-	protected void OnEnable()
-	{
-		button.onClick.AddListener(OnClick);
-	}
+		protected void OnEnable()
+		{
+			button.onClick.AddListener(OnClick);
+		}
 
-	protected void OnDisable()
-	{
-		button.onClick.RemoveListener(OnClick);
-	}
+		protected void OnDisable()
+		{
+			button.onClick.RemoveListener(OnClick);
+		}
 
-	protected void Reset()
-	{
-		button = GetComponent<Button>();
-	}
+		protected void Reset()
+		{
+			button = GetComponent<Button>();
+		}
 
-	private void OnClick()
-	{
-		SceneManager.LoadSceneAsync(gameObject.name);
+		private void OnClick()
+		{
+			SceneManager.LoadSceneAsync(gameObject.name);
+		}
 	}
 }

@@ -1,29 +1,34 @@
-﻿public class SwipeBeganEvent : IEvent
-{
-	public SwipeHandle Handle { private set; get; }
+﻿using Utils;
 
-	public SwipeBeganEvent(SwipeHandle _handle)
+namespace Proeve
+{
+	public class SwipeBeganEvent : IEvent
 	{
-		Handle = _handle;
+		public SwipeHandle Handle { private set; get; }
+
+		public SwipeBeganEvent(SwipeHandle _handle)
+		{
+			Handle = _handle;
+		}
 	}
-}
 
-public class SwipeUpdateEvent : IEvent
-{
-	public SwipeHandle Handle { private set; get; }
-
-	public SwipeUpdateEvent(SwipeHandle _handle)
+	public class SwipeUpdateEvent : IEvent
 	{
-		Handle = _handle;
+		public SwipeHandle Handle { private set; get; }
+
+		public SwipeUpdateEvent(SwipeHandle _handle)
+		{
+			Handle = _handle;
+		}
 	}
-}
 
-public class SwipeEndedEvent : IEvent
-{
-	public SwipeHandle Handle { private set; get; }
-
-	public SwipeEndedEvent(SwipeHandle _handle)
+	public class SwipeEndedEvent : IEvent
 	{
-		Handle = _handle;
+		public SwipeHandle Handle { private set; get; }
+
+		public SwipeEndedEvent(SwipeHandle _handle)
+		{
+			Handle = _handle;
+		}
 	}
 }

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public interface IDependency
+namespace Utils
 {
+	public interface IDependency
+	{
+	}
 }

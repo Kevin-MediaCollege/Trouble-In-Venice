@@ -1,60 +1,65 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Utils;
 
-[RequireComponent(typeof(EntityNodeTracker))]
-public class EntityMovement : MonoBehaviour
+namespace Proeve
 {
-	public delegate void OnMove(GridNode _old, GridNode _new);
-	public event OnMove onMoveEvent = delegate { };
-
-	[SerializeField] private EntityNodeTracker nodeTracker;
-
-	private Entity entity;
-
-	protected void Awake()
+	[RequireComponent(typeof(EntityNodeTracker))]
+	public class EntityMovement : MonoBehaviour
 	{
-		entity = GetComponent<Entity>();
-	}
+		public delegate void OnMove(GridNode _old, GridNode _new);
+		public event OnMove onMoveEvent = delegate { };
 
-	protected void Reset()
-	{
-		nodeTracker = GetComponent<EntityNodeTracker>();
-	}
+		[SerializeField]
+		private EntityNodeTracker nodeTracker;
 
-	protected void OnDrawGizmos()
-	{
-		Gizmos.color = Color.green;
-		GizmosUtils.DrawArrowXZ(transform.position + Vector3.up, transform.forward / 2, 0.3f, 0.5f);
-	}
+		private Entity entity;
 
-	public void Move(Vector2 _direction)
-	{
-		LookAt(_direction);
-
-		GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
-		if(target != null && target.Active)
+		protected void Awake()
 		{
-			GridNode old = nodeTracker.CurrentNode;
+			entity = GetComponent<Entity>();
+		}
 
-			if(old.HasConnection(target))
+		protected void Reset()
+		{
+			nodeTracker = GetComponent<EntityNodeTracker>();
+		}
+
+		protected void OnDrawGizmos()
+		{
+			Gizmos.color = Color.green;
+			GizmosUtils.DrawArrowXZ(transform.position + Vector3.up, transform.forward / 2, 0.3f, 0.5f);
+		}
+
+		public void Move(Vector2 _direction)
+		{
+			LookAt(_direction);
+
+			GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
+			if(target != null && target.Active)
 			{
-				nodeTracker.CurrentNode = target;
+				GridNode old = nodeTracker.CurrentNode;
 
-				Vector3 nodePosition = nodeTracker.CurrentNode.Position;
-				transform.position = new Vector3(nodePosition.x, nodePosition.y + 1, nodePosition.z);
+				if(old.HasConnection(target))
+				{
+					nodeTracker.CurrentNode = target;
 
-				// (Un)register the entity
-				old.RemoveEntity(entity);
-				target.AddEntity(entity);
+					Vector3 nodePosition = nodeTracker.CurrentNode.Position;
+					transform.position = new Vector3(nodePosition.x, nodePosition.y + 1, nodePosition.z);
 
-				onMoveEvent(old, target);
+					// (Un)register the entity
+					old.RemoveEntity(entity);
+					target.AddEntity(entity);
+
+					onMoveEvent(old, target);
+				}
 			}
 		}
-	}
 
-	public void LookAt(Vector2 _direction)
-	{
-		Quaternion rotation = Quaternion.LookRotation(new Vector3(_direction.x, 0, _direction.y));
-		transform.rotation = rotation;
+		public void LookAt(Vector2 _direction)
+		{
+			Quaternion rotation = Quaternion.LookRotation(new Vector3(_direction.x, 0, _direction.y));
+			transform.rotation = rotation;
+		}
 	}
 }

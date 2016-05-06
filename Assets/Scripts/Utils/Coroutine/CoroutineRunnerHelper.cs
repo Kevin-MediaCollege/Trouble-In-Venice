@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
-internal class CoroutineRunnerHelper : MonoBehaviour
+namespace Utils
 {
+	internal class CoroutineRunnerHelper : MonoBehaviour
+	{
+	}
 }

@@ -1,47 +1,50 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// A collection of entity utilities.
-/// </summary>
-public static class EntityUtils
+namespace Utils
 {
 	/// <summary>
-	/// Get all entities with the specified tag.
+	/// A collection of entity utilities.
 	/// </summary>
-	/// <param name="_tag">The tag.</param>
-	/// <returns>All entities with the specified tag.</returns>
-	public static IEnumerable<Entity> GetEntitiesWithTag(string _tag)
+	public static class EntityUtils
 	{
-		HashSet<Entity> result = new HashSet<Entity>();
-
-		foreach(Entity entity in Entity.All)
+		/// <summary>
+		/// Get all entities with the specified tag.
+		/// </summary>
+		/// <param name="_tag">The tag.</param>
+		/// <returns>All entities with the specified tag.</returns>
+		public static IEnumerable<Entity> GetEntitiesWithTag(string _tag)
 		{
-			if(entity.HasTag(_tag))
+			HashSet<Entity> result = new HashSet<Entity>();
+
+			foreach(Entity entity in Entity.All)
 			{
-				result.Add(entity);
+				if(entity.HasTag(_tag))
+				{
+					result.Add(entity);
+				}
 			}
+
+			return result;
 		}
 
-		return result;
-	}
-
-	/// <summary>
-	/// Get the first entity with the specified tag.
-	/// </summary>
-	/// <param name="_tag">The tag.</param>
-	/// <returns>The first entity with the specified tag.</returns>
-	public static Entity GetEntityWithTag(string _tag)
-	{
-		foreach(Entity entity in Entity.All)
+		/// <summary>
+		/// Get the first entity with the specified tag.
+		/// </summary>
+		/// <param name="_tag">The tag.</param>
+		/// <returns>The first entity with the specified tag.</returns>
+		public static Entity GetEntityWithTag(string _tag)
 		{
-			if(entity.HasTag(_tag))
+			foreach(Entity entity in Entity.All)
 			{
-				return entity;
+				if(entity.HasTag(_tag))
+				{
+					return entity;
+				}
 			}
-		}
 
-		Debug.LogError("[EntityUtils] No entity with tag: " + _tag + " found");
-		return null;
+			Debug.LogError("[EntityUtils] No entity with tag: " + _tag + " found");
+			return null;
+		}
 	}
 }

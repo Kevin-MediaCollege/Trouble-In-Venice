@@ -2,43 +2,46 @@
 using UnityEditor;
 using UnityEditorInternal;
 
-[CustomEditor(typeof(Entity))]
-public class EntityEditor : Editor
+namespace Utils
 {
-	private ReorderableList startingTags;
-
-	private SerializedProperty prop_startingTags;
-
-	protected void OnEnable()
+	[CustomEditor(typeof(Entity))]
+	public class EntityEditor : Editor
 	{
-		prop_startingTags = serializedObject.FindProperty("startingTags");
+		private ReorderableList startingTags;
 
-		startingTags = new ReorderableList(serializedObject, prop_startingTags, false, true, true, true);
-		startingTags.drawHeaderCallback += OnDrawHeader;
-		startingTags.drawElementCallback += OnDrawElement;
-	}
+		private SerializedProperty prop_startingTags;
 
-	public override void OnInspectorGUI()
-	{
-		serializedObject.Update();
+		protected void OnEnable()
+		{
+			prop_startingTags = serializedObject.FindProperty("startingTags");
 
-		EditorGUILayout.Space();
-		startingTags.DoLayoutList();
+			startingTags = new ReorderableList(serializedObject, prop_startingTags, false, true, true, true);
+			startingTags.drawHeaderCallback += OnDrawHeader;
+			startingTags.drawElementCallback += OnDrawElement;
+		}
 
-		serializedObject.ApplyModifiedProperties();
-	}
+		public override void OnInspectorGUI()
+		{
+			serializedObject.Update();
 
-	private void OnDrawHeader(Rect _position)
-	{
-		EditorGUI.LabelField(_position, new GUIContent("Tags"));
-	}
+			EditorGUILayout.Space();
+			startingTags.DoLayoutList();
 
-	private void OnDrawElement(Rect _position, int _index, bool _isActive, bool _isFocused)
-	{
-		_position.y += 3;
-		_position.height = EditorGUIUtility.singleLineHeight;
+			serializedObject.ApplyModifiedProperties();
+		}
 
-		SerializedProperty element = prop_startingTags.GetArrayElementAtIndex(_index);
-		EditorGUI.PropertyField(_position, element, new GUIContent("Tag " + (_index + 1)));
+		private void OnDrawHeader(Rect _position)
+		{
+			EditorGUI.LabelField(_position, new GUIContent("Tags"));
+		}
+
+		private void OnDrawElement(Rect _position, int _index, bool _isActive, bool _isFocused)
+		{
+			_position.y += 3;
+			_position.height = EditorGUIUtility.singleLineHeight;
+
+			SerializedProperty element = prop_startingTags.GetArrayElementAtIndex(_index);
+			EditorGUI.PropertyField(_position, element, new GUIContent("Tag " + (_index + 1)));
+		}
 	}
 }

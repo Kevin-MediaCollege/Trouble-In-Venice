@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ScreenLevelSelect : ScreenBase 
+namespace Proeve
 {
-	public override void OnScreenEnter()
+	public class ScreenLevelSelect : ScreenBase
 	{
-	}
+		public override void OnScreenEnter()
+		{
+		}
 
-	public override IEnumerator OnScreenFadeout()
-	{
-		yield break;
-	}
+		public override IEnumerator OnScreenFadeout()
+		{
+			yield break;
+		}
 
-	public override void OnScreenExit()
-	{
-	}
+		public override void OnScreenExit()
+		{
+		}
 
-	public override string GetScreenName()
-	{
-		return "ScreenLevelSelect";
+		public override string GetScreenName()
+		{
+			return "ScreenLevelSelect";
+		}
 	}
 }

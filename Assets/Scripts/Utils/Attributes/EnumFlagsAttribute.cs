@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
-public class EnumFlagsAttribute : PropertyAttribute
+namespace Utils
 {
+	public class EnumFlagsAttribute : PropertyAttribute
+	{
+	}
 }
