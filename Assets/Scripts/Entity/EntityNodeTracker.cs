@@ -5,6 +5,9 @@ namespace Proeve
 {
 	public class EntityNodeTracker : MonoBehaviour
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public GridNode CurrentNode
 		{
 			set

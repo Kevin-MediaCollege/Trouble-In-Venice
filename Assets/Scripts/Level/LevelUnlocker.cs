@@ -5,6 +5,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class LevelUnlocker : IDependency
 	{
 		private const string LEVEL_INDEX_PLAYERPREFS_KEY = "UnlockedLevelIndex";
@@ -20,6 +23,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Reset()
 		{
 			// Save PlayerPrefs
@@ -31,6 +37,12 @@ namespace Proeve
 			Debug.Log("Reset level progress");
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_level"></param>
+		/// <param name="_unlockPrerequisites"></param>
+		/// <returns></returns>
 		public bool Unlock(int _level, bool _unlockPrerequisites = false)
 		{
 			if(_level < 0)
@@ -60,6 +72,11 @@ namespace Proeve
 			return true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_level"></param>
+		/// <returns></returns>
 		public bool IsUnlocked(int _level)
 		{
 			return _level <= unlockedLevelIndex;

@@ -3,6 +3,9 @@ using System.Collections;
 
 namespace Utils
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class CoroutineRunner : IDependency
 	{
 		private CoroutineRunnerHelper coroutineRunnerHelper;
@@ -22,6 +25,9 @@ namespace Utils
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Dispose()
 		{
 			if(coroutineRunnerHelper != null)
@@ -30,16 +36,29 @@ namespace Utils
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_routine"></param>
+		/// <returns></returns>
 		public Coroutine StartCoroutine(IEnumerator _routine)
 		{
 			return CoroutineRunnerHelper.StartCoroutine(_routine);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="routine"></param>
 		public void StopCoroutine(IEnumerator routine)
 		{
 			CoroutineRunnerHelper.StopCoroutine(routine);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="routine"></param>
 		public void StopCoroutine(Coroutine routine)
 		{
 			CoroutineRunnerHelper.StopCoroutine(routine);

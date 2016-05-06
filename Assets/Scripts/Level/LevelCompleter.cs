@@ -5,6 +5,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class LevelCompleter : MonoBehaviour
 	{
 		private LevelUnlocker levelUnlocker;
@@ -36,6 +39,10 @@ namespace Proeve
 			node.onEntityEnteredEvent -= OnEntityEntered;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_entity"></param>
 		private void OnEntityEntered(Entity _entity)
 		{
 			if(_entity.HasTag("Player"))

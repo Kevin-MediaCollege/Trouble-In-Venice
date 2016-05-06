@@ -4,6 +4,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public abstract class Pickup : MonoBehaviour
 	{
 		protected GridNode node;
@@ -46,6 +49,10 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_entity"></param>
 		private void OnEntityEntered(Entity _entity)
 		{
 			if(_entity.HasTag("Player"))
@@ -58,6 +65,10 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_entity"></param>
 		private void OnEntityLeft(Entity _entity)
 		{
 			if(_entity.HasTag("Player"))
@@ -66,14 +77,24 @@ namespace Proeve
 				renderer.enabled = true;
 			}
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
 		protected virtual void OnActivate()
 		{
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		protected virtual void OnDeactivate()
 		{
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		protected virtual void OnUpdate()
 		{
 		}

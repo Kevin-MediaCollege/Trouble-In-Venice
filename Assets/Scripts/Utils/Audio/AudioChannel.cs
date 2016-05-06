@@ -24,52 +24,82 @@ using UnityEngine;
 
 namespace Snakybo.Audio
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class AudioChannel : MonoBehaviour
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public AudioObjectSingle AudioObject { private set; get; }
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public float Volume
 		{
 			set { audioSource.volume = Mathf.Clamp01(value); }
 			get { return audioSource.volume; }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public float Pitch
 		{
 			set { audioSource.pitch = Mathf.Clamp01(value); }
 			get { return audioSource.pitch; }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public float StereoPan
 		{
 			set { audioSource.panStereo = Mathf.Clamp01(value); }
 			get { return audioSource.panStereo; }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public float SpatialBlend
 		{
 			set { audioSource.spatialBlend = Mathf.Clamp01(value); }
 			get { return audioSource.spatialBlend; }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public float ReverbZoneMix
 		{
 			set { audioSource.reverbZoneMix = Mathf.Clamp(value, 0, 1.1f); }
 			get { return audioSource.reverbZoneMix; }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public bool Mute
 		{
 			set { audioSource.mute = value; }
 			get { return audioSource.mute; }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public bool Loop
 		{
 			set { audioSource.loop = value; }
 			get { return audioSource.loop; }
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public bool IsPlaying
 		{
 			get { return audioSource.isPlaying && !paused; }
@@ -92,6 +122,10 @@ namespace Snakybo.Audio
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_audioObject"></param>
 		internal void Play(AudioObjectSingle _audioObject)
 		{
 			AudioObject = _audioObject;
@@ -100,18 +134,27 @@ namespace Snakybo.Audio
 			audioSource.Play();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Pause()
 		{
 			audioSource.Pause();
 			paused = true;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void UnPause()
 		{
 			audioSource.UnPause();
 			paused = false;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void Stop()
 		{
 			audioSource.Stop();

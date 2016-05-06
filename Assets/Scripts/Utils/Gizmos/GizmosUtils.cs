@@ -2,10 +2,24 @@
 
 namespace Utils
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public static class GizmosUtils
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public const float SEGMENT_ANGLE_THRESHOLD = 6f;
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public static readonly int CIRCLE_SEGMENTS;
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public static readonly float CIRCLE_SEGMENT_ANGLE;
 
 		static GizmosUtils()
@@ -14,6 +28,12 @@ namespace Utils
 			CIRCLE_SEGMENT_ANGLE = 360f / CIRCLE_SEGMENTS;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_r1"></param>
+		/// <param name="_r2"></param>
 		public static void DrawRingXZ(Vector3 _p, float _r1, float _r2)
 		{
 			const int step = 12;
@@ -34,44 +54,111 @@ namespace Utils
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_direction"></param>
 		public static void DrawArrowXZ(Vector3 _p, Vector3 _direction)
 		{
 			DrawArrow(_p, _direction, .3f, 0f, Vector3.up);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_direction"></param>
+		/// <param name="_baseWidth"></param>
 		public static void DrawArrowXZ(Vector3 _p, Vector3 _direction, float _baseWidth)
 		{
 			DrawArrow(_p, _direction, _baseWidth, 0f, Vector3.up);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_direction"></param>
+		/// <param name="_baseWidth"></param>
+		/// <param name="_headLength"></param>
 		public static void DrawArrowXZ(Vector3 _p, Vector3 _direction, float _baseWidth, float _headLength)
 		{
 			DrawArrow(_p, _direction, _baseWidth, _headLength, Vector3.up);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_direction"></param>
 		public static void DrawArrowXY(Vector3 _p, Vector3 _direction)
 		{
 			DrawArrow(_p, _direction, .3f, 0f, Vector3.forward);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_direction"></param>
+		/// <param name="_baseWidth"></param>
 		public static void DrawArrowXY(Vector3 _p, Vector3 _direction, float _baseWidth)
 		{
 			DrawArrow(_p, _direction, _baseWidth, 0f, Vector3.forward);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_direction"></param>
+		/// <param name="_baseWidth"></param>
+		/// <param name="_headLength"></param>
 		public static void DrawArrowXY(Vector3 _p, Vector3 _direction, float _baseWidth, float _headLength)
 		{
 			DrawArrow(_p, _direction, _baseWidth, _headLength, Vector3.forward);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_direction"></param>
+		/// <param name="_baseWidth"></param>
+		/// <param name="_headLength"></param>
+		/// <param name="_normal"></param>
 		public static void DrawArrow(Vector3 _p, Vector3 _direction, float _baseWidth, float _headLength, Vector3 _normal)
 		{
 			DrawGradientArrow(_p, _direction, _baseWidth, _headLength, _normal, Gizmos.color, Gizmos.color, 1);
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_direction"></param>
+		/// <param name="_baseWidth"></param>
+		/// <param name="_headLength"></param>
+		/// <param name="_normal"></param>
+		/// <param name="_baseColor"></param>
+		/// <param name="_tipColor"></param>
 		public static void DrawGradientArrow(Vector3 _p, Vector3 _direction, float _baseWidth, float _headLength, Vector3 _normal, Color _baseColor, Color _tipColor)
 		{
 			DrawGradientArrow(_p, _direction, _baseWidth, _headLength, _normal, _baseColor, _tipColor, 20);
 		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_p"></param>
+		/// <param name="_direction"></param>
+		/// <param name="_baseWidth"></param>
+		/// <param name="_headLength"></param>
+		/// <param name="_normal"></param>
+		/// <param name="_baseColor"></param>
+		/// <param name="_tipColor"></param>
+		/// <param name="_segments"></param>
 		public static void DrawGradientArrow(Vector3 _p, Vector3 _direction, float _baseWidth, float _headLength, Vector3 _normal, Color _baseColor, Color _tipColor, int _segments)
 		{
 			float l = _direction.magnitude;
@@ -98,6 +185,15 @@ namespace Utils
 			Gizmos.color = gizCol;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_from"></param>
+		/// <param name="_to"></param>
+		/// <param name="_color1"></param>
+		/// <param name="_color2"></param>
+		/// <param name="_segments"></param>
+		/// <param name="_offsets"></param>
 		public static void DrawGradientLine(Vector3 _from, Vector3 _to, Color _color1, Color _color2, int _segments, params Vector3[] _offsets)
 		{
 			Color gizCol = Gizmos.color;

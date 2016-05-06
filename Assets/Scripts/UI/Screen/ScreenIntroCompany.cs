@@ -4,9 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ScreenIntroCompany : ScreenBase
 	{
 		public GoatPrint[] printList;
@@ -14,11 +18,18 @@ namespace Proeve
 		public RectTransform logoRect;
 		public CanvasGroup overlayAlphaGroup;
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void OnScreenEnter()
 		{
 			StartCoroutine("IntroAnimation");
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		private IEnumerator IntroAnimation()
 		{
 			//hide everything
@@ -87,13 +98,20 @@ namespace Proeve
 			SceneManager.LoadSceneAsync("Menu");
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string GetScreenName()
 		{
 			return "ScreenIntroCompany";
 		}
 	}
-
-	[System.Serializable]
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[Serializable]
 	public class GoatPrint
 	{
 		public Image image;

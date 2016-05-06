@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class LevelSelectionButton : MonoBehaviour
 	{
 		[SerializeField] private Button button;
@@ -37,6 +40,9 @@ namespace Proeve
 			button = GetComponent<Button>();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		private void OnClick()
 		{
 			SceneManager.LoadSceneAsync(gameObject.name);

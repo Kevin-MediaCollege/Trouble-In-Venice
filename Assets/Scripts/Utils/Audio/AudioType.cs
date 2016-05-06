@@ -22,6 +22,9 @@
 
 namespace Snakybo.Audio
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public enum AudioType
 	{
 		Music,

@@ -4,6 +4,9 @@ using System;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class LinkPickupConnectionDoor : LinkPickupConnection
 	{
 		[SerializeField] private bool startOpen;
@@ -25,6 +28,9 @@ namespace Proeve
 			GetComponent<Renderer>().enabled = !startOpen;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public override void OnPickup()
 		{
 			nodeTracker.CurrentNode.Active = !nodeTracker.CurrentNode.Active;		

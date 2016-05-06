@@ -4,6 +4,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class CameraInput
 	{
 		public float deltaZoom;
@@ -17,6 +20,9 @@ namespace Proeve
 		private int touchMode;
 		private bool isMoving;
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public CameraInput()
 		{
 			deltaZoom = 0f;
@@ -31,14 +37,14 @@ namespace Proeve
 			touchMode = 0;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void UpdateInput()
 		{
 			deltaZoom = 0f;
 			moveX = 0f;
 			moveY = 0f;
-
-#if UNITY_ANDROID
-#endif
 
 			if(Application.isMobilePlatform)
 			{
@@ -127,6 +133,11 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_pos"></param>
+		/// <returns></returns>
 		public bool IsTouchingPlayer(Vector2 _pos)
 		{
 			Entity e = EntityUtils.GetEntityWithTag("Player");

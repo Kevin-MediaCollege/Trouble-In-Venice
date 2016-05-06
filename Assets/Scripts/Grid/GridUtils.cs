@@ -5,6 +5,9 @@ namespace Proeve
 {
 	public static class GridUtils
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public static GridNode Start
 		{
 			get
@@ -21,6 +24,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public static GridNode End
 		{
 			get
@@ -37,6 +43,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		private static Grid Grid
 		{
 			get
@@ -52,6 +61,11 @@ namespace Proeve
 
 		private static Grid grid;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="node"></param>
+		/// <returns></returns>
 		public static IEnumerable<GridNode> GetNeighbours(GridNode node)
 		{
 			List<GridNode> result = new List<GridNode>();
@@ -70,11 +84,21 @@ namespace Proeve
 			return result;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="position"></param>
+		/// <returns></returns>
 		public static GridNode GetNodeAt(Vector2 position)
 		{
 			return Grid.GetNodeAt(position);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="position"></param>
+		/// <returns></returns>
 		public static GridNode GetNodeAtGUI(Vector2 position)
 		{
 			Ray ray = Camera.main.ScreenPointToRay(position);

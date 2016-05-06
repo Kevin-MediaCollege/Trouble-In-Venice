@@ -4,14 +4,16 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	[RequireComponent(typeof(EntityNodeTracker))]
 	public class EntityMovement : MonoBehaviour
 	{
 		public delegate void OnMove(GridNode _old, GridNode _new);
 		public event OnMove onMoveEvent = delegate { };
 
-		[SerializeField]
-		private EntityNodeTracker nodeTracker;
+		[SerializeField] private EntityNodeTracker nodeTracker;
 
 		private Entity entity;
 
@@ -31,6 +33,10 @@ namespace Proeve
 			GizmosUtils.DrawArrowXZ(transform.position + Vector3.up, transform.forward / 2, 0.3f, 0.5f);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_direction"></param>
 		public void Move(Vector2 _direction)
 		{
 			LookAt(_direction);
@@ -56,6 +62,10 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_direction"></param>
 		public void LookAt(Vector2 _direction)
 		{
 			Quaternion rotation = Quaternion.LookRotation(new Vector3(_direction.x, 0, _direction.y));

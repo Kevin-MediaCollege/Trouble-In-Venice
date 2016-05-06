@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 namespace Utils
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public enum TouchableState
 	{
 		Normal,
@@ -13,6 +16,9 @@ namespace Utils
 		Disabled
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
 	public class Touchable : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPointerUpHandler, IDragHandler, IPointerEnterHandler
 	{
 		//--------------------------------------------------------------------------------//
@@ -21,26 +27,86 @@ namespace Utils
 		public bool CancelPointerWhenItExits = true;
 		//--------------------------------------------------------------------------------//
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_sender"></param>
+		/// <param name="_eventData"></param>
 		public delegate void OnPointerDownHandler(Touchable _sender, PointerEventData _eventData);
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public event OnPointerDownHandler OnPointerDownEvent = delegate { };
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_sender"></param>
+		/// <param name="_eventData"></param>
 		public delegate void OnPointerUpHandler(Touchable _sender, PointerEventData _eventData);
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public event OnPointerUpHandler OnPointerUpEvent = delegate { };
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_sender"></param>
+		/// <param name="_eventData"></param>
 		public delegate void OnPointerExitHandler(Touchable _sender, PointerEventData _eventData);
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public event OnPointerExitHandler OnPointerExitEvent = delegate { };
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_sender"></param>
+		/// <param name="_eventData"></param>
 		public delegate void OnPointerMoveHandler(Touchable _sender, PointerEventData _eventData);
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public event OnPointerMoveHandler OnPointerMoveEvent = delegate { };
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_sender"></param>
+		/// <param name="_eventData"></param>
 		public delegate void OnPointerEnterHandler(Touchable _sender, PointerEventData _eventData);
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public event OnPointerEnterHandler OnPointerEnterEvent = delegate { };
 
 		public Canvas Canvas { get; private set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public Camera Camera { get; private set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public Image Image { get; private set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
 		public TouchableState State { get; private set; }
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public bool Interactable
 		{
 			get { return State != TouchableState.Disabled; }
@@ -57,6 +123,9 @@ namespace Utils
 
 		protected List<int> pointers = new List<int>();
 
+		/// <summary>
+		/// 
+		/// </summary>
 		protected virtual void Start()
 		{
 			Canvas = GetComponent<Graphic>().canvas;
@@ -71,6 +140,10 @@ namespace Utils
 				NormalSprite = Image.sprite;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_eventData"></param>
 		public virtual void OnPointerDown(PointerEventData _eventData)
 		{
 			if(!Interactable)
@@ -82,6 +155,10 @@ namespace Utils
 			OnPointerDownEvent(this, _eventData);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_eventData"></param>
 		public virtual void OnPointerUp(PointerEventData _eventData)
 		{
 			if(!pointers.Contains(_eventData.pointerId))
@@ -96,12 +173,20 @@ namespace Utils
 			OnPointerUpEvent(this, _eventData);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_eventData"></param>
 		public virtual void OnPointerEnter(PointerEventData _eventData)
 		{
 			if(Interactable)
 				OnPointerEnterEvent(this, _eventData);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_eventData"></param>
 		public virtual void OnPointerExit(PointerEventData _eventData)
 		{
 			if(Interactable)
@@ -111,6 +196,10 @@ namespace Utils
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_eventData"></param>
 		public virtual void OnDrag(PointerEventData _eventData)
 		{
 			if(!pointers.Contains(_eventData.pointerId))
@@ -120,6 +209,10 @@ namespace Utils
 				OnPointerMoveEvent(this, _eventData);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_state"></param>
 		protected virtual void SetState(TouchableState _state)
 		{
 			State = _state;
@@ -143,11 +236,21 @@ namespace Utils
 				Image.SetNativeSize();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_eventData"></param>
+		/// <returns></returns>
 		public Vector3 GetCanvasPos(PointerEventData _eventData)
 		{
 			return Canvas.transform.InverseTransformPoint(GetWorldPos(_eventData));
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_eventData"></param>
+		/// <returns></returns>
 		public Vector3 GetWorldPos(PointerEventData _eventData)
 		{
 			Vector2 pos;

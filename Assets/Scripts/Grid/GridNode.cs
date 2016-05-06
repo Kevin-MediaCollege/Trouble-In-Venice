@@ -4,6 +4,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public enum GridNodeType
 	{
 		Start,
@@ -11,6 +14,9 @@ namespace Proeve
 		Normal
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
 	[ExecuteInEditMode]
 	[RequireComponent(typeof(BoxCollider))]
 	public class GridNode : MonoBehaviour
@@ -21,6 +27,9 @@ namespace Proeve
 		public delegate void OnEntityLeft(Entity _entity);
 		public event OnEntityLeft onEntityLeftEvent = delegate { };
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public IEnumerable<GridNode> Connections
 		{
 			get
@@ -29,6 +38,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public Vector2 GridPosition
 		{
 			get
@@ -37,6 +49,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public Vector3 Position
 		{
 			get
@@ -45,6 +60,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public Vector2 PositionXZ
 		{
 			get
@@ -53,6 +71,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public GridNodeType Type
 		{
 			get
@@ -61,6 +82,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public bool IsStart
 		{
 			get
@@ -69,6 +93,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public bool IsEnd
 		{
 			get
@@ -77,12 +104,13 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public bool Active { set; get; }
 
-		[SerializeField]
-		private GridNodeType type;
-		[SerializeField]
-		private List<GridNode> connections;
+		[SerializeField] private GridNodeType type;
+		[SerializeField] private List<GridNode> connections;
 
 		private HashSet<Entity> entities;
 
@@ -101,8 +129,7 @@ namespace Proeve
 				grid.AddNode(this);
 			}
 		}
-
-#if UNITY_EDITOR
+		
 		protected void OnValidate()
 		{
 			SpriteRenderer sr = GetComponent<SpriteRenderer>();
@@ -139,7 +166,6 @@ namespace Proeve
 				sr.color = Color.red;
 			}
 		}
-#endif
 
 		protected void OnDestroy()
 		{
@@ -159,6 +185,9 @@ namespace Proeve
 			GetComponentInParent<Grid>().DrawGizmos();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void DrawGizmos()
 		{
 			if(Active)
@@ -177,6 +206,10 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_entity"></param>
 		public void AddEntity(Entity _entity)
 		{
 			if(entities.Add(_entity))
@@ -185,6 +218,10 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_entity"></param>
 		public void RemoveEntity(Entity _entity)
 		{
 			if(entities.Remove(_entity))
@@ -193,12 +230,21 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_node"></param>
+		/// <returns></returns>
 		public bool HasConnection(GridNode _node)
 		{
 			return connections.Contains(_node);
 		}
 
 #if UNITY_EDITOR
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_node"></param>
 		public void AddConnection(GridNode _node)
 		{
 			if(!connections.Contains(_node))
@@ -207,6 +253,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public void RemoveAllConnections()
 		{
 			foreach(GridNode connection in connections)
@@ -217,6 +266,10 @@ namespace Proeve
 			connections.Clear();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_node"></param>
 		public void RemoveConnection(GridNode _node)
 		{
 			connections.Remove(_node);

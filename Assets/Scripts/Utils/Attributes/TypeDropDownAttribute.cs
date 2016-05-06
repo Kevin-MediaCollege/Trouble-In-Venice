@@ -8,8 +8,15 @@ namespace Utils
 	/// </summary>
 	public class TypeDropdownAttribute : PropertyAttribute
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		public Type BaseType { private set; get; }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_baseType"></param>
 		public TypeDropdownAttribute(Type _baseType)
 		{
 			BaseType = _baseType;

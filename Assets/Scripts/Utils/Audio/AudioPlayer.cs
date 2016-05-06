@@ -26,12 +26,24 @@ using System;
 
 namespace Snakybo.Audio
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public static class AudioPlayer
 	{
+		/// <summary>
+		/// 
+		/// </summary>
 		private static class AudioManager
 		{
+			/// <summary>
+			/// 
+			/// </summary>
 			public const int NUM_CHANNELS = 64;
 
+			/// <summary>
+			/// 
+			/// </summary>
 			internal static IEnumerable<AudioChannel> Channels
 			{
 				get
@@ -59,6 +71,10 @@ namespace Snakybo.Audio
 				}
 			}
 
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <returns></returns>
 			internal static AudioChannel GetNext()
 			{
 				foreach(AudioChannel channel in channels)
@@ -72,6 +88,11 @@ namespace Snakybo.Audio
 				return null;
 			}
 
+			/// <summary>
+			/// 
+			/// </summary>
+			/// <param name="_type"></param>
+			/// <returns></returns>
 			internal static IEnumerable<AudioChannel> GetOfType(AudioType _type)
 			{
 				HashSet<AudioChannel> result = new HashSet<AudioChannel>();
@@ -88,6 +109,11 @@ namespace Snakybo.Audio
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_audioObject"></param>
+		/// <returns></returns>
 		public static AudioChannel Play(this AudioObject _audioObject)
 		{
 			if(_audioObject == null)
@@ -127,6 +153,9 @@ namespace Snakybo.Audio
 			return null;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public static void StopAll()
 		{
 			foreach(AudioChannel audioChannel in AudioManager.Channels)
@@ -135,6 +164,10 @@ namespace Snakybo.Audio
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_type"></param>
 		public static void StopAll(AudioType _type)
 		{
 			foreach(AudioChannel audioChannel in AudioManager.GetOfType(_type))
@@ -143,6 +176,9 @@ namespace Snakybo.Audio
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public static void PauseAll()
 		{
 			foreach(AudioChannel audioChannel in AudioManager.Channels)
@@ -151,6 +187,10 @@ namespace Snakybo.Audio
 			}
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_type"></param>
 		public static void PauseAll(AudioType _type)
 		{
 			foreach(AudioChannel audioChannel in AudioManager.GetOfType(_type))
@@ -159,6 +199,9 @@ namespace Snakybo.Audio
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
 		public static void UnPauseAll()
 		{
 			foreach(AudioChannel audioChannel in AudioManager.Channels)
@@ -167,6 +210,10 @@ namespace Snakybo.Audio
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_type"></param>
 		public static void UnPauseAll(AudioType _type)
 		{
 			foreach(AudioChannel audioChannel in AudioManager.GetOfType(_type))

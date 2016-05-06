@@ -24,10 +24,17 @@ using UnityEngine;
 
 namespace Snakybo.Audio
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class AudioObjectMultiple : AudioObject
 	{
 		[SerializeField] private AudioObjectSingle[] available;
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public AudioObjectSingle Next()
 		{
 			return available[Random.Range(0, available.Length)];

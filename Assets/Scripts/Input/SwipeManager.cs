@@ -4,6 +4,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class SwipeManager : MonoBehaviour
 	{
 		protected void Update()
@@ -24,6 +27,11 @@ namespace Proeve
 #endif
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_id"></param>
+		/// <returns></returns>
 		private Vector2 GetPosition(int _id)
 		{
 			if(_id == -1)
@@ -44,6 +52,11 @@ namespace Proeve
 			return Vector2.zero;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_id"></param>
+		/// <returns></returns>
 		private bool IsTouching(int _id)
 		{
 			if(_id == -1)
@@ -64,6 +77,12 @@ namespace Proeve
 			return false;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_id"></param>
+		/// <param name="_handle"></param>
+		/// <returns></returns>
 		private IEnumerator Track(int _id, SwipeHandle _handle)
 		{
 			bool notified = false;

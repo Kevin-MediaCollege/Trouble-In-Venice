@@ -24,6 +24,9 @@ using UnityEngine;
 
 namespace Snakybo.Audio
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public abstract class AudioObject : ScriptableObject
 	{
 	}

@@ -3,6 +3,9 @@ using System.Collections;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class ScreenManager : MonoBehaviour
 	{
 		public static ScreenManager instance;
@@ -14,7 +17,7 @@ namespace Proeve
 		public string startScreen;
 		private bool switching;
 
-		void Awake()
+		protected void Awake()
 		{
 			instance = this;
 			switching = false;
@@ -26,11 +29,15 @@ namespace Proeve
 			}
 		}
 
-		void Start()
+		protected void Start()
 		{
 			SwitchScreen(startScreen);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_screen"></param>
 		public void SwitchScreen(string _screen)
 		{
 			ScreenBase nextScreen;
@@ -41,6 +48,11 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_screen"></param>
+		/// <returns></returns>
 		private IEnumerator SetScreen(ScreenBase _screen)
 		{
 			if(currentScreen != null)
@@ -60,6 +72,11 @@ namespace Proeve
 			switching = false;
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_name"></param>
+		/// <returns></returns>
 		private ScreenBase GetScreenByName(string _name)
 		{
 			for(int i = 0; i < screenListLenght; i++)

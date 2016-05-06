@@ -10,6 +10,10 @@ namespace Utils
 	public abstract class ScriptableObjectSingleton<T> : ScriptableObject where T : ScriptableObjectSingleton<T>
 	{
 		private static T instance;
+
+		/// <summary>
+		/// 
+		/// </summary>
 		protected static T Instance
 		{
 			get

@@ -6,6 +6,9 @@ using System.Collections;
 
 namespace Proeve
 {
+	/// <summary>
+	/// 
+	/// </summary>
 	public class GameCamera : MonoBehaviour
 	{
 		[Header("Camera Gameobject")]
@@ -48,14 +51,14 @@ namespace Proeve
 		{
 			cutscene = false;
 			cameraInput = new CameraInput();
-			StartCoroutine("cutsceneAnimation");
+			StartCoroutine("CutsceneAnimation");
 
 			currentAngle = startAngle;
 			currentRotation = startRotation;
 			currentZoom = startZoom;
 		}
 
-		public IEnumerator cutsceneAnimation()
+		public IEnumerator CutsceneAnimation()
 		{
 			cutscene = true;
 
@@ -85,7 +88,7 @@ namespace Proeve
 				currentZoom -= cameraInput.deltaZoom / 40f;
 				currentZoom = currentZoom < minZoom ? minZoom : currentZoom > maxZoom ? maxZoom : currentZoom;
 
-				setCameraPosition(currentAngle, currentRotation, currentZoom);
+				SetCameraPosition(currentAngle, currentRotation, currentZoom);
 			}
 		}
 
@@ -97,21 +100,33 @@ namespace Proeve
 			}
 			else if(cutsceneUpdateInEditor)
 			{
-				setCameraPosition(cutsceneAngle, cutsceneRotation, cutsceneZoom);
+				SetCameraPosition(cutsceneAngle, cutsceneRotation, cutsceneZoom);
 			}
 			else if(startUpdateInEditor)
 			{
-				setCameraPosition(startAngle, startRotation, startZoom);
+				SetCameraPosition(startAngle, startRotation, startZoom);
 			}
 		}
 
-		public void setCameraPosition(float _angle, float _rotation, float _zoom)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_angle"></param>
+		/// <param name="_rotation"></param>
+		/// <param name="_zoom"></param>
+		public void SetCameraPosition(float _angle, float _rotation, float _zoom)
 		{
 			transform.rotation = SettingsToQuaternion(_angle, _rotation);
 			cam.transform.localPosition = new Vector3(0f, 0f, _zoom);
 			cam.transform.LookAt(transform);
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="_angle"></param>
+		/// <param name="_rotation"></param>
+		/// <returns></returns>
 		private Quaternion SettingsToQuaternion(float _angle, float _rotation)
 		{
 			return Quaternion.Euler(new Vector3(-_angle, _rotation, 0f));
