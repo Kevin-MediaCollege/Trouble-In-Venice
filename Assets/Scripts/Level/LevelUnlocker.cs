@@ -10,8 +10,22 @@ public class LevelUnlocker : IDependency
 
 	public LevelUnlocker()
 	{
-		unlockedLevelIndex = PlayerPrefs.GetInt(LEVEL_INDEX_PLAYERPREFS_KEY, 0);
-		Debug.Log("Unlocked level " + unlockedLevelIndex);
+		if(Application.isPlaying)
+		{
+			unlockedLevelIndex = PlayerPrefs.GetInt(LEVEL_INDEX_PLAYERPREFS_KEY, 0);
+			Debug.Log("Unlocked level " + unlockedLevelIndex);
+		}
+	}
+
+	public void Reset()
+	{
+		// Save PlayerPrefs
+		PlayerPrefs.SetInt(LEVEL_INDEX_PLAYERPREFS_KEY, 0);
+		PlayerPrefs.Save();
+
+		unlockedLevelIndex = 0;
+
+		Debug.Log("Reset level progress");
 	}
 
 	public bool Unlock(int _level, bool _unlockPrerequisites = false)
