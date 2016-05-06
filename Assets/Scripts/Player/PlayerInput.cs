@@ -7,7 +7,16 @@ public class PlayerInput : MonoBehaviour
 	[SerializeField] private EntityNodeTracker nodeTracker;
 	[SerializeField] private EntityMovement movement;
 
+	private Dictionary<SpriteRenderer, Color> originalNodeColors;
+	private SpriteRenderer selected;
+	private Color selectedOrigColor;
+
 	private SwipeHandle swipeHandle;
+
+	protected void Awake()
+	{
+		originalNodeColors = new Dictionary<SpriteRenderer, Color>();
+	}
 
 	protected void OnEnable()
 	{
@@ -58,7 +67,22 @@ public class PlayerInput : MonoBehaviour
 
 			if(closestNode != Vector2.zero)
 			{
+				foreach(KeyValuePair<SpriteRenderer, Color> kvp in originalNodeColors)
+				{
+					kvp.Key.color = kvp.Value;
+				}
+
+				originalNodeColors.Clear();
+
 				movement.Move(closestNode);
+
+				foreach(GridNode node in nodeTracker.CurrentNode.Connections)
+				{
+					SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
+					originalNodeColors.Add(sr, sr.color);
+
+					sr.color = Color.blue;
+				}
 			}
 		}
 		//====================================================================
@@ -103,6 +127,21 @@ public class PlayerInput : MonoBehaviour
 		{
 			swipeHandle = _evt.Handle;
 			swipeHandle.IsConsumed = true;
+
+			foreach(KeyValuePair<SpriteRenderer, Color> kvp in originalNodeColors)
+			{
+				kvp.Key.color = kvp.Value;
+			}
+
+			originalNodeColors.Clear();
+
+			foreach(GridNode node in nodeTracker.CurrentNode.Connections)
+			{
+				SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
+				originalNodeColors.Add(sr, sr.color);
+
+				sr.color = Color.blue;
+			}
 		}
 	}
 
@@ -110,7 +149,31 @@ public class PlayerInput : MonoBehaviour
 	{
 		if(_evt.Handle == swipeHandle)
 		{
+			GridNode node = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + GetSwipeDirection());
 			
+			if(node != null && nodeTracker.CurrentNode.HasConnection(node))
+			{
+				SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
+				
+				if(selected != sr)
+				{
+					if(selected != null)
+					{
+						selected.color = selectedOrigColor;
+					}
+
+					selected = sr;
+					selectedOrigColor = selected.color;
+					selected.color = Color.yellow;
+				}
+			}
+			else
+			{
+				if(selected != null)
+				{
+					selected.color = selectedOrigColor;
+				}
+			}
 		}
 	}
 
@@ -118,8 +181,16 @@ public class PlayerInput : MonoBehaviour
 	{
 		if(_evt.Handle == swipeHandle)
 		{
+			foreach(KeyValuePair<SpriteRenderer, Color> kvp in originalNodeColors)
+			{
+				kvp.Key.color = kvp.Value;
+			}
+
+			originalNodeColors.Clear();
+
 			movement.Move(GetSwipeDirection());
 			swipeHandle = null;
+			selected = null;
 		}
 	}
 }
