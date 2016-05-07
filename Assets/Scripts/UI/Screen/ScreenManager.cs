@@ -22,6 +22,7 @@ namespace Proeve
 			instance = this;
 			switching = false;
 			screenListLenght = screenList.Length;
+			DebugCommand.RegisterCommand(OnSetScreenCommand, "screen", "[name]");
 
 			for(int i = 0; i < screenListLenght; i++)
 			{
@@ -38,14 +39,16 @@ namespace Proeve
 		/// 
 		/// </summary>
 		/// <param name="_screen"></param>
-		public void SwitchScreen(string _screen)
+		public bool SwitchScreen(string _screen)
 		{
 			ScreenBase nextScreen;
 			if(!switching && (nextScreen = GetScreenByName(_screen)) != null)
 			{
 				switching = true;
 				StartCoroutine(SetScreen(nextScreen));
+				return true;
 			}
+			return false;
 		}
 
 		/// <summary>
@@ -89,6 +92,21 @@ namespace Proeve
 
 			Debug.LogError("screen name not found!");
 			return null;
+		}
+
+		private void OnSetScreenCommand(string[] _params)
+		{
+			if(_params.Length > 0 && !string.IsNullOrEmpty(_params[0]))
+			{
+				if(SwitchScreen(_params[0]))
+				{
+					DebugConsole.Log("Switching to screen: " + _params[0]);	
+				}
+				else
+				{
+					DebugConsole.Log("Cannot switch to screen: " + _params[0], new Color32(255, 0, 0, 255));
+				}
+			}
 		}
 	}
 }
