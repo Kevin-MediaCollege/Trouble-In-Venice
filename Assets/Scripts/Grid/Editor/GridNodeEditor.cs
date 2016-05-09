@@ -86,6 +86,12 @@ namespace Proeve
 			GridNode node1 = target as GridNode;
 			GridNode node2 = element.objectReferenceValue as GridNode;
 
+			if(node2 == null)
+			{
+				prop_connections.DeleteArrayElementAtIndex(_index);
+				return;
+			}
+
 			_position.y += 3;
 			_position.height = EditorGUIUtility.singleLineHeight;
 

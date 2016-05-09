@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Utils;
 
 namespace Proeve
@@ -25,7 +26,12 @@ namespace Proeve
 
 		protected void Start()
 		{
-			currentNode.AddEntity(GetComponent<Entity>());
+			if(CurrentNode == null)
+			{
+				throw new InvalidOperationException("Entity must be attached to a GridNode");
+			}
+
+			CurrentNode.AddEntity(GetComponent<Entity>());
 		}
 	}
 }
