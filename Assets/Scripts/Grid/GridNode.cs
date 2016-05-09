@@ -139,10 +139,12 @@ namespace Proeve
 				LevelCompleter levelCompleter = GetComponent<LevelCompleter>();
 				if(levelCompleter != null)
 				{
+#if UNITY_EDITOR
 					UnityEditor.EditorApplication.delayCall += () =>
 					{
 						DestroyImmediate(levelCompleter);
 					};
+#endif
 				}
 
 				switch(type)
