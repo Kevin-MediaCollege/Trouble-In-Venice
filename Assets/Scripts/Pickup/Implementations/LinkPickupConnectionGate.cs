@@ -7,25 +7,24 @@ namespace Proeve
 	/// <summary>
 	/// 
 	/// </summary>
-	public class LinkPickupConnectionDoor : LinkPickupConnection
+	public class LinkPickupConnectionGate : LinkPickupConnection
 	{
+		[SerializeField] private Animator animator;
 		[SerializeField] private bool startOpen;
 
 		private EntityNodeTracker nodeTracker;
-		private new Renderer renderer;
 
 		protected void Awake()
 		{
 			nodeTracker = GetComponent<EntityNodeTracker>();
-			renderer = GetComponent<Renderer>();
 		
 			nodeTracker.CurrentNode.Active = startOpen;
-			renderer.enabled = !startOpen;
+			animator.SetBool("Open", startOpen);
 		}
 
 		protected void OnValidate()
 		{
-			GetComponent<Renderer>().enabled = !startOpen;
+			animator.SetBool("Open", startOpen);
 		}
 
 		/// <summary>
@@ -34,7 +33,7 @@ namespace Proeve
 		public override void OnPickup()
 		{
 			nodeTracker.CurrentNode.Active = !nodeTracker.CurrentNode.Active;		
-			renderer.enabled = !renderer.enabled;
+			animator.SetBool("Open", !animator.GetBool("Open"));
 		}
 	}
 }

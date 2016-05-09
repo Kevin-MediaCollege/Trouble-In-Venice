@@ -12,14 +12,12 @@ namespace Proeve
 		protected GridNode node;
 
 		protected bool used;
-
-		private new Renderer renderer;
+		
 		private bool active;
 
 		protected void OnEnable()
 		{
 			node = GetComponent<EntityNodeTracker>().CurrentNode;
-			renderer = GetComponent<Renderer>();
 
 			node.onEntityEnteredEvent += OnEntityEntered;
 			node.onEntityLeftEvent += OnEntityLeft;
@@ -40,11 +38,6 @@ namespace Proeve
 				if(used)
 				{
 					OnDeactivate();
-
-					if(!enabled)
-					{
-						renderer.enabled = false;
-					}
 				}
 			}
 		}
@@ -59,8 +52,7 @@ namespace Proeve
 			{
 				active = true;
 				used = false;
-
-				renderer.enabled = false;
+				
 				OnActivate();
 			}
 		}
@@ -74,7 +66,6 @@ namespace Proeve
 			if(_entity.HasTag("Player"))
 			{
 				active = false;
-				renderer.enabled = true;
 			}
 		}
 

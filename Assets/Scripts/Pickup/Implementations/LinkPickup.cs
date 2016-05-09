@@ -8,6 +8,7 @@ namespace Proeve
 	/// </summary>
 	public class LinkPickup : Pickup
 	{
+		[SerializeField] private Animator animator;
 		[SerializeField] private LinkPickupConnection[] connections;
 
 		/// <summary>
@@ -15,6 +16,8 @@ namespace Proeve
 		/// </summary>
 		protected override void OnActivate()
 		{
+			animator.SetTrigger("Switch");
+
 			foreach(LinkPickupConnection connection in connections)
 			{
 				connection.OnPickup();

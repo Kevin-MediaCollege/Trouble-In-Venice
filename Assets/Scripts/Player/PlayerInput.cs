@@ -84,10 +84,13 @@ namespace Proeve
 
 					foreach(GridNode node in nodeTracker.CurrentNode.Connections)
 					{
-						SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
-						originalNodeColors.Add(sr, sr.color);
+						if(node.Active)
+						{
+							SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
+							originalNodeColors.Add(sr, sr.color);
 
-						sr.color = Color.blue;
+							sr.color = Color.blue;
+						}
 					}
 				}
 			}
@@ -157,10 +160,13 @@ namespace Proeve
 
 				foreach(GridNode node in nodeTracker.CurrentNode.Connections)
 				{
-					SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
-					originalNodeColors.Add(sr, sr.color);
+					if(node.Active)
+					{
+						SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
+						originalNodeColors.Add(sr, sr.color);
 
-					sr.color = Color.blue;
+						sr.color = Color.blue;
+					}
 				}
 			}
 		}
@@ -175,7 +181,7 @@ namespace Proeve
 			{
 				GridNode node = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + GetSwipeDirection());
 
-				if(node != null && nodeTracker.CurrentNode.HasConnection(node))
+				if(node != null && nodeTracker.CurrentNode.HasConnection(node) && node.Active)
 				{
 					SpriteRenderer sr = node.GetComponent<SpriteRenderer>();
 
