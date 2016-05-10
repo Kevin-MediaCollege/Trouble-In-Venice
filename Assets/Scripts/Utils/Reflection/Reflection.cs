@@ -6,7 +6,7 @@ using System.Linq;
 namespace Utils
 {
 	/// <summary>
-	/// A bunch of reflection utilities.
+	/// A collection of reflection utilities.
 	/// </summary>
 	public static class Reflection
 	{

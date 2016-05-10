@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Utils
+﻿namespace Utils
 {
 	/// <summary>
-	/// 
+	/// Base interface for dependencies.
 	/// </summary>
 	public interface IDependency
 	{

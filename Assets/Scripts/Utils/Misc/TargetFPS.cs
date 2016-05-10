@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Utils
 {
 	/// <summary>
-	/// 
+	/// Set the target framerate of the application.
 	/// </summary>
 	public class TargetFPS : MonoBehaviour
 	{

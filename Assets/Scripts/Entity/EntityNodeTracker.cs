@@ -4,10 +4,13 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// The Entity Node Tracker, automatically tracks which <see cref="GridNode"/> the entity is on.
+	/// </summary>
 	public class EntityNodeTracker : MonoBehaviour
 	{
 		/// <summary>
-		/// 
+		/// The current node.
 		/// </summary>
 		public GridNode CurrentNode
 		{

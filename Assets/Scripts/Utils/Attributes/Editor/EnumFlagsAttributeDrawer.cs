@@ -3,6 +3,9 @@ using UnityEditor;
 
 namespace Utils
 {
+	/// <summary>
+	/// The property drawer <see cref="EnumFlagsAttribute"/>.
+	/// </summary>
 	[CustomPropertyDrawer(typeof(EnumFlagsAttribute))]
 	public class EnumFlagsAttributeDrawer : PropertyDrawer
 	{

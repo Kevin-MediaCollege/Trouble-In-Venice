@@ -26,12 +26,12 @@ using UnityEngine.Audio;
 namespace Snakybo.Audio
 {
 	/// <summary>
-	/// 
+	/// A single <see cref="AudioObject"/>, contains most of the AudioClip properties.
 	/// </summary>
 	public class AudioObjectSingle : AudioObject
 	{
 		/// <summary>
-		/// 
+		/// The type of the audio object.
 		/// </summary>
 		public AudioType Type
 		{
@@ -62,10 +62,6 @@ namespace Snakybo.Audio
 		[SerializeField] private bool bypassListenerEffects;
 		[SerializeField] private bool bypassReverbZones;
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_audioSource"></param>
 		internal void ApplySettings(AudioSource _audioSource)
 		{
 			_audioSource.clip = audioClip;

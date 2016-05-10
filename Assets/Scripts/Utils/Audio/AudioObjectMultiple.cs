@@ -25,16 +25,16 @@ using UnityEngine;
 namespace Snakybo.Audio
 {
 	/// <summary>
-	/// 
+	/// Represents a collection of <see cref="AudioObjectSingle"/>
 	/// </summary>
 	public class AudioObjectMultiple : AudioObject
 	{
 		[SerializeField] private AudioObjectSingle[] available;
 
 		/// <summary>
-		/// 
+		/// Get the next <see cref="AudioObjectSingle"/>.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>The next <see cref="AudioObjectSingle"/></returns>
 		public AudioObjectSingle Next()
 		{
 			return available[Random.Range(0, available.Length)];

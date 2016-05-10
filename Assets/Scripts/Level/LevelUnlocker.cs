@@ -1,12 +1,11 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using Utils;
 
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// The level unlocker dependency, manages the unlocking of levels.
 	/// </summary>
 	public class LevelUnlocker : IDependency
 	{
@@ -14,6 +13,9 @@ namespace Proeve
 
 		private int unlockedLevelIndex;
 
+		/// <summary>
+		/// Create the level unlocker.
+		/// </summary>
 		public LevelUnlocker()
 		{
 			if(Application.isPlaying)
@@ -24,7 +26,7 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Reset the unlocked progress to 0.
 		/// </summary>
 		public void Reset()
 		{
@@ -38,11 +40,15 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Unlock a level.
 		/// </summary>
-		/// <param name="_level"></param>
-		/// <param name="_unlockPrerequisites"></param>
-		/// <returns></returns>
+		/// <remarks>
+		/// If <paramref name="_unlockPrerequisites"/> is set to false,
+		/// and <paramref name="_level"/> is higher than the current unlocked level + 1, it won't do anyting.
+		/// </remarks>
+		/// <param name="_level">The level index to unlock.</param>
+		/// <param name="_unlockPrerequisites">Whether or not to unlock all levels before <paramref name="_level"/> as well.</param>
+		/// <returns>Whether or not the level unlock was successful.</returns>
 		public bool Unlock(int _level, bool _unlockPrerequisites = false)
 		{
 			if(_level < 0)
@@ -73,10 +79,10 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Check whether or not the specified level has been unlocked.
 		/// </summary>
-		/// <param name="_level"></param>
-		/// <returns></returns>
+		/// <param name="_level">The level index.</param>
+		/// <returns>Whether or not the specified level has been unlocked.</returns>
 		public bool IsUnlocked(int _level)
 		{
 			return _level <= unlockedLevelIndex;

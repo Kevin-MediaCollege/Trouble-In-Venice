@@ -4,6 +4,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// A collection of project specific editor utilities.
+	/// </summary>
 	public static class EditorUtils
 	{
 		[MenuItem("Tools/Reset Unlocked Levels")]

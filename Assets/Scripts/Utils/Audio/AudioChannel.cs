@@ -25,18 +25,21 @@ using UnityEngine;
 namespace Snakybo.Audio
 {
 	/// <summary>
-	/// 
+	/// An audio channel.
 	/// </summary>
 	public class AudioChannel : MonoBehaviour
 	{
 		/// <summary>
-		/// 
+		/// The current <see cref="AudioObjectSingle"/> assigned to this channel.
 		/// </summary>
 		public AudioObjectSingle AudioObject { private set; get; }
 
 		/// <summary>
-		/// 
+		/// The volume of the channel.
 		/// </summary>
+		/// <remarks>
+		/// <paramref name="value"/> is clamped to [0, 1].
+		/// </remarks>
 		public float Volume
 		{
 			set { audioSource.volume = Mathf.Clamp01(value); }
@@ -44,8 +47,11 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// The pitch of the channel.
 		/// </summary>
+		/// <remarks>
+		/// <paramref name="value"/> is clamped to [0, 1].
+		/// </remarks>
 		public float Pitch
 		{
 			set { audioSource.pitch = Mathf.Clamp01(value); }
@@ -53,8 +59,11 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// The stereo pan of the channel.
 		/// </summary>
+		/// <remarks>
+		/// <paramref name="value"/> is clamped to [0, 1].
+		/// </remarks>
 		public float StereoPan
 		{
 			set { audioSource.panStereo = Mathf.Clamp01(value); }
@@ -62,8 +71,11 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// The spatial blend of the channel.
 		/// </summary>
+		/// <remarks>
+		/// <paramref name="value"/> is clamped to [0, 1].
+		/// </remarks>
 		public float SpatialBlend
 		{
 			set { audioSource.spatialBlend = Mathf.Clamp01(value); }
@@ -71,8 +83,11 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// The reverb zone mix of the channel.
 		/// </summary>
+		/// <remarks>
+		/// <paramref name="value"/> is clamped to [0, 1].
+		/// </remarks>
 		public float ReverbZoneMix
 		{
 			set { audioSource.reverbZoneMix = Mathf.Clamp(value, 0, 1.1f); }
@@ -80,7 +95,7 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Whether or not the channel is muted.
 		/// </summary>
 		public bool Mute
 		{
@@ -89,7 +104,7 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Whether or not the channel should loop the current <see cref="AudioObject"/>
 		/// </summary>
 		public bool Loop
 		{
@@ -98,7 +113,7 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Whether or not the channel is currently playing something.
 		/// </summary>
 		public bool IsPlaying
 		{
@@ -122,10 +137,6 @@ namespace Snakybo.Audio
 			}
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_audioObject"></param>
 		internal void Play(AudioObjectSingle _audioObject)
 		{
 			AudioObject = _audioObject;
@@ -135,7 +146,7 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Pause the channel.
 		/// </summary>
 		public void Pause()
 		{
@@ -144,7 +155,7 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Resume the channel.
 		/// </summary>
 		public void UnPause()
 		{
@@ -153,7 +164,7 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Stop the channel.
 		/// </summary>
 		public void Stop()
 		{

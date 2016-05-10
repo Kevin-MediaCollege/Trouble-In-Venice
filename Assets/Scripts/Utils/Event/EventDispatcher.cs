@@ -11,6 +11,9 @@ namespace Utils
 		private Dictionary<Type, Action<object>> eventCallbacks;
 		private Dictionary<object, Action<object>> delegateLookup;
 
+		/// <summary>
+		/// Create a new <see cref="EventDispatcher"/>.
+		/// </summary>
 		public EventDispatcher()
 		{
 			eventCallbacks = new Dictionary<Type, Action<object>>();

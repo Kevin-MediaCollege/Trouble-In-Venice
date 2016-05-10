@@ -4,15 +4,13 @@ using UnityEngine;
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// A throwable pickup, can be thrown to neighbouring nodes when
+	/// when picked up by the player <see cref="Utils.Entity"/>.
 	/// </summary>
 	public class ThrowablePickup : Pickup
 	{
 		private List<GridNode> nodes;
 
-		/// <summary>
-		/// 
-		/// </summary>
 		protected override void OnActivate()
 		{
 			nodes = new List<GridNode>(GridUtils.GetNeighbours(node));
@@ -20,9 +18,6 @@ namespace Proeve
 			HighlightNodes(Color.blue);
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
 		protected override void OnUpdate()
 		{
 			// Wait for mouse button press
@@ -40,10 +35,6 @@ namespace Proeve
 			}
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_color"></param>
 		private void HighlightNodes(Color _color)
 		{
 			foreach(GridNode node in nodes)

@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Editor add-on for <see cref="GridNode"/>.
+	/// </summary>
 	[CustomEditor(typeof(GridNode))]
 	public class GridNodeEditor : Editor
 	{

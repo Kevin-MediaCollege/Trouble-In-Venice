@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Utils;
 
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Handles player input.
 	/// </summary>
 	public class PlayerInput : MonoBehaviour
 	{
@@ -96,11 +95,7 @@ namespace Proeve
 			}
 			//====================================================================
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
+		
 		private Vector2 GetSwipeDirection()
 		{
 			Vector2 current = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.PositionXZ));
@@ -127,23 +122,13 @@ namespace Proeve
 
 			return closestNode;
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_a"></param>
-		/// <param name="_b"></param>
-		/// <returns></returns>
+		
 		private float GetRotationDifference(float _a, float _b)
 		{
 			_b += _b > _a + 180f ? -360f : _b < _a - 180f ? 360f : 0f;
 			return _a - _b;
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_evt"></param>
+		
 		private void OnSwipeBeganEvent(SwipeBeganEvent _evt)
 		{
 			if(GridUtils.GetNodeAtGUI(_evt.Handle.StartPosition) == nodeTracker.CurrentNode)
@@ -171,10 +156,6 @@ namespace Proeve
 			}
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_evt"></param>
 		private void OnSwipeUpdateEvent(SwipeUpdateEvent _evt)
 		{
 			if(_evt.Handle == swipeHandle)
@@ -206,11 +187,7 @@ namespace Proeve
 				}
 			}
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_evt"></param>
+		
 		private void OnSwipeEndedEvent(SwipeEndedEvent _evt)
 		{
 			if(_evt.Handle == swipeHandle)

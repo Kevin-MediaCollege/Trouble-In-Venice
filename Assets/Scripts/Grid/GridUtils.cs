@@ -3,10 +3,13 @@ using UnityEngine;
 
 namespace Proeve
 {
+	/// <summary>
+	/// A collection of <see cref="Grid"/> utilities.
+	/// </summary>
 	public static class GridUtils
 	{
 		/// <summary>
-		/// 
+		/// Get the starting node of the <see cref="Grid"/>.
 		/// </summary>
 		public static GridNode Start
 		{
@@ -25,7 +28,7 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Get the end node of the <see cref="Grid"/>.
 		/// </summary>
 		public static GridNode End
 		{
@@ -43,9 +46,7 @@ namespace Proeve
 			}
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
+		private static Grid grid;
 		private static Grid Grid
 		{
 			get
@@ -59,25 +60,23 @@ namespace Proeve
 			}
 		}
 
-		private static Grid grid;
-
 		/// <summary>
-		/// 
+		/// Get all neighbours of a <see cref="GridNode"/>.
 		/// </summary>
-		/// <param name="node"></param>
-		/// <returns></returns>
-		public static IEnumerable<GridNode> GetNeighbours(GridNode node)
+		/// <param name="_node">The target node.</param>
+		/// <returns>All neighbours of <paramref name="_node"/>.</returns>
+		public static IEnumerable<GridNode> GetNeighbours(GridNode _node)
 		{
 			List<GridNode> result = new List<GridNode>();
 
-			result.Add(GetNodeAt(node.GridPosition + new Vector2(0, 1))); // Up
-			result.Add(GetNodeAt(node.GridPosition + new Vector2(-1, 1))); // Up-left
-			result.Add(GetNodeAt(node.GridPosition + new Vector2(-1, 0))); // Left
-			result.Add(GetNodeAt(node.GridPosition + new Vector2(-1, -1))); // Down-left
-			result.Add(GetNodeAt(node.GridPosition + new Vector2(0, -1))); // Down
-			result.Add(GetNodeAt(node.GridPosition + new Vector2(1, -1))); // Down-right
-			result.Add(GetNodeAt(node.GridPosition + new Vector2(1, 0))); // Right
-			result.Add(GetNodeAt(node.GridPosition + new Vector2(1, 1))); // Up-right
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(0, 1))); // Up
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(-1, 1))); // Up-left
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(-1, 0))); // Left
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(-1, -1))); // Down-left
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(0, -1))); // Down
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(1, -1))); // Down-right
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(1, 0))); // Right
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(1, 1))); // Up-right
 
 			// Remove all null-entries
 			result.RemoveAll(element => element == null);
@@ -85,23 +84,30 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Get the <see cref="GridNode"/> at the specified position.
 		/// </summary>
-		/// <param name="position"></param>
+		/// <remarks>
+		/// <paramref name="_position"/> represents a position on the grid, not transform.position.
+		/// </remarks>
+		/// <param name="_position">The position of the node.</param>
+		/// <returns>The <see cref="GridNode"/> at the specified position, or null if there is none.</returns>
 		/// <returns></returns>
-		public static GridNode GetNodeAt(Vector2 position)
+		public static GridNode GetNodeAt(Vector2 _position)
 		{
-			return Grid.GetNodeAt(position);
+			return Grid.GetNodeAt(_position);
 		}
 
 		/// <summary>
-		/// 
+		/// Get the <see cref="GridNode"/> at the specified position.
 		/// </summary>
-		/// <param name="position"></param>
-		/// <returns></returns>
-		public static GridNode GetNodeAtGUI(Vector2 position)
+		/// <remarks>
+		/// <paramref name="_position"/> represents a screen space coordinate.
+		/// </remarks>
+		/// <param name="_position">The position of the node.</param>
+		/// <returns>The <see cref="GridNode"/> at the specified position.</returns>
+		public static GridNode GetNodeAtGUI(Vector2 _position)
 		{
-			Ray ray = Camera.main.ScreenPointToRay(position);
+			Ray ray = Camera.main.ScreenPointToRay(_position);
 			RaycastHit[] hits = Physics.RaycastAll(ray);
 
 			foreach(RaycastHit hit in hits)

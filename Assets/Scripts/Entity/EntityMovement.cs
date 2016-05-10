@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Utils;
 
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Base class for entity movement, allows entities to move to and look at neighbouring nodes.
 	/// </summary>
+	/// <remarks>
+	/// Requires an <see cref="EntityNodeTracker"/> component to work.
+	/// </remarks>
 	[RequireComponent(typeof(EntityNodeTracker))]
 	public class EntityMovement : MonoBehaviour
 	{
@@ -27,20 +29,19 @@ namespace Proeve
 			nodeTracker = GetComponent<EntityNodeTracker>();
 		}
 
-		protected void OnDrawGizmos()
-		{
-			Gizmos.color = Color.green;
-			GizmosUtils.DrawArrowXZ(transform.position + Vector3.up, transform.forward / 2, 0.3f, 0.5f);
-		}
-
 		/// <summary>
-		/// 
+		/// Move the entity in the specified direction.
+		/// If there is no connecting node in the specified direction, nothing will happen.
 		/// </summary>
-		/// <param name="_direction"></param>
+		/// <remarks>
+		/// <paramref name="_direction"/> is a normalized Vector2.
+		/// </remarks>
+		/// <param name="_direction">The direction to move in, should be normalized.</param>
 		public void Move(Vector2 _direction)
 		{
 			LookAt(_direction);
 
+			_direction.Normalize();
 			GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
 			if(target != null && target.Active)
 			{
@@ -63,11 +64,16 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Look in the specified direction.
 		/// </summary>
-		/// <param name="_direction"></param>
+		/// <remarks>
+		/// <paramref name="_direction"/> is a normalized Vector2.
+		/// </remarks>
+		/// <param name="_direction">The direction to look at, should be normalized.</param>
 		public void LookAt(Vector2 _direction)
 		{
+			_direction.Normalize();
+
 			Quaternion rotation = Quaternion.LookRotation(new Vector3(_direction.x, 0, _direction.y));
 			transform.rotation = rotation;
 		}

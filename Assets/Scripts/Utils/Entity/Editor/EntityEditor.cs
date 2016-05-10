@@ -4,6 +4,9 @@ using UnityEditorInternal;
 
 namespace Utils
 {
+	/// <summary>
+	/// Inspector for <see cref="Entity"/>.
+	/// </summary>
 	[CustomEditor(typeof(Entity))]
 	public class EntityEditor : Editor
 	{

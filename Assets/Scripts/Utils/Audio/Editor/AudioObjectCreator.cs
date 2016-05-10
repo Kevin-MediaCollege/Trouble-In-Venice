@@ -27,6 +27,9 @@ using UnityEngine;
 
 namespace Snakybo.Audio
 {
+	/// <summary>
+	/// Editor class to create <see cref="AudioObject"/>s.
+	/// </summary>
 	public static class AudioObjectCreator
 	{
 		[MenuItem("Audio/Create AudioObjects from AudioClips")]

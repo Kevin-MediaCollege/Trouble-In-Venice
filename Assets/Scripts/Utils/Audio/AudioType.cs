@@ -23,14 +23,33 @@
 namespace Snakybo.Audio
 {
 	/// <summary>
-	/// 
+	/// All available audio types.
 	/// </summary>
 	public enum AudioType
 	{
+		/// <summary>
+		/// A music clip.
+		/// </summary>
 		Music,
+		
+		/// <summary>
+		/// A sound effect.
+		/// </summary>
 		SFX,
+
+		/// <summary>
+		/// Ambient/background noise.
+		/// </summary>
 		Ambient,
+
+		/// <summary>
+		/// Character speech.
+		/// </summary>
 		Speech,
+
+		/// <summary>
+		/// UI feedback.
+		/// </summary>
 		UI
 	}
 }

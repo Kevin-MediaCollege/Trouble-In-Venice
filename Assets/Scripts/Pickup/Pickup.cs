@@ -5,7 +5,7 @@ using Utils;
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// The base class for pickups, handles activation, updating an deactivation of implementations.
 	/// </summary>
 	public abstract class Pickup : MonoBehaviour
 	{
@@ -41,11 +41,7 @@ namespace Proeve
 				}
 			}
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_entity"></param>
+		
 		private void OnEntityEntered(Entity _entity)
 		{
 			if(_entity.HasTag("Player"))
@@ -56,11 +52,7 @@ namespace Proeve
 				OnActivate();
 			}
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_entity"></param>
+		
 		private void OnEntityLeft(Entity _entity)
 		{
 			if(_entity.HasTag("Player"))
@@ -70,21 +62,21 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Invoked when the pickup should activate.
 		/// </summary>
 		protected virtual void OnActivate()
 		{
 		}
 
 		/// <summary>
-		/// 
+		/// Invoked when the pickup should deactivate.
 		/// </summary>
 		protected virtual void OnDeactivate()
 		{
 		}
 
 		/// <summary>
-		/// 
+		/// Invoked when the pickup should update.
 		/// </summary>
 		protected virtual void OnUpdate()
 		{

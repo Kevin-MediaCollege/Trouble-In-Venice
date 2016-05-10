@@ -25,6 +25,9 @@ using UnityEditor;
 
 namespace Snakybo.Audio
 {
+	/// <summary>
+	/// Inspector for <see cref="AudioObjectSingle"/>.
+	/// </summary>
 	[CustomEditor(typeof(AudioObjectSingle))]
 	[CanEditMultipleObjects]
 	public class AudioObjectSingleEditor : Editor

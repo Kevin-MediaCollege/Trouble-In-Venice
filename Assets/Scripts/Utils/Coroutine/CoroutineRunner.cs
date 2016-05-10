@@ -4,7 +4,7 @@ using System.Collections;
 namespace Utils
 {
 	/// <summary>
-	/// 
+	/// Coroutine runner dependency, allows you to run coroutines on non-MonoBehaviours.
 	/// </summary>
 	public class CoroutineRunner : IDependency
 	{
@@ -26,7 +26,7 @@ namespace Utils
 		}
 
 		/// <summary>
-		/// 
+		/// Dispose of the <see cref="CoroutineRunner"/>
 		/// </summary>
 		public void Dispose()
 		{
@@ -37,28 +37,28 @@ namespace Utils
 		}
 
 		/// <summary>
-		/// 
+		/// Start a coroutine.
 		/// </summary>
-		/// <param name="_routine"></param>
-		/// <returns></returns>
+		/// <param name="_routine">The coroutine to start.</param>
+		/// <returns>The coroutine.</returns>
 		public Coroutine StartCoroutine(IEnumerator _routine)
 		{
 			return CoroutineRunnerHelper.StartCoroutine(_routine);
 		}
 
 		/// <summary>
-		/// 
+		/// Stop a coroutine.
 		/// </summary>
-		/// <param name="routine"></param>
+		/// <param name="routine">The coroutine to stop.</param>
 		public void StopCoroutine(IEnumerator routine)
 		{
 			CoroutineRunnerHelper.StopCoroutine(routine);
 		}
 
 		/// <summary>
-		/// 
+		/// Stop a coroutine.
 		/// </summary>
-		/// <param name="routine"></param>
+		/// <param name="routine">The coroutine to stop.</param>
 		public void StopCoroutine(Coroutine routine)
 		{
 			CoroutineRunnerHelper.StopCoroutine(routine);

@@ -27,23 +27,14 @@ using System;
 namespace Snakybo.Audio
 {
 	/// <summary>
-	/// 
+	/// The audio player, handles the playing, stopping and pausing of <see cref="AudioChannel"/>s.
 	/// </summary>
 	public static class AudioPlayer
 	{
-		/// <summary>
-		/// 
-		/// </summary>
 		private static class AudioManager
 		{
-			/// <summary>
-			/// 
-			/// </summary>
 			public const int NUM_CHANNELS = 64;
 
-			/// <summary>
-			/// 
-			/// </summary>
 			internal static IEnumerable<AudioChannel> Channels
 			{
 				get
@@ -71,10 +62,6 @@ namespace Snakybo.Audio
 				}
 			}
 
-			/// <summary>
-			/// 
-			/// </summary>
-			/// <returns></returns>
 			internal static AudioChannel GetNext()
 			{
 				foreach(AudioChannel channel in channels)
@@ -88,11 +75,6 @@ namespace Snakybo.Audio
 				return null;
 			}
 
-			/// <summary>
-			/// 
-			/// </summary>
-			/// <param name="_type"></param>
-			/// <returns></returns>
 			internal static IEnumerable<AudioChannel> GetOfType(AudioType _type)
 			{
 				HashSet<AudioChannel> result = new HashSet<AudioChannel>();
@@ -110,10 +92,10 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Attempt to play an <see cref="AudioObject"/>, if no suitable <see cref="AudioChannel"/> is found it will return null.
 		/// </summary>
-		/// <param name="_audioObject"></param>
-		/// <returns></returns>
+		/// <param name="_audioObject">The <see cref="AudioObject"/> to play.</param>
+		/// <returns>The <see cref="AudioChannel"/> the <see cref="AudioObject"/> is playing on, or null.</returns>
 		public static AudioChannel Play(this AudioObject _audioObject)
 		{
 			if(_audioObject == null)
@@ -154,7 +136,7 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Stop all playing <see cref="AudioChannel"/>s.
 		/// </summary>
 		public static void StopAll()
 		{
@@ -165,9 +147,9 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Stop all playing <see cref="AudioChannel"/>s of type <paramref name="_type"/>.
 		/// </summary>
-		/// <param name="_type"></param>
+		/// <param name="_type">The type.</param>
 		public static void StopAll(AudioType _type)
 		{
 			foreach(AudioChannel audioChannel in AudioManager.GetOfType(_type))
@@ -177,7 +159,7 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// Pause all playing <see cref="AudioChannel"/>s.
 		/// </summary>
 		public static void PauseAll()
 		{
@@ -186,11 +168,11 @@ namespace Snakybo.Audio
 				audioChannel.Pause();
 			}
 		}
-		
+
 		/// <summary>
-		/// 
+		/// Pause all playing <see cref="AudioChannel"/>s of type <paramref name="_type"/>.
 		/// </summary>
-		/// <param name="_type"></param>
+		/// <param name="_type">The type.</param>
 		public static void PauseAll(AudioType _type)
 		{
 			foreach(AudioChannel audioChannel in AudioManager.GetOfType(_type))
@@ -200,7 +182,7 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// UnPause all playing <see cref="AudioChannel"/>s.
 		/// </summary>
 		public static void UnPauseAll()
 		{
@@ -211,9 +193,9 @@ namespace Snakybo.Audio
 		}
 
 		/// <summary>
-		/// 
+		/// UnPause all playing <see cref="AudioChannel"/>s of type <paramref name="_type"/>.
 		/// </summary>
-		/// <param name="_type"></param>
+		/// <param name="_type">The type.</param>
 		public static void UnPauseAll(AudioType _type)
 		{
 			foreach(AudioChannel audioChannel in AudioManager.GetOfType(_type))

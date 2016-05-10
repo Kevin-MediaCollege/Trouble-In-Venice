@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// A gate link connection, uses the Animator to open or close a gate/entrance.
 	/// </summary>
 	public class LinkPickupConnectionGate : LinkPickupConnection
 	{
@@ -26,10 +24,7 @@ namespace Proeve
 		{
 			animator.SetBool("Open", startOpen);
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
+		
 		public override void OnPickup()
 		{
 			nodeTracker.CurrentNode.Active = !nodeTracker.CurrentNode.Active;		

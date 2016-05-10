@@ -1,21 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace Proeve
 {
 	/// <summary>
-	/// The grid of a board, there can only be one grid at a time
+	/// The grid of a level.
 	/// </summary>
 	public class Grid : MonoBehaviour
 	{
+		/// <summary>
+		/// The width in tiles of the grid.
+		/// </summary>
 		public const int WIDTH = 50;
+
+		/// <summary>
+		/// The height in tiles of the grid.
+		/// </summary>
 		public const int HEIGHT = 50;
 
+		/// <summary>
+		/// The tile size in meters of the grid.
+		/// </summary>
 		public const int SIZE = 3;
 
 		/// <summary>
-		/// Get all nodes in the grid
+		/// All <see cref="GridNode"/> in the grid.
 		/// </summary>
 		public IEnumerable<GridNode> Nodes
 		{
@@ -44,7 +53,8 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Draw gizmos of the grid, called by <see cref="OnDrawGizmosSelected"/> and <see cref="GridNode.OnDrawGizmosSelected"/>.
+		/// It will draw the gizmos of the grid and the <see cref="GridNode"/>s.
 		/// </summary>
 		public void DrawGizmos()
 		{
@@ -75,10 +85,10 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Add a <see cref="GridNode"/> to the grid.
 		/// </summary>
-		/// <param name="_node"></param>
-		/// <returns></returns>
+		/// <param name="_node">The node to add.</param>
+		/// <returns>Whether or not the node has been added succesfully.</returns>
 		public bool AddNode(GridNode _node)
 		{
 			if(!nodes.Contains(_node))
@@ -91,19 +101,23 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Remove a <see cref="GridNode"/> from the grid.
 		/// </summary>
-		/// <param name="_node"></param>
-		public void RemoveNode(GridNode _node)
+		/// <param name="_node">The node to remove.</param>
+		/// <returns>Whether or not the node has been removed successfully.</returns>
+		public bool RemoveNode(GridNode _node)
 		{
-			nodes.Remove(_node);
+			return nodes.Remove(_node);
 		}
 
 		/// <summary>
-		/// 
+		/// Get the <see cref="GridNode"/> at the specified position.
 		/// </summary>
-		/// <param name="_position"></param>
-		/// <returns></returns>
+		/// <remarks>
+		/// <paramref name="_position"/> represents a position on the grid, not transform.position.
+		/// </remarks>
+		/// <param name="_position">The position of the node.</param>
+		/// <returns>The <see cref="GridNode"/> at the specified position, or null if there is none.</returns>
 		public GridNode GetNodeAt(Vector2 _position)
 		{
 			if(nodeCache == null)

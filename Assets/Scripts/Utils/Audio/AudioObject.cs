@@ -25,8 +25,15 @@ using UnityEngine;
 namespace Snakybo.Audio
 {
 	/// <summary>
-	/// 
+	/// Base class for <see cref="AudioObjectSingle"/> and <see cref="AudioObjectMultiple"/>.
 	/// </summary>
+	/// <remarks>
+	/// This is the base class for <see cref="AudioObjectSingle"/> and <see cref="AudioObjectMultiple"/> because it allows you to do
+	/// <code>
+	///		public AudioObject myAudioClip;
+	/// </code>
+	/// and easily switch between them.
+	/// </remarks>
 	public abstract class AudioObject : ScriptableObject
 	{
 	}

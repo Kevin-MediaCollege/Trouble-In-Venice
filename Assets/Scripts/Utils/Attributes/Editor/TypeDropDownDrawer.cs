@@ -6,7 +6,7 @@ using System;
 namespace Utils
 {
 	/// <summary>
-	/// The property drawer for the <see cref="TypeDropdownAttribute"/>
+	/// The property drawer for <see cref="TypeDropdownAttribute"/>
 	/// </summary>
 	[CustomPropertyDrawer(typeof(TypeDropdownAttribute))]
 	public class TypeDropdownDrawer : PropertyDrawer

@@ -9,14 +9,14 @@ namespace Utils
 	public class TypeDropdownAttribute : PropertyAttribute
 	{
 		/// <summary>
-		/// 
+		/// The base type.
 		/// </summary>
 		public Type BaseType { private set; get; }
 
 		/// <summary>
-		/// 
+		/// Create a new TypeDropdownAttribute.
 		/// </summary>
-		/// <param name="_baseType"></param>
+		/// <param name="_baseType">The base type.</param>
 		public TypeDropdownAttribute(Type _baseType)
 		{
 			BaseType = _baseType;
