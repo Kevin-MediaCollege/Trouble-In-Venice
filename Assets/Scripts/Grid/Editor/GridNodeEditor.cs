@@ -84,6 +84,11 @@ namespace Proeve
 
 		private void OnDrawElement(Rect _position, int _index, bool _isActive, bool _isFocused)
 		{
+			if(_index >= prop_connections.arraySize)
+			{
+				return;
+			}
+
 			SerializedProperty element = prop_connections.GetArrayElementAtIndex(_index);
 
 			GridNode node1 = target as GridNode;
