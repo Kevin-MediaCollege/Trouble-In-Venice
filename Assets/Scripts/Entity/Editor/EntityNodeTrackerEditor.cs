@@ -3,6 +3,9 @@ using UnityEditor;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Editor add-on for <see cref="EntityNodeTracker"/>.
+	/// </summary>
 	[CustomEditor(typeof(EntityNodeTracker))]
 	public class EntityNodeTrackerEditor : Editor
 	{
