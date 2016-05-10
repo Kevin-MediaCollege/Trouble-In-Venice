@@ -8,9 +8,9 @@ namespace Proeve
 	public class DebugConsole : MonoBehaviour 
 	{
 		public static DebugConsole instance;
+		private static List<LogItem> log = init();
 
 		private Texture2D background;
-		private List<LogItem> log;
 		private bool consoleEnabled = false;
 		private string currentInput = "";
 		private string currentSuggestion = "";
@@ -20,17 +20,35 @@ namespace Proeve
 		void Awake()
 		{
 			instance = this;
-			log = new List<LogItem>();
-			for(int i = 0; i < 10; i++) { log.Add(new LogItem("", Color.white)); }
 
 			background = new Texture2D(1, 1);
 			background.SetPixel(0, 0, new Color32(0, 0, 0, 120));
 			background.Apply();
 		}
 
+		public static List<LogItem> init()
+		{
+			List<LogItem> l = new List<LogItem>();
+			for(int i = 0; i < 10; i++) { l.Add(new LogItem("", Color.white)); }
+			return l;
+		}
+
+		protected void OnEnable()
+		{
+			instance = this;
+		}
+
+		protected void OnDisable()
+		{
+			if (instance == this)
+			{
+				instance = null;
+			}
+		}
+
 		protected void Update()
 		{
-			if(Input.GetKeyDown(KeyCode.BackQuote))
+			if(Input.GetKeyDown(KeyCode.BackQuote) && instance == this)
 			{
 				consoleEnabled = !consoleEnabled;
 				backspaceDelay = 0f;
@@ -120,18 +138,6 @@ namespace Proeve
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="_message"></param>
-		/// <param name="_color"></param>
-		protected void AddMessageToLog(string _message, Color32 _color)
-		{
-			log.RemoveAt(0);
-			log.Add(new LogItem(_message, _color));
-			Debug.Log(_message);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
 		private void updateSuggestion()
 		{
 			if(currentInput.Length > 0)
@@ -195,8 +201,9 @@ namespace Proeve
 		/// <param name="_color"></param>
 		public static void Log(string _message, Color32 _color)
 		{
-			if(instance != null)
-				instance.AddMessageToLog(_message, _color);
+			log.RemoveAt(0);
+			log.Add(new LogItem(_message, _color));
+			Debug.Log(_message);
 		}
 
 		/// <summary>

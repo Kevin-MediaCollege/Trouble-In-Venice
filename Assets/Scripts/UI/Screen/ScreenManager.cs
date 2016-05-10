@@ -22,7 +22,6 @@ namespace Proeve
 			instance = this;
 			switching = false;
 			screenListLenght = screenList.Length;
-			DebugCommand.RegisterCommand(OnSetScreenCommand, "screen", "[name]");
 
 			for(int i = 0; i < screenListLenght; i++)
 			{
@@ -33,6 +32,16 @@ namespace Proeve
 		protected void Start()
 		{
 			SwitchScreen(startScreen);
+		}
+
+		protected void OnEnable()
+		{
+			DebugCommand.RegisterCommand(OnSetScreenCommand, "screen", "[name]");
+		}
+
+		protected void OnDisable()
+		{
+			DebugCommand.UnregisterCommand(OnSetScreenCommand);
 		}
 
 		/// <summary>
