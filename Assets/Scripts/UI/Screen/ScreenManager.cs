@@ -8,12 +8,21 @@ namespace Proeve
 	/// </summary>
 	public class ScreenManager : MonoBehaviour
 	{
+		/// <summary>
+		/// ScreenManager singleton
+		/// </summary>
 		public static ScreenManager instance;
 
+		/// <summary>
+		/// List of screens
+		/// </summary>
 		public ScreenBase[] screenList;
 		private int screenListLenght;
 		private ScreenBase currentScreen;
 
+		/// <summary>
+		/// ScreenBase to load on Awake
+		/// </summary>
 		public string startScreen;
 		private bool switching;
 
@@ -45,9 +54,9 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Switch to a different ScreenBase
 		/// </summary>
-		/// <param name="_screen"></param>
+		/// <param name="_screen">Name of the screen to switch to</param>
 		public bool SwitchScreen(string _screen)
 		{
 			ScreenBase nextScreen;
@@ -60,11 +69,6 @@ namespace Proeve
 			return false;
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_screen"></param>
-		/// <returns></returns>
 		private IEnumerator SetScreen(ScreenBase _screen)
 		{
 			if(currentScreen != null)
@@ -83,12 +87,7 @@ namespace Proeve
 
 			switching = false;
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_name"></param>
-		/// <returns></returns>
+			
 		private ScreenBase GetScreenByName(string _name)
 		{
 			for(int i = 0; i < screenListLenght; i++)

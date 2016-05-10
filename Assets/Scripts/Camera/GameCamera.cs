@@ -7,7 +7,7 @@ using System.Collections;
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Game Camera controls
 	/// </summary>
 	public class GameCamera : MonoBehaviour
 	{
@@ -15,7 +15,7 @@ namespace Proeve
 		public Camera cam;
 
 		[Header("Camera Angle Settings")]
-		public float maxAngle = 75f;
+		public float maxAngle = 90f;
 		public float minAngle = 10f;
 
 		[Header("Camera Zoom Settings")]
@@ -58,6 +58,9 @@ namespace Proeve
 			currentZoom = startZoom;
 		}
 
+		/// <summary>
+		/// Starts the cutscene camera animation
+		/// </summary>
 		public IEnumerator CutsceneAnimation()
 		{
 			cutscene = true;
@@ -109,11 +112,11 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Sets the camera to these settings
 		/// </summary>
-		/// <param name="_angle"></param>
-		/// <param name="_rotation"></param>
-		/// <param name="_zoom"></param>
+		/// <param name="_angle">Camera X rotation</param>
+		/// <param name="_rotation">Camera Y rotation</param>
+		/// <param name="_zoom">Camera distance to center</param>
 		public void SetCameraPosition(float _angle, float _rotation, float _zoom)
 		{
 			transform.rotation = SettingsToQuaternion(_angle, _rotation);
@@ -122,10 +125,10 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Converts Euler rotation to Quaternion
 		/// </summary>
-		/// <param name="_angle"></param>
-		/// <param name="_rotation"></param>
+		/// <param name="_angle">Camera X rotation</param>
+		/// <param name="_rotation">Camera Y rotation</param>
 		/// <returns></returns>
 		private Quaternion SettingsToQuaternion(float _angle, float _rotation)
 		{

@@ -5,7 +5,7 @@ using Utils;
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Controls the camera input
 	/// </summary>
 	public class CameraInput
 	{
@@ -21,7 +21,7 @@ namespace Proeve
 		private bool isMoving;
 
 		/// <summary>
-		/// 
+		/// Creates the camera input class
 		/// </summary>
 		public CameraInput()
 		{
@@ -38,7 +38,7 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Updates the camera input (windows, web and android)
 		/// </summary>
 		public void UpdateInput()
 		{
@@ -134,9 +134,9 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Checks if this screen position hits player
 		/// </summary>
-		/// <param name="_pos"></param>
+		/// <param name="_pos">Position on screen</param>
 		/// <returns></returns>
 		public bool IsTouchingPlayer(Vector2 _pos)
 		{

@@ -5,17 +5,20 @@ using UnityEngine;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Saves and runs commands
+	/// </summary>
 	public static class DebugCommand 
 	{
 		public static List<CommandData> commandList;
 		public static int commandListLenght = 0;
 
 		/// <summary>
-		/// 
+		/// Adds command to the command list
 		/// </summary>
-		/// <param name="_action"></param>
-		/// <param name="_commandName"></param>
-		/// <param name="_example"></param>
+		/// <param name="_action">Saved action</param>
+		/// <param name="_commandName">Name of the command</param>
+		/// <param name="_example">Parameters example, Visible when typing in console</param>
 		public static void RegisterCommand(Action<string[]> _action, string _commandName, string _example = "")
 		{
 			if(commandList == null)
@@ -47,9 +50,9 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Removes command from the commands list
 		/// </summary>
-		/// <param name="_action"></param>
+		/// <param name="_action">Saved action</param>
 		public static void UnregisterCommand(Action<string[]> _action)
 		{
 			if(commandList != null)
@@ -67,9 +70,9 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Calls all commands in the command list with a matching name
 		/// </summary>
-		/// <param name="_input"></param>
+		/// <param name="_input">Command name with parameters</param>
 		public static void RunCommand(string _input)
 		{
 			if(commandList == null)
@@ -87,9 +90,9 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Finds a matching command, Returns null if nothing is found.
 		/// </summary>
-		/// <param name="_suggestion"></param>
+		/// <param name="_suggestion">Command suggestion</param>
 		public static CommandData GetCommandSuggestion(string _suggestion)
 		{
 			if(commandList != null && !string.IsNullOrEmpty(_suggestion))
@@ -124,19 +127,12 @@ namespace Proeve
 			return null;
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
 		private static void init()
 		{
 			commandList = new List<CommandData>();
 			DebugCommand.RegisterCommand(OnCommandHelp, "help", "[page]");
 		}
 
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="_params"></param>
 		private static void OnCommandHelp(string[] _params)
 		{
 			int page = 0;
@@ -161,18 +157,30 @@ namespace Proeve
 		}
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
 	public class CommandData
 	{
+		/// <summary>
+		/// This saved action will be called when this command is entered in console.
+		/// </summary>
 		public Action<string[]> action;
+		/// <summary>
+		/// Name of the command
+		/// </summary>
 		public string commandName;
+		/// <summary>
+		/// Parameters example, Visible when typing in console
+		/// </summary>
 		public string example;
 
 		/// <summary>
-		/// 
+		/// Creates a new CommandData class
 		/// </summary>
-		/// <param name="_action"></param>
-		/// <param name="_commandName"></param>
-		/// <param name="_example"></param>
+		/// <param name="_action">This saved action will be called when this command is entered in console.</param>
+		/// <param name="_commandName">Name of the command</param>
+		/// <param name="_example">Parameters example, Visible when typing in console</param>
 		public CommandData(Action<string[]> _action, string _commandName, string _example)
 		{
 			action = _action;

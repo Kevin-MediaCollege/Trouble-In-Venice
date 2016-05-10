@@ -19,7 +19,7 @@ namespace Proeve
 		public CanvasGroup overlayAlphaGroup;
 
 		/// <summary>
-		/// 
+		/// Called when switched to this screen
 		/// </summary>
 		public override void OnScreenEnter()
 		{
@@ -27,9 +27,8 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Called when switched to other screen
 		/// </summary>
-		/// <returns></returns>
 		private IEnumerator IntroAnimation()
 		{
 			//hide everything
@@ -109,7 +108,7 @@ namespace Proeve
 	}
 	
 	/// <summary>
-	/// 
+	/// Returns name of the screen
 	/// </summary>
 	[Serializable]
 	public class GoatPrint

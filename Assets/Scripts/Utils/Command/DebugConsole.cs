@@ -4,9 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Proeve
-{
+{		
+	/// <summary>
+	/// 
+	/// </summary>
 	public class DebugConsole : MonoBehaviour 
 	{
+		/// <summary>
+		/// DebugConsole singleton
+		/// </summary>
 		public static DebugConsole instance;
 		private static List<LogItem> log = init();
 
@@ -26,6 +32,9 @@ namespace Proeve
 			background.Apply();
 		}
 
+		/// <summary>
+		/// Creates the log
+		/// </summary>
 		public static List<LogItem> init()
 		{
 			List<LogItem> l = new List<LogItem>();
@@ -134,10 +143,7 @@ namespace Proeve
 				GUI.Label(new Rect(3f + inputWidth.x, Screen.height - 22f, 600f, 25f), currentSuggestion, style);
 			}
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
+			
 		private void updateSuggestion()
 		{
 			if(currentInput.Length > 0)
@@ -183,10 +189,10 @@ namespace Proeve
 			public Color32 color;
 
 			/// <summary>
-			/// 
+			/// Stores info about a log item
 			/// </summary>
-			/// <param name="_message"></param>
-			/// <param name="_color"></param>
+			/// <param name="_message">log message</param>
+			/// <param name="_color">log color</param>
 			public LogItem(string _message, Color32 _color)
 			{
 				message = _message;
@@ -195,10 +201,10 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Adds a new message to the console log
 		/// </summary>
-		/// <param name="_message"></param>
-		/// <param name="_color"></param>
+		/// <param name="_message">message to log</param>
+		/// <param name="_color">log color</param>
 		public static void Log(string _message, Color32 _color)
 		{
 			log.RemoveAt(0);
@@ -207,9 +213,9 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Adds a new message to the console log
 		/// </summary>
-		/// <param name="_message"></param>
+		/// <param name="_message">message to log</param>
 		public static void Log(string _message)
 		{
 			Log(_message, new Color32(255, 255, 255, 255));

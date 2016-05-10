@@ -9,14 +9,14 @@ namespace Proeve
 	public class ScreenSettings : ScreenBase
 	{
 		/// <summary>
-		/// 
+		/// Called when switched to this screen
 		/// </summary>
 		public override void OnScreenEnter()
 		{
 		}
 
 		/// <summary>
-		/// 
+		/// Called when switched to other screen
 		/// </summary>
 		public override IEnumerator OnScreenFadeout()
 		{
@@ -24,16 +24,15 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// 
+		/// Called after OnScreenFadeout
 		/// </summary>
 		public override void OnScreenExit()
 		{
 		}
 
 		/// <summary>
-		/// 
+		/// Returns name of the screen
 		/// </summary>
-		/// <returns></returns>
 		public override string GetScreenName()
 		{
 			return "ScreenSettings";
