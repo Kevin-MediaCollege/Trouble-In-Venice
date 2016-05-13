@@ -32,6 +32,10 @@ namespace Proeve
 		{
 			serializedObject.Update();
 
+			GUI.enabled = false;
+			EditorGUILayout.LabelField("Grid Position: " + (target as GridNode).GridPosition);
+			GUI.enabled = true;
+
 			EditorGUILayout.PropertyField(prop_type);
 			connections.DoLayoutList();
 
