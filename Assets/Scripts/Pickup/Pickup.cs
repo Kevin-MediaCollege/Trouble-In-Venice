@@ -7,27 +7,11 @@ namespace Proeve
 	/// <summary>
 	/// The base class for pickups, handles activation, updating an deactivation of implementations.
 	/// </summary>
-	public abstract class Pickup : MonoBehaviour
+	public abstract class Pickup : NodeObject
 	{
-		protected GridNode node;
-
 		protected bool used;
 		
 		private bool active;
-
-		protected void OnEnable()
-		{
-			node = GetComponent<EntityNodeTracker>().CurrentNode;
-
-			node.onEntityEnteredEvent += OnEntityEntered;
-			node.onEntityLeftEvent += OnEntityLeft;
-		}
-
-		private void OnDisable()
-		{
-			node.onEntityEnteredEvent -= OnEntityEntered;
-			node.onEntityLeftEvent -= OnEntityLeft;
-		}
 
 		protected void LateUpdate()
 		{
@@ -42,7 +26,7 @@ namespace Proeve
 			}
 		}
 		
-		private void OnEntityEntered(Entity _entity)
+		protected override void OnEntityEntered(Entity _entity)
 		{
 			if(_entity.HasTag("Player"))
 			{
@@ -53,7 +37,7 @@ namespace Proeve
 			}
 		}
 		
-		private void OnEntityLeft(Entity _entity)
+		protected override void OnEntityLeft(Entity _entity)
 		{
 			if(_entity.HasTag("Player"))
 			{
