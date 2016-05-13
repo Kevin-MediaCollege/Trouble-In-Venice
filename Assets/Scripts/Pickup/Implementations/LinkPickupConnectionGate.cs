@@ -10,13 +10,11 @@ namespace Proeve
 		[SerializeField] private Animator animator;
 		[SerializeField] private bool startOpen;
 
-		private EntityNodeTracker nodeTracker;
-
-		protected void Awake()
+		protected override void Awake()
 		{
-			nodeTracker = GetComponent<EntityNodeTracker>();
-		
-			nodeTracker.CurrentNode.Active = startOpen;
+			base.Awake();
+
+			node.Active = startOpen;
 			animator.SetBool("Open", startOpen);
 		}
 
@@ -27,7 +25,7 @@ namespace Proeve
 		
 		public override void OnPickup()
 		{
-			nodeTracker.CurrentNode.Active = !nodeTracker.CurrentNode.Active;		
+			node.Active = !node.Active;		
 			animator.SetBool("Open", !animator.GetBool("Open"));
 		}
 	}

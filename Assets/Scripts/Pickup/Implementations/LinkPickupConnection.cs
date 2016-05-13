@@ -5,7 +5,7 @@ namespace Proeve
 	/// <summary>
 	/// A connection for a <see cref="LinkPickup"/>.
 	/// </summary>
-	public abstract class LinkPickupConnection : MonoBehaviour
+	public abstract class LinkPickupConnection : NodeObject
 	{
 		/// <summary>
 		/// Called by <see cref="LinkPickup.OnActivate"/>.
