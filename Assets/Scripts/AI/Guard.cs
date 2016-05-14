@@ -4,7 +4,7 @@ using Utils;
 
 namespace Proeve
 {
-	public class Guard : NodeObject
+	public class Guard : GridNodeObject
 	{
 		[SerializeField] private Vector2 direction;
 

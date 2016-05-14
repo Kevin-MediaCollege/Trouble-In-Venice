@@ -7,7 +7,7 @@ namespace Proeve
 	/// <summary>
 	/// The base class for pickups, handles activation, updating an deactivation of implementations.
 	/// </summary>
-	public abstract class Pickup : NodeObject
+	public abstract class Pickup : GridNodeObject
 	{
 		protected bool used;
 		

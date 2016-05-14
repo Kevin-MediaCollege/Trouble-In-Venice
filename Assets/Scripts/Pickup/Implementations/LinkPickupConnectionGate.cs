@@ -17,11 +17,6 @@ namespace Proeve
 			node.Active = startOpen;
 			animator.SetBool("Open", startOpen);
 		}
-
-		protected void OnValidate()
-		{
-			animator.SetBool("Open", startOpen);
-		}
 		
 		public override void OnPickup()
 		{

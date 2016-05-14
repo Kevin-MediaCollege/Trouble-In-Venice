@@ -4,7 +4,7 @@ using Utils;
 namespace Proeve
 {
 	[RequireComponent(typeof(EntityNodeTracker))]
-	public class NodeObject : MonoBehaviour
+	public class GridNodeObject : MonoBehaviour
 	{
 		protected GridNode node;
 		
