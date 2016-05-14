@@ -30,7 +30,7 @@ GameObject:
   - 114: {fileID: 11444138}
   - 114: {fileID: 11458262}
   m_Layer: 0
-  m_Name: Lever+Door 1
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
