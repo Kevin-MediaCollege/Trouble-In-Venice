@@ -13,18 +13,9 @@ namespace Proeve
 			RotatingCounterClockwise,
 			Patrolling
 		}
-
-		private enum Direction
-		{
-			Up,
-			Left,
-			Down,
-			Right
-		}
-
 		[SerializeField] private EntityMovement movement;
 
-		[SerializeField] private Direction direction;
+		[SerializeField] private GridDirection direction;
 		[SerializeField] private PatrolMode patrolMode;
 
 		protected override void Awake()
@@ -60,7 +51,7 @@ namespace Proeve
 		protected void OnDrawGizmosSelected()
 		{
 			GridNode n = GetComponent<EntityNodeTracker>().CurrentNode;
-			n = GridUtils.GetConnectionInDirection(n, GetDirectionVector());
+			n = GridUtils.GetConnectionInDirection(n, GridUtils.GetDirectionVector(direction));
 
 			if(n != null)
 			{
@@ -71,7 +62,7 @@ namespace Proeve
 
 		protected void OnValidate()
 		{
-			Vector2 dir = GetDirectionVector();
+			Vector2 dir = GridUtils.GetDirectionVector(direction);
 			Quaternion rotation = transform.rotation;
 
 			if(dir == Vector2.up)
@@ -114,28 +105,28 @@ namespace Proeve
 
 			while(!movement.CanMove(dir))
 			{
-				if((direction == Direction.Up && patrolMode == PatrolMode.RotatingClockwise) ||
-				   (direction == Direction.Down && patrolMode == PatrolMode.RotatingCounterClockwise))
+				if((direction == GridDirection.Up && patrolMode == PatrolMode.RotatingClockwise) ||
+				   (direction == GridDirection.Down && patrolMode == PatrolMode.RotatingCounterClockwise))
 				{
-					direction = Direction.Right;
+					direction = GridDirection.Right;
 					dir = Vector2.right;
 				}
-				else if((direction == Direction.Right && patrolMode == PatrolMode.RotatingClockwise) ||
-					    (direction == Direction.Left && patrolMode == PatrolMode.RotatingCounterClockwise))
+				else if((direction == GridDirection.Right && patrolMode == PatrolMode.RotatingClockwise) ||
+					    (direction == GridDirection.Left && patrolMode == PatrolMode.RotatingCounterClockwise))
 				{
-					direction = Direction.Down;
+					direction = GridDirection.Down;
 					dir = Vector2.down;
 				}
-				else if((direction == Direction.Down && patrolMode == PatrolMode.RotatingClockwise) ||
-					    (direction == Direction.Up && patrolMode == PatrolMode.RotatingCounterClockwise))
+				else if((direction == GridDirection.Down && patrolMode == PatrolMode.RotatingClockwise) ||
+					    (direction == GridDirection.Up && patrolMode == PatrolMode.RotatingCounterClockwise))
 				{
-					direction = Direction.Left;
+					direction = GridDirection.Left;
 					dir = Vector2.left;
 				}
-				else if((direction == Direction.Left && patrolMode == PatrolMode.RotatingClockwise) ||
-					    (direction == Direction.Right && patrolMode == PatrolMode.RotatingCounterClockwise))
+				else if((direction == GridDirection.Left && patrolMode == PatrolMode.RotatingClockwise) ||
+					    (direction == GridDirection.Right && patrolMode == PatrolMode.RotatingCounterClockwise))
 				{
-					direction = Direction.Up;
+					direction = GridDirection.Up;
 					dir = Vector2.up;
 				}
 			}
@@ -145,26 +136,26 @@ namespace Proeve
 
 		private void Patrol()
 		{
-			while(!movement.CanMove(GetDirectionVector()))
+			while(!movement.CanMove(GridUtils.GetDirectionVector(direction)))
 			{
 				switch(direction)
 				{
-				case Direction.Up:
-					direction = Direction.Down;
+				case GridDirection.Up:
+					direction = GridDirection.Down;
 					break;
-				case Direction.Left:
-					direction = Direction.Right;
+				case GridDirection.Left:
+					direction = GridDirection.Right;
 					break;
-				case Direction.Down:
-					direction = Direction.Up;
+				case GridDirection.Down:
+					direction = GridDirection.Up;
 					break;
-				case Direction.Right:
-					direction = Direction.Left;
+				case GridDirection.Right:
+					direction = GridDirection.Left;
 					break;
 				}
 			}
 
-			movement.Move(GetDirectionVector());
+			movement.Move(GridUtils.GetDirectionVector(direction));
 			FindTargetNode();
 		}
 
@@ -177,7 +168,7 @@ namespace Proeve
 			case PatrolMode.Static:
 			case PatrolMode.RotatingClockwise:
 			case PatrolMode.RotatingCounterClockwise:
-				node = GridUtils.GetConnectionInDirection(node, GetDirectionVector());
+				node = GridUtils.GetConnectionInDirection(node, GridUtils.GetDirectionVector(direction));
 				break;
 			case PatrolMode.Patrolling:
 				base.Awake();
@@ -185,22 +176,6 @@ namespace Proeve
 			}
 
 			base.OnEnable();
-		}
-
-		private Vector2 GetDirectionVector()
-		{
-			switch(direction)
-			{
-			case Direction.Up:
-			default:
-				return Vector2.up;
-			case Direction.Left:
-				return Vector2.left;
-			case Direction.Down:
-				return Vector2.down;
-			case Direction.Right:
-				return Vector2.right;
-			}
 		}
 
 		private void OnPlayerMovedEvent(PlayerMovedEvent _evt)

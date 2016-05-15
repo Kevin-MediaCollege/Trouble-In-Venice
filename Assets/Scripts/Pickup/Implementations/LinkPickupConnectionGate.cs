@@ -8,20 +8,39 @@ namespace Proeve
 	public class LinkPickupConnectionGate : LinkPickupConnection
 	{
 		[SerializeField] private Animator animator;
+		[SerializeField] private GridDirection direction;
 		[SerializeField] private bool startOpen;
+
+		private GridNode blockedNode;
 
 		protected override void Awake()
 		{
 			base.Awake();
 
-			node.Active = startOpen;
+			blockedNode = GridUtils.GetConnectionInDirection(node, GridUtils.GetDirectionVector(direction));
+
+			if(blockedNode != null && !startOpen)
+			{
+				node.AddBlockade(blockedNode);
+			}
+			
 			animator.SetBool("Open", startOpen);
 		}
 		
 		public override void OnPickup()
 		{
-			node.Active = !node.Active;		
-			animator.SetBool("Open", !animator.GetBool("Open"));
+			bool open = animator.GetBool("Open");
+
+			if(open)
+			{
+				node.AddBlockade(blockedNode);
+			}
+			else
+			{
+				node.RemoveBlockade(blockedNode);
+			}
+
+			animator.SetBool("Open", !open);
 		}
 	}
 }
