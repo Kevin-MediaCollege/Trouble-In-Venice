@@ -24,6 +24,11 @@ namespace Proeve
 				node.AddBlockade(blockedNode);
 			}
 			
+			if(startOpen)
+			{
+				animator.SetTrigger("StartOpen");
+			}
+
 			animator.SetBool("Open", startOpen);
 		}
 		
