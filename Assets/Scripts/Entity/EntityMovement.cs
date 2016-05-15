@@ -42,25 +42,46 @@ namespace Proeve
 			LookAt(_direction);
 
 			_direction.Normalize();
+
+			GridNode target;
+			if(CanMove(_direction, out target))
+			{
+				GridNode old = nodeTracker.CurrentNode;
+				nodeTracker.CurrentNode = target;
+
+				Vector3 nodePosition = nodeTracker.CurrentNode.Position;
+				transform.position = new Vector3(nodePosition.x, nodePosition.y + 1, nodePosition.z);
+
+				// (Un)register the entity
+				old.RemoveEntity(entity);
+				target.AddEntity(entity);
+
+				onMoveEvent(old, target);
+			}
+		}
+
+		public bool CanMove(Vector2 _direction)
+		{
+			GridNode destination;
+			return CanMove(_direction, out destination);
+		}
+
+		public bool CanMove(Vector2 _direction, out GridNode _destination)
+		{
+			_direction.Normalize();
+
 			GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
 			if(target != null && target.Active)
 			{
-				GridNode old = nodeTracker.CurrentNode;
-
-				if(old.HasConnection(target))
+				if(nodeTracker.CurrentNode.HasConnection(target))
 				{
-					nodeTracker.CurrentNode = target;
-
-					Vector3 nodePosition = nodeTracker.CurrentNode.Position;
-					transform.position = new Vector3(nodePosition.x, nodePosition.y + 1, nodePosition.z);
-
-					// (Un)register the entity
-					old.RemoveEntity(entity);
-					target.AddEntity(entity);
-
-					onMoveEvent(old, target);
+					_destination = target;
+					return true;
 				}
 			}
+
+			_destination = null;
+			return false;
 		}
 
 		/// <summary>

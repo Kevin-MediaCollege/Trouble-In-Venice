@@ -97,6 +97,18 @@ namespace Proeve
 			return Grid.GetNodeAt(_position);
 		}
 
+		public static GridNode GetConnectionInDirection(GridNode origin, Vector2 direction)
+		{
+			GridNode node = GetNodeAt(origin.GridPosition + direction);
+
+			if(node != null && origin.HasConnection(node))
+			{
+				return node;
+			}
+
+			return null;
+		}
+
 		/// <summary>
 		/// Get the <see cref="GridNode"/> at the specified position.
 		/// </summary>

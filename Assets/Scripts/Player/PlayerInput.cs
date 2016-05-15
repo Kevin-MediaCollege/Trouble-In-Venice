@@ -44,7 +44,6 @@ namespace Proeve
 
 		protected void Update()
 		{
-			//===================== ARROW TEST MOVEMENT ==========================
 			float arrowRotion = Input.GetKeyDown(KeyCode.A) ? 180f : Input.GetKeyDown(KeyCode.W) ? 90f : Input.GetKeyDown(KeyCode.D) ? 1f : Input.GetKeyDown(KeyCode.S) ? -90f : 0f;
 			if(arrowRotion != 0f)
 			{
@@ -78,8 +77,7 @@ namespace Proeve
 					}
 
 					originalNodeColors.Clear();
-
-					movement.Move(closestNode);
+					Move(closestNode);
 
 					foreach(GridNode node in nodeTracker.CurrentNode.Connections)
 					{
@@ -93,7 +91,6 @@ namespace Proeve
 					}
 				}
 			}
-			//====================================================================
 		}
 		
 		private Vector2 GetSwipeDirection()
@@ -199,9 +196,20 @@ namespace Proeve
 
 				originalNodeColors.Clear();
 
-				movement.Move(GetSwipeDirection());
+				Move(GetSwipeDirection());
 				swipeHandle = null;
 				selected = null;
+			}
+		}
+
+		private void Move(Vector2 _direction)
+		{
+			GridNode target;
+			if(movement.CanMove(_direction, out target))
+			{
+				GlobalEvents.Invoke(new PlayerMovedEvent(nodeTracker.CurrentNode, target));
+
+				movement.Move(_direction);
 			}
 		}
 	}

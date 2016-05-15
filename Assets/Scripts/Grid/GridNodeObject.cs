@@ -15,14 +15,20 @@ namespace Proeve
 
 		protected virtual void OnEnable()
 		{
-			node.onEntityEnteredEvent += OnEntityEntered;
-			node.onEntityLeftEvent += OnEntityLeft;
+			if(node != null)
+			{
+				node.onEntityEnteredEvent += OnEntityEntered;
+				node.onEntityLeftEvent += OnEntityLeft;
+			}
 		}
 
 		protected virtual void OnDisable()
 		{
-			node.onEntityEnteredEvent -= OnEntityEntered;
-			node.onEntityLeftEvent -= OnEntityLeft;
+			if(node != null)
+			{
+				node.onEntityEnteredEvent -= OnEntityEntered;
+				node.onEntityLeftEvent -= OnEntityLeft;
+			}
 		}
 
 		protected virtual void OnEntityEntered(Entity _entity)
