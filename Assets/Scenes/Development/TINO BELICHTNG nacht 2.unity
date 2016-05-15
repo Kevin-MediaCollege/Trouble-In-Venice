@@ -1820,6 +1820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1250055081}
+  direction: 0
   startOpen: 0
 --- !u!114 &1117454013
 MonoBehaviour:
@@ -2979,7 +2980,6 @@ GameObject:
   - 212: {fileID: 1942756920}
   - 65: {fileID: 1942756919}
   - 114: {fileID: 1942756918}
-  - 114: {fileID: 1942756917}
   m_Layer: 0
   m_Name: Grid Node 1 (8)
   m_TagString: Untagged
@@ -2999,17 +2999,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1332691486}
   m_RootOrder: 2
---- !u!114 &1942756917
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1942756915}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6fa2b988020c2e4e8ecf7c1939dfe0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1942756918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3021,7 +3010,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b447be27be5eb02499b6be60ef9f8e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 2
   connections: []
 --- !u!65 &1942756919
 BoxCollider:
@@ -3062,7 +3051,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1 &1948526407

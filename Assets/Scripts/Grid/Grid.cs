@@ -88,6 +88,11 @@ namespace Proeve
 			Gizmos.matrix = Matrix4x4.identity;
 			foreach(GridNode node in nodes)
 			{
+				if(node == null)
+				{
+					continue;
+				}
+
 				node.DrawGizmos();
 			}
 		}
@@ -132,6 +137,11 @@ namespace Proeve
 			{
 				foreach(GridNode node in nodes)
 				{
+					if(node == null)
+					{
+						continue;
+					}
+
 					if(node.GridPosition == _position)
 					{
 						return node;
