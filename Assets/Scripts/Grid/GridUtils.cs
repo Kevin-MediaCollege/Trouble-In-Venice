@@ -137,5 +137,22 @@ namespace Proeve
 
 			return null;
 		}
+
+		public static Vector2 GetDirectionVector(GridDirection _direction)
+		{
+			switch(_direction)
+			{
+			case GridDirection.Up:
+				return Vector2.up;
+			case GridDirection.Left:
+				return Vector2.left;
+			case GridDirection.Down:
+				return Vector2.down;
+			case GridDirection.Right:
+				return Vector2.right;
+			default:
+				return Vector2.zero;
+			}
+		}
 	}
 }

@@ -71,7 +71,7 @@ namespace Proeve
 			_direction.Normalize();
 
 			GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
-			if(target != null && target.Active)
+			if(target != null)
 			{
 				if(nodeTracker.CurrentNode.HasConnection(target))
 				{

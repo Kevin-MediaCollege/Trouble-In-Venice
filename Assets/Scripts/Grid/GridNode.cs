@@ -137,20 +137,18 @@ namespace Proeve
 			}
 		}
 
-		/// <summary>
-		/// Whether or not this node is currently active,
-		/// if it's not active entities are unable to move to this node.
-		/// </summary>
 		public bool Active { set; get; }
 
 		[SerializeField] private GridNodeType type;
 		[SerializeField] private List<GridNode> connections;
 
 		private HashSet<Entity> entities;
+		private HashSet<GridNode> blockedConnections;
 
 		protected void Awake()
 		{
 			entities = new HashSet<Entity>();
+			blockedConnections = new HashSet<GridNode>();
 
 			Active = true;
 		}
@@ -226,19 +224,21 @@ namespace Proeve
 		/// </summary>
 		public void DrawGizmos()
 		{
-			if(Active)
+			if(!Active)
 			{
-				Gizmos.color = Color.blue;
+				return;
+			}
 
-				foreach(GridNode connection in connections)
+			Gizmos.color = Color.blue;
+
+			foreach(GridNode connection in connections)
+			{
+				if(connection == null || (blockedConnections != null && blockedConnections.Contains(connection)))
 				{
-					if(connection == null)
-					{
-						continue;
-					}
-
-					Gizmos.DrawLine(transform.position, connection.transform.position);
+					continue;
 				}
+
+				Gizmos.DrawLine(transform.position, connection.transform.position);
 			}
 		}
 
@@ -265,18 +265,19 @@ namespace Proeve
 				onEntityLeftEvent(_entity);
 			}
 		}
-
-		/// <summary>
-		/// Check whether or not this node has a connection to <paramref name="_node"/>.
-		/// </summary>
-		/// <param name="_node">The other node.</param>
-		/// <returns>Whether or not <paramref name="_node"/> is connected to this node.</returns>
-		public bool HasConnection(GridNode _node)
+		
+		public void AddBlockade(GridNode _node)
 		{
-			return connections.Contains(_node);
+			blockedConnections.Add(_node);
+			_node.blockedConnections.Add(this);
 		}
 
-#if UNITY_EDITOR
+		public void RemoveBlockade(GridNode _node)
+		{
+			blockedConnections.Remove(_node);
+			_node.blockedConnections.Remove(this);
+		}
+
 		/// <summary>
 		/// Add a connection to this node.
 		/// </summary>
@@ -310,6 +311,15 @@ namespace Proeve
 		{
 			connections.Remove(_node);
 		}
-#endif
+
+		/// <summary>
+		/// Check whether or not this node has a connection to <paramref name="_node"/>.
+		/// </summary>
+		/// <param name="_node">The other node.</param>
+		/// <returns>Whether or not <paramref name="_node"/> is connected to this node.</returns>
+		public bool HasConnection(GridNode _node)
+		{
+			return connections.Contains(_node) && !blockedConnections.Contains(_node);
+		}
 	}
 }

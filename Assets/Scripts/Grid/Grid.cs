@@ -3,6 +3,14 @@ using System.Collections.Generic;
 
 namespace Proeve
 {
+	public enum GridDirection
+	{
+		Up,
+		Left,
+		Down,
+		Right
+	}
+
 	/// <summary>
 	/// The grid of a level.
 	/// </summary>
