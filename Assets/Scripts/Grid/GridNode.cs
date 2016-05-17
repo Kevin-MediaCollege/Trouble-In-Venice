@@ -161,7 +161,7 @@ namespace Proeve
 				grid.AddNode(this);
 			}
 		}
-		
+
 		protected void OnValidate()
 		{
 			SpriteRenderer sr = GetComponent<SpriteRenderer>();
