@@ -54,6 +54,12 @@ namespace Proeve
 		/// </summary>
 		public event OnEntityLeft onEntityLeftEvent = delegate { };
 
+		public delegate void OnBlockadeAdded(GridNode to);
+		public event OnBlockadeAdded onBlockadeAddedEvent = delegate { };
+
+		public delegate void OnBlockadeRemoved(GridNode to);
+		public event OnBlockadeRemoved onBlockadeRemovedEvent = delegate { };
+
 		/// <summary>
 		/// All connections of the node.
 		/// </summary>
@@ -270,12 +276,18 @@ namespace Proeve
 		{
 			blockedConnections.Add(_node);
 			_node.blockedConnections.Add(this);
+
+			onBlockadeAddedEvent(_node);
+			_node.onBlockadeAddedEvent(this);
 		}
 
 		public void RemoveBlockade(GridNode _node)
 		{
 			blockedConnections.Remove(_node);
 			_node.blockedConnections.Remove(this);
+
+			onBlockadeRemovedEvent(_node);
+			_node.onBlockadeRemovedEvent(this);
 		}
 
 		/// <summary>

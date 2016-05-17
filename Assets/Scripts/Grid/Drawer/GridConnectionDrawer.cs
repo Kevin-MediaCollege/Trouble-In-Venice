@@ -69,6 +69,9 @@ namespace Proeve
 					GridConnectionDrawerUtils.Start(entry);
 				}
 			}
+
+			node.onBlockadeAddedEvent += OnBlockadeAdded;
+			node.onBlockadeRemovedEvent += OnBlockadeRemoved;
 		}
 
 		protected void OnDisable()
@@ -80,6 +83,40 @@ namespace Proeve
 					GridConnectionDrawerUtils.End(entry);
 				}
 			}
+
+			node.onBlockadeAddedEvent -= OnBlockadeAdded;
+			node.onBlockadeRemovedEvent -= OnBlockadeRemoved;
+		}
+
+		private void OnBlockadeRemoved(GridNode to)
+		{
+			Entry entry = FindEntry(to);
+			if(entry != null)
+			{
+				GridConnectionDrawerUtils.Restore(entry);
+			}
+		}
+
+		private void OnBlockadeAdded(GridNode to)
+		{
+			Entry entry = FindEntry(to);
+			if(entry != null)
+			{
+				GridConnectionDrawerUtils.Interrupt(entry);
+			}
+		}
+
+		private Entry FindEntry(GridNode to)
+		{
+			foreach(Entry entry in entries)
+			{
+				if(entry.End == to)
+				{
+					return entry;
+				}
+			}
+
+			return null;
 		}
 	}
 }
