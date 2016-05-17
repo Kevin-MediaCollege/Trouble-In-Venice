@@ -13,8 +13,8 @@ namespace Proeve
 			public GridNode Start { private set; get; }
 			public GridNode End { private set; get; }
 
-			public int StartIndex { set; get; }
-			public int EndIndex { set; get; }
+			public int[] StartIndices { set; get; }
+			public int[] EndIndices { set; get; }
 
 			public Vector3 StartPosition
 			{
@@ -28,7 +28,7 @@ namespace Proeve
 			{
 				get
 				{
-					return Start.Position + (End.Position - Start.Position);
+					return Start.Position + ((End.Position - Start.Position) * 0.5f);
 				}
 			}
 
@@ -66,7 +66,7 @@ namespace Proeve
 			{
 				if(node.HasConnection(entry.End))
 				{
-					GridConnectionDrawer.Start(entry);
+					StartCoroutine(GridConnectionDrawer.Start(entry));
 				}
 			}
 
@@ -76,14 +76,6 @@ namespace Proeve
 
 		protected void OnDisable()
 		{
-			foreach(Entry entry in entries)
-			{
-				if(node.HasConnection(entry.End))
-				{
-					GridConnectionDrawer.End(entry);
-				}
-			}
-
 			node.onBlockadeAddedEvent -= OnBlockadeAdded;
 			node.onBlockadeRemovedEvent -= OnBlockadeRemoved;
 		}
@@ -94,14 +86,14 @@ namespace Proeve
 			{
 				foreach(Entry entry in entries)
 				{
-					GridConnectionDrawer.Interrupt(entry);
+					StartCoroutine(GridConnectionDrawer.End(entry));
 				}
 			}
 			else if(!wasActive && node.Active)
 			{
 				foreach(Entry entry in entries)
 				{
-					GridConnectionDrawer.Restore(entry);
+					StartCoroutine(GridConnectionDrawer.Start(entry));
 				}
 			}
 
@@ -113,7 +105,7 @@ namespace Proeve
 			Entry entry = FindEntry(to);
 			if(entry != null)
 			{
-				GridConnectionDrawer.Restore(entry);
+				StartCoroutine(GridConnectionDrawer.Start(entry));
 			}
 		}
 
@@ -122,7 +114,7 @@ namespace Proeve
 			Entry entry = FindEntry(to);
 			if(entry != null)
 			{
-				GridConnectionDrawer.Interrupt(entry);
+				StartCoroutine(GridConnectionDrawer.End(entry));
 			}
 		}
 
