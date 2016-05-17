@@ -42,14 +42,10 @@ namespace Proeve
 		private List<Entry> entries;
 		private GridNode node;
 
-		private Material material;
-
 		protected void Awake()
 		{
 			node = GetComponent<GridNode>();
 			entries = new List<Entry>();
-
-			material = Resources.Load<Material>("Grid Connection");
 
 			foreach(GridNode connection in node.Connections)
 			{
