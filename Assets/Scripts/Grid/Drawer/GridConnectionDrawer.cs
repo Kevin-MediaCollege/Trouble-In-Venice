@@ -2,84 +2,70 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Utils;
 
 namespace Proeve
 {
+	[RequireComponent(typeof(MeshFilter))]
+	[RequireComponent(typeof(MeshRenderer))]
 	public class GridConnectionDrawer : MonoBehaviour
 	{
-		public class Entry
-		{
-			public GridNode Start { private set; get; }
-			public GridNode End { private set; get; }
-
-			public int StartIndex { set; get; }
-			public int EndIndex { set; get; }
-
-			public Vector3 StartPosition
-			{
-				get
-				{
-					return Start.Position;
-				}
-			}
-
-			public Vector3 EndPosition
-			{
-				get
-				{
-					return Start.Position + (End.Position - Start.Position);
-				}
-			}
-
-			public Entry(GridNode _start, GridNode _end)
-			{
-				Start = _start;
-				End = _end;
-			}
-		}
-
-		private List<Entry> entries;
-		private GridNode node;
-
-		private Material material;
+		public static Mesh Mesh { private set; get; }
 
 		protected void Awake()
 		{
-			node = GetComponent<GridNode>();
-			entries = new List<Entry>();
+			Mesh = new Mesh();
 
-			material = Resources.Load<Material>("Grid Connection");
-
-			foreach(GridNode connection in node.Connections)
-			{
-				Entry entry = new Entry(node, connection);
-				GridConnectionDrawerUtils.RegisterEntry(entry);
-
-				entries.Add(entry);
-			}
+			GetComponent<MeshFilter>().sharedMesh = Mesh;
+			GetComponent<MeshRenderer>().material = Resources.Load<Material>("Grid Connection");
 		}
 
-		protected void OnEnable()
+		public static void RegisterEntry(GridConnection.Entry _entry)
 		{
-			foreach(Entry entry in entries)
+			_entry.StartIndex = Mesh.vertexCount;
+			_entry.EndIndex = Mesh.vertexCount + 1;
+
+			Vector3[] vertices = new Vector3[Mesh.vertices.Length + 2];
+			for(int i = 0; i < Mesh.vertices.Length; i++)
 			{
-				if(node.HasConnection(entry.End))
-				{
-					GridConnectionDrawerUtils.Start(entry);
-				}
+				vertices[i] = Mesh.vertices[i];
 			}
+
+			int[] indices = new int[Mesh.GetIndices(0).Length + 2];
+			for(int i = 0; i < Mesh.GetIndices(0).Length; i++)
+			{
+				indices[i] = Mesh.GetIndices(0)[i];
+			}
+
+			vertices[_entry.StartIndex] = _entry.StartPosition;
+			vertices[_entry.EndIndex] = _entry.EndPosition;
+
+			indices[indices.Length - 2] = _entry.StartIndex;
+			indices[indices.Length - 1] = _entry.EndIndex;
+
+			Mesh.vertices = vertices;
+			Mesh.SetIndices(indices, MeshTopology.Lines, 0);
+			
+			Mesh.RecalculateBounds();
 		}
 
-		protected void OnDisable()
+		public static IEnumerator Start(GridConnection.Entry _entry)
 		{
-			foreach(Entry entry in entries)
-			{
-				if(node.HasConnection(entry.End))
-				{
-					GridConnectionDrawerUtils.End(entry);
-				}
-			}
+			yield break;
+		}
+
+		public static IEnumerator End(GridConnection.Entry _entry)
+		{
+			yield break;
+		}
+
+		public static IEnumerator Interrupt(GridConnection.Entry _entry)
+		{
+			yield break;
+		}
+
+		public static IEnumerator Restore(GridConnection.Entry _entry)
+		{
+			yield break;
 		}
 	}
 }
