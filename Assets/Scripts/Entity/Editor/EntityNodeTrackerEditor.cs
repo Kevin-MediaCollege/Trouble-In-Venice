@@ -28,6 +28,11 @@ namespace Proeve
 
 				foreach(GridNode node in grid.Nodes)
 				{
+					if(node == null)
+					{
+						continue;
+					}
+
 					float distance = (node.transform.position - ec.transform.position).sqrMagnitude;
 
 					if(distance < nearestDistance)
