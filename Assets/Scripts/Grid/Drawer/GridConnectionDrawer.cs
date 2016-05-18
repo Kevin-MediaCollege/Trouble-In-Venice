@@ -11,6 +11,7 @@ namespace Proeve
 	public class GridConnectionDrawer : MonoBehaviour
 	{
 		private const float SPEED = 7f;
+		private const float LINE_WIDTH = 0.03f;
 
 		public static Mesh Mesh { private set; get; }
 
@@ -42,11 +43,13 @@ namespace Proeve
 				indices[i] = Mesh.GetIndices(0)[i];
 			}
 
+			Vector3[] startPosition = GetLinePosition(_entry, _entry.StartPosition);
+
 			// Assign new vertices
-			vertices[_entry.StartIndices[0]] = _entry.StartPosition * 1.01f;
-			vertices[_entry.StartIndices[1]] = _entry.StartPosition * 0.99f;
-			vertices[_entry.EndIndices[0]] = _entry.StartPosition * 1.01f;
-			vertices[_entry.EndIndices[1]] = _entry.StartPosition * 0.99f;
+			vertices[_entry.StartIndices[0]] = startPosition[0];
+			vertices[_entry.StartIndices[1]] = startPosition[1];
+			vertices[_entry.EndIndices[0]] = startPosition[0];
+			vertices[_entry.EndIndices[1]] = startPosition[1];
 
 			// Assign new indices
 			indices[indices.Length - 4] = _entry.StartIndices[0];
@@ -76,8 +79,10 @@ namespace Proeve
 				Vector3 position = Vector3.Lerp(_entry.StartPosition, _entry.EndPosition, t);
 				Vector3[] vertices = Mesh.vertices;
 
-				vertices[_entry.EndIndices[0]] = position * 1.01f;
-				vertices[_entry.EndIndices[1]] = position * 0.99f;
+				Vector3[] linePosition = GetLinePosition(_entry, position);
+
+				vertices[_entry.EndIndices[0]] = linePosition[1];
+				vertices[_entry.EndIndices[1]] = linePosition[0];
 				Mesh.vertices = vertices;
 
 				yield return null;
@@ -98,8 +103,10 @@ namespace Proeve
 				Vector3 position = Vector3.Lerp(_entry.EndPosition, _entry.StartPosition, t);
 				Vector3[] vertices = Mesh.vertices;
 
-				vertices[_entry.EndIndices[0]] = position * 1.01f;
-				vertices[_entry.EndIndices[1]] = position * 0.99f;
+				Vector3[] linePosition = GetLinePosition(_entry, position);
+
+				vertices[_entry.EndIndices[0]] = linePosition[1];
+				vertices[_entry.EndIndices[1]] = linePosition[0];
 				Mesh.vertices = vertices;
 
 				yield return null;
@@ -114,6 +121,30 @@ namespace Proeve
 		public static IEnumerator Restore(GridConnection.Entry _entry)
 		{
 			yield break;
+		}
+
+		private static Vector3[] GetLinePosition(GridConnection.Entry _entry, Vector3 _position)
+		{
+			Vector3 axis = (_entry.End.GridPosition - _entry.Start.GridPosition).normalized;
+
+			// Add width on Z axis
+			if(Mathf.Abs(axis.x) == 1)
+			{
+				return new Vector3[]
+				{
+					_position + new Vector3(0, 0, LINE_WIDTH),
+					_position + new Vector3(0, 0, -LINE_WIDTH)
+				};
+			}
+			// Add width on X axis
+			else
+			{
+				return new Vector3[]
+				{
+					_position + new Vector3(LINE_WIDTH, 0, 0),
+					_position + new Vector3(-LINE_WIDTH, 0, 0)
+				};
+			}
 		}
 	}
 }
