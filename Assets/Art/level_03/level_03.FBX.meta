@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: c8f4bcb457167c943a7333351296bf25
-timeCreated: 1462873127
+guid: f70fbf97e0ea9724aa93fafbe6a042e2
+timeCreated: 1463489414
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -9,8 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Plane001
-    9500000: //RootNode
+    4300000: level4
   materials:
     importMaterials: 1
     materialName: 0
@@ -40,7 +39,7 @@ ModelImporter:
     addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
-    generateSecondaryUV: 0
+    generateSecondaryUV: 1
     useFileUnits: 1
     optimizeMeshForGPU: 1
     keepQuads: 0
@@ -69,7 +68,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
