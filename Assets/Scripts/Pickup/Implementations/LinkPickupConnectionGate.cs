@@ -31,6 +31,18 @@ namespace Proeve
 
 			animator.SetBool("Open", startOpen);
 		}
+
+		protected void OnDrawGizmosSelected()
+		{
+			GridNode n = GetComponent<EntityNodeTracker>().CurrentNode;
+			n = GridUtils.GetConnectionInDirection(n, GridUtils.GetDirectionVector(direction));
+
+			if(n != null)
+			{
+				Gizmos.color = Color.cyan;
+				Gizmos.DrawSphere(n.Position, 0.1f);
+			}
+		}
 		
 		public override void OnPickup()
 		{

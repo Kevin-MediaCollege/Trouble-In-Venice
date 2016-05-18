@@ -331,6 +331,11 @@ namespace Proeve
 		/// <returns>Whether or not <paramref name="_node"/> is connected to this node.</returns>
 		public bool HasConnection(GridNode _node)
 		{
+			if(blockedConnections == null)
+			{
+				return connections.Contains(_node);
+			}
+
 			return connections.Contains(_node) && !blockedConnections.Contains(_node);
 		}
 	}
