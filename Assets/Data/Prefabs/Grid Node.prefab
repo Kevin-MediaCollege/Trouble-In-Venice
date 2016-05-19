@@ -12,6 +12,7 @@ GameObject:
   - 65: {fileID: 6569438}
   - 114: {fileID: 11427662}
   - 114: {fileID: 11413116}
+  - 114: {fileID: 11464478}
   m_Layer: 0
   m_Name: Grid Node
   m_TagString: Untagged
@@ -67,6 +68,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   connections: []
+--- !u!114 &11464478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6fa2b988020c2e4e8ecf7c1939dfe0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &21259974
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -93,8 +105,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300002, guid: 9fc06acff3cc1904e9e0c15ad7fc63bc, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000

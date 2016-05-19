@@ -9,25 +9,6 @@ namespace Proeve
 	public static class GridUtils
 	{
 		/// <summary>
-		/// Get the starting node of the <see cref="Grid"/>.
-		/// </summary>
-		public static GridNode Start
-		{
-			get
-			{
-				foreach(GridNode node in Grid.Nodes)
-				{
-					if(node.IsStart)
-					{
-						return node;
-					}
-				}
-
-				return null;
-			}
-		}
-
-		/// <summary>
 		/// Get the end node of the <see cref="Grid"/>.
 		/// </summary>
 		public static GridNode End

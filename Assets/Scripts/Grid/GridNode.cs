@@ -10,11 +10,6 @@ namespace Proeve
 	public enum GridNodeType
 	{
 		/// <summary>
-		/// The player starts here.
-		/// </summary>
-		Start,
-
-		/// <summary>
 		/// When the player reaches this node the level is completed.
 		/// </summary>
 		End,
@@ -120,18 +115,6 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// Whether or not this node is the starting node, equal to
-		/// <code>Type == GridNodeType.Start</code>
-		/// </summary>
-		public bool IsStart
-		{
-			get
-			{
-				return Type == GridNodeType.Start;
-			}
-		}
-
-		/// <summary>
 		/// Whether or not this node is the end node, equal to
 		/// <code>Type == GridNodeType.End</code>
 		/// </summary>
@@ -171,8 +154,9 @@ namespace Proeve
 		protected void OnValidate()
 		{
 			SpriteRenderer sr = GetComponent<SpriteRenderer>();
+			sr.color = Color.black;
 
-			if(type == GridNodeType.Start || type == GridNodeType.Normal)
+			if(type == GridNodeType.Normal)
 			{
 				LevelCompleter levelCompleter = GetComponent<LevelCompleter>();
 				if(levelCompleter != null)
@@ -185,15 +169,7 @@ namespace Proeve
 #endif
 				}
 
-				switch(type)
-				{
-				case GridNodeType.Start:
-					sr.color = Color.green;
-					break;
-				case GridNodeType.Normal:
-					sr.color = Color.white;
-					break;
-				}
+				sr.sprite = Resources.LoadAll<Sprite>("grid_icons")[0];
 			}
 			else if(type == GridNodeType.End)
 			{
@@ -203,7 +179,7 @@ namespace Proeve
 					gameObject.AddComponent<LevelCompleter>();
 				}
 
-				sr.color = Color.red;
+				sr.sprite = Resources.LoadAll<Sprite>("grid_icons")[1];
 			}
 		}
 
