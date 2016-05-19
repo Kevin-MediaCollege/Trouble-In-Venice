@@ -32,6 +32,8 @@ namespace Proeve
 			{
 				active = true;
 				used = false;
+
+				GlobalEvents.Invoke(new PickupActivatedEvent(this, _entity));
 				
 				OnActivate();
 			}
