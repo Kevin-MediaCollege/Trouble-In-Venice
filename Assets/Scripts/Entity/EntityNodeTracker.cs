@@ -25,7 +25,6 @@ namespace Proeve
 		}
 
 		[SerializeField, HideInInspector] private GridNode currentNode;
-		[SerializeField] private bool manualY;
 
 		protected void Start()
 		{

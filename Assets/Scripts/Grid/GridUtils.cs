@@ -80,6 +80,11 @@ namespace Proeve
 
 		public static GridNode GetConnectionInDirection(GridNode origin, Vector2 direction)
 		{
+			if(origin == null)
+			{
+				return null;
+			}
+
 			GridNode node = GetNodeAt(origin.GridPosition + direction);
 
 			if(node != null && origin.HasConnection(node))

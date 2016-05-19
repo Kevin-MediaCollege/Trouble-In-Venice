@@ -42,7 +42,7 @@ namespace Proeve
 			}
 		}
 
-		[HideInInspector, SerializeField] private List<GridNode> nodes;
+		[SerializeField] private List<GridNode> nodes;
 		private Dictionary<Vector2, GridNode> nodeCache;
 
 		protected void Awake()

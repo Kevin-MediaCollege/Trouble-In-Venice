@@ -9,13 +9,6 @@ namespace Proeve
 	[CustomEditor(typeof(EntityNodeTracker))]
 	public class EntityNodeTrackerEditor : Editor
 	{
-		private SerializedProperty prop_manualY;
-
-		protected void OnEnable()
-		{
-			prop_manualY = serializedObject.FindProperty("manualY");
-		}
-
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
@@ -55,13 +48,7 @@ namespace Proeve
 
 				if(nearest != null)
 				{
-					float y = ec.transform.position.y;
-					if(!prop_manualY.boolValue)
-					{
-						y = nearest.transform.position.y + 1;
-					}
-
-					ec.transform.position = new Vector3(nearest.transform.position.x, y, nearest.transform.position.z);
+					ec.transform.position = nearest.transform.position;
 					ec.CurrentNode = nearest;
 				}
 			}
