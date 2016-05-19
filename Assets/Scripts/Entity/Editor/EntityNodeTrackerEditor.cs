@@ -16,6 +16,17 @@ namespace Proeve
 			prop_manualY = serializedObject.FindProperty("manualY");
 		}
 
+		public override void OnInspectorGUI()
+		{
+			base.OnInspectorGUI();
+
+			GUI.enabled = false;
+
+			EditorGUILayout.ObjectField(new GUIContent("Current Node"), (target as EntityNodeTracker).CurrentNode, typeof(GridNode), true);
+
+			GUI.enabled = true;
+		}
+
 		protected void OnSceneGUI()
 		{
 			if(!Application.isPlaying)

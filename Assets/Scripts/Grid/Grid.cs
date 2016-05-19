@@ -49,9 +49,21 @@ namespace Proeve
 		{
 			nodeCache = new Dictionary<Vector2, GridNode>();
 
-			foreach(GridNode node in nodes)
+			List<int> toRemove = new List<int>();
+			for(int i = 0; i < nodes.Count; i++)
 			{
-				nodeCache.Add(node.GridPosition, node);
+				if(nodes[i] == null)
+				{
+					toRemove.Add(i);
+					continue;
+				}
+
+				nodeCache.Add(nodes[i].GridPosition, nodes[i]);
+			}
+
+			foreach(int index in toRemove)
+			{
+				nodes.RemoveAt(index);
 			}
 		}
 

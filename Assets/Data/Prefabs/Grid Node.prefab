@@ -11,6 +11,7 @@ GameObject:
   - 212: {fileID: 21259974}
   - 65: {fileID: 6569438}
   - 114: {fileID: 11427662}
+  - 114: {fileID: 11413116}
   m_Layer: 0
   m_Name: Grid Node
   m_TagString: Untagged
@@ -42,6 +43,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5, z: 0}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &11413116
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 152690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 205ad6788b4063a43b45b82a650d8e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11427662
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -53,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b447be27be5eb02499b6be60ef9f8e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   connections: []
 --- !u!212 &21259974
 SpriteRenderer:
@@ -81,8 +93,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 9fc06acff3cc1904e9e0c15ad7fc63bc, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000
