@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using Utils;
 
@@ -10,7 +11,14 @@ namespace Proeve
 	/// </summary>
 	public class ScreenLevelSelect : ScreenBase
 	{
+		public Touchable button_left;
+		public Touchable button_right;
+		public CanvasGroup group;
+
 		public LevelItem[] items;
+
+		private int currentPage;
+		private int maxPages;
 
 		protected void Awake()
 		{
@@ -18,6 +26,20 @@ namespace Proeve
 			{
 				items[i].init(this);
 			}
+
+			if (Application.isMobilePlatform)
+			{ 
+				button_left.OnPointerUpEvent += OnButtonPageLeft; 
+				button_right.OnPointerUpEvent += OnButtonPageRight; 
+			} 
+			else 
+			{ 
+				button_left.OnPointerDownEvent += OnButtonPageLeft;
+				button_right.OnPointerDownEvent += OnButtonPageRight;
+			}
+
+			maxPages = Mathf.CeilToInt(LevelManager.getLevelList().Length / 3f);
+			UpdatePage ();
 		}
 
 		/// <summary>
@@ -25,9 +47,35 @@ namespace Proeve
 		/// </summary>
 		public override void OnScreenEnter()
 		{
+			currentPage = 0;
+			UpdatePage();
+		}
+
+		private void OnButtonPageLeft (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		{
+			if(currentPage > 0)
+			{
+				currentPage--;
+				UpdatePage();
+			}
+		}
+
+		private void OnButtonPageRight (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		{
+			if(currentPage < maxPages - 1)
+			{
+				currentPage++;
+				UpdatePage();
+			}
+		}
+
+		public void UpdatePage()
+		{
+			button_left.gameObject.SetActive (currentPage > 0 ? true : false);
+			button_right.gameObject.SetActive (currentPage < maxPages - 1 ? true : false);
+
 			LevelData[] levels = LevelManager.getLevelList ();
 			int levelLenght = levels.Length;
-			int currentPage = 0;
 			int levelID = 0;
 
 			for(int i = 0; i < 3; i++)
@@ -39,6 +87,7 @@ namespace Proeve
 					items[i].levelName = levels[levelID].levelName;
 					items[i].setStars(levels[levelID].maxStars);
 					items[i].level.sprite = levels[levelID].levelImage;
+					items[i].debugText.text = levels[levelID].levelName;
 				}
 				else 
 				{
@@ -49,6 +98,7 @@ namespace Proeve
 
 		public void OnLevelButton(LevelItem _item)
 		{
+			SceneManager.LoadScene (_item.levelName);
 			//Load level,  _item.levelName
 		}
 
@@ -83,6 +133,7 @@ namespace Proeve
 		public Image level;
 		public Touchable button;
 		public Image[] stars;
+		public Text debugText;
 
 		[System.NonSerialized]
 		public string levelName;

@@ -57,13 +57,13 @@ namespace Proeve
 		/// Switch to a different ScreenBase
 		/// </summary>
 		/// <param name="_screen">Name of the screen to switch to</param>
-		public bool SwitchScreen(string _screen)
+		public static bool SwitchScreen(string _screen)
 		{
 			ScreenBase nextScreen;
-			if(!switching && (nextScreen = GetScreenByName(_screen)) != null)
+			if(!instance.switching && (nextScreen = instance.GetScreenByName(_screen)) != null)
 			{
-				switching = true;
-				StartCoroutine(SetScreen(nextScreen));
+				instance.switching = true;
+				instance.StartCoroutine(instance.SetScreen(nextScreen));
 				return true;
 			}
 			return false;

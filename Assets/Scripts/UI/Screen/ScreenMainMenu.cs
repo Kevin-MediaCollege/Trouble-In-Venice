@@ -66,17 +66,17 @@ namespace Proeve
 
 		private void OnButtonPlay(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
 		{
-			ScreenManager.instance.SwitchScreen ("ScreenLevelSelect");
+			ScreenManager.SwitchScreen ("ScreenLevelSelect");
 		}
 
 		private void OnButtonSettings(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
 		{
-			ScreenManager.instance.SwitchScreen ("ScreenSettings");
+			ScreenManager.SwitchScreen ("ScreenSettings");
 		}
 
 		private void OnButtonCredits(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
 		{
-			ScreenManager.instance.SwitchScreen ("ScreenCredits");
+			ScreenManager.SwitchScreen ("ScreenCredits");
 		}
 
 		/// <summary>

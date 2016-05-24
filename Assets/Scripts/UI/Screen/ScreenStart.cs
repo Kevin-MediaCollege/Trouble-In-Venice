@@ -60,10 +60,10 @@ namespace Proeve
 		}
 
 		protected void Update()
-		{
+		{ 
 			if(Input.anyKeyDown)
 			{
-				ScreenManager.instance.SwitchScreen ("ScreenMainMenu");
+				ScreenManager.SwitchScreen ("ScreenMainMenu");
 			}
 		}
 

@@ -82,7 +82,7 @@ namespace Proeve
 
 		private void OnButtonBack(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
 		{
-			ScreenManager.instance.SwitchScreen ("ScreenMainMenu");
+			ScreenManager.SwitchScreen ("ScreenMainMenu");
 		}
 
 		/// <summary>
