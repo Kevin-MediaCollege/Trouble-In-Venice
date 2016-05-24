@@ -66,7 +66,8 @@ LightmapSettings:
     m_FinalGather: 0
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000001, guid: 8a8719a5fcb3709438f3f839abd1acf8,
+    type: 2}
   m_RuntimeCPUUsage: 75
 --- !u!196 &4
 NavMeshSettings:
