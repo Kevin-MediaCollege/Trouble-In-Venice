@@ -17,7 +17,7 @@ namespace Proeve
 
 		protected void Awake()
 		{
-			string[] levelName = transform.root.gameObject.name.Split('_');
+			string[] levelName = SceneManager.GetActiveScene().name.Split('_');
 
 			if(levelName.Length > 1)
 			{

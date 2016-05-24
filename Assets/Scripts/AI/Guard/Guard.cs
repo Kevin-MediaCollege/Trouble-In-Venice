@@ -56,7 +56,7 @@ namespace Proeve
 
 		protected override void OnEntityEntered(Entity _entity)
 		{
-			if(_entity.HasTag("Player"))
+			if(_entity.HasTag("Player") && Movement.CurrentNode.HasConnection(node))
 			{
 				ExecuteCommand<GuardCommandAttackPlayer>();
 			}

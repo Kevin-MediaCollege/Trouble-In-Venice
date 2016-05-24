@@ -15,6 +15,14 @@ namespace Proeve
 		public delegate void OnMove(GridNode _old, GridNode _new);
 		public event OnMove onMoveEvent = delegate { };
 
+		public GridNode CurrentNode
+		{
+			get
+			{
+				return nodeTracker.CurrentNode;
+			}
+		}
+
 		[SerializeField] private EntityNodeTracker nodeTracker;
 
 		private Entity entity;
@@ -50,7 +58,7 @@ namespace Proeve
 				nodeTracker.CurrentNode = target;
 
 				Vector3 nodePosition = nodeTracker.CurrentNode.Position;
-				transform.position = new Vector3(nodePosition.x, nodePosition.y + 1, nodePosition.z);
+				transform.position = new Vector3(nodePosition.x, nodePosition.y, nodePosition.z);
 
 				// (Un)register the entity
 				old.RemoveEntity(entity);
@@ -73,7 +81,7 @@ namespace Proeve
 			GridNode target = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + _direction);
 			if(target != null)
 			{
-				if(nodeTracker.CurrentNode.HasConnection(target))
+				if(target.Active && nodeTracker.CurrentNode.HasConnection(target))
 				{
 					_destination = target;
 					return true;

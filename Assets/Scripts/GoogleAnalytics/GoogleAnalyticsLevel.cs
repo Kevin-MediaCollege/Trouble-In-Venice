@@ -1,33 +1,35 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using Utils;
 
 namespace Proeve
 {
-	public class GoogleAnalyticsLevel : GoogleAnalyticsScreen
+	public class GoogleAnalyticsLevel : MonoBehaviour
 	{
+		private GoogleAnalytics googleAnalytics;
 		private LevelUnlocker levelUnlocker;
 
 		private int numMoves;
 		private int levelIndex;
 
-		protected override void Awake()
+		protected void Awake()
 		{
-			base.Awake();
+			googleAnalytics = Dependency.Get<GoogleAnalytics>();
 
-			string[] parts = screenName.Split('_');
+			string[] parts = SceneManager.GetActiveScene().name.Split('_');
 			levelIndex = int.Parse(parts[1]);
 			levelUnlocker = Dependency.Get<LevelUnlocker>();
 		}
 
-		protected override void OnEnable()
+		protected void OnEnable()
 		{
-			base.OnEnable();
-
 			GlobalEvents.AddListener<PlayerMovedEvent>(OnPlayerMovedEvent);
+
+			googleAnalytics.LogScreen(new AppViewHitBuilder().SetScreenName("Level_" + levelIndex));
 
 			// Log started
 			EventHitBuilder ehb = new EventHitBuilder();
-			ehb.SetEventCategory(screenName);
+			ehb.SetEventCategory("Level_" + levelIndex);
 			ehb.SetEventAction(levelUnlocker.IsUnlocked(levelIndex + 1) ? "Started After Completion" : "Started");
 			googleAnalytics.LogEvent(ehb);
 		}
@@ -38,21 +40,16 @@ namespace Proeve
 
 			// Log completion status
 			EventHitBuilder ehb = new EventHitBuilder();
-			ehb.SetEventCategory(screenName);
+			ehb.SetEventCategory("Level_" + levelIndex);
 			ehb.SetEventAction(levelUnlocker.IsUnlocked(levelIndex + 1) ? "Complete" : "Not Complete");
 			googleAnalytics.LogEvent(ehb);
 
 			// Log num moves
 			ehb = new EventHitBuilder();
-			ehb.SetEventCategory(screenName);
+			ehb.SetEventCategory("Level_" + levelIndex);
 			ehb.SetEventAction("Turn Count");
 			ehb.SetEventValue(numMoves);
 			googleAnalytics.LogEvent(ehb);
-		}
-
-		protected void Reset()
-		{
-			screenName = transform.root.gameObject.name;
 		}
 
 		private void OnPlayerMovedEvent(PlayerMovedEvent evt)

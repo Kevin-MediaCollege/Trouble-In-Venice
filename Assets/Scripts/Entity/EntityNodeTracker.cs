@@ -30,7 +30,31 @@ namespace Proeve
 		{
 			if(CurrentNode == null)
 			{
-				throw new InvalidOperationException("Entity must be attached to a GridNode");
+				Grid grid = FindObjectOfType<Grid>();
+				GridNode nearest = null;
+				float nearestDistance = float.PositiveInfinity;
+
+				foreach(GridNode node in grid.Nodes)
+				{
+					if(node == null)
+					{
+						continue;
+					}
+
+					float distance = (node.transform.position - transform.position).sqrMagnitude;
+
+					if(distance < nearestDistance)
+					{
+						nearest = node;
+						nearestDistance = distance;
+					}
+				}
+
+				if(nearest != null)
+				{
+					transform.position = nearest.transform.position;
+					CurrentNode = nearest;
+				}
 			}
 
 			CurrentNode.AddEntity(GetComponent<Entity>());

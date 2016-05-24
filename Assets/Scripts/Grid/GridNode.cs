@@ -126,13 +126,30 @@ namespace Proeve
 			}
 		}
 
-		public bool Active { set; get; }
+		public bool Active
+		{
+			set
+			{
+				if((!active && value) || (active && !value))
+				{
+					GetComponent<SpriteRenderer>().enabled = value;
+				}
+
+				active = value;
+			}
+			get
+			{
+				return active;
+			}
+		}
 
 		[SerializeField] private GridNodeType type;
 		[SerializeField] private List<GridNode> connections;
 
 		private HashSet<Entity> entities;
 		private HashSet<GridNode> blockedConnections;
+
+		private bool active;
 
 		protected void Awake()
 		{

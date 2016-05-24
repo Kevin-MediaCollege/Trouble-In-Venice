@@ -28,8 +28,7 @@ namespace Proeve
 				{
 					HighlightNodes(Color.white);
 					node.GetComponentInChildren<Renderer>().material.color = Color.yellow;
-
-					used = true;
+					
 					enabled = false;
 				}
 			}

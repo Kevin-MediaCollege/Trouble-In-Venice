@@ -1,29 +1,60 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Utils;
 
 namespace Proeve
 {
-	public class LimitedUsesPickup : Pickup
+	public class LimitedUsesPickup : MonoBehaviour
 	{
-		[SerializeField] private int uses;
+		[SerializeField] private GridNode[] nodes;
+		[SerializeField] private int numUses;
 
 		private int remaining;
 
-		protected override void Awake()
+		protected void Awake()
 		{
-			base.Awake();
-
-			remaining = uses;
+			remaining = numUses;
 		}
 
-		protected override void OnActivate()
+		protected void OnEnable()
 		{
-			remaining--;
+			GlobalEvents.AddListener<PlayerMovedEvent>(OnPlayerMovedEvent);
+		}
 
-			if(remaining <= 0)
+		protected void OnDisable()
+		{
+			GlobalEvents.RemoveListener<PlayerMovedEvent>(OnPlayerMovedEvent);
+		}
+
+		private void OnPlayerMovedEvent(PlayerMovedEvent evt)
+		{
+			if(!IsValid(evt.To) && IsValid(evt.From))
 			{
-				node.Active = false;
+				if(remaining <= 0)
+				{
+					foreach(GridNode node in nodes)
+					{
+						node.Active = false;
+					}
+				}
 			}
+			else if(!IsValid(evt.From) && IsValid(evt.To))
+			{
+				remaining--;
+			}
+		}
+
+		private bool IsValid(GridNode node)
+		{
+			foreach(GridNode n in nodes)
+			{
+				if(node == n)
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 	}
 }
