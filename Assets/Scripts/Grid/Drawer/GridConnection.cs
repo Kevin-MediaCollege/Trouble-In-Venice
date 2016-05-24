@@ -62,11 +62,14 @@ namespace Proeve
 
 		protected void OnEnable()
 		{
-			foreach(Entry entry in entries)
+			if(node.Active)
 			{
-				if(node.HasConnection(entry.End))
+				foreach(Entry entry in entries)
 				{
-					StartCoroutine(GridConnectionDrawer.Start(entry));
+					if(node.HasConnection(entry.End) && entry.End.Active)
+					{
+						StartCoroutine(GridConnectionDrawer.Start(entry));
+					}
 				}
 			}
 
@@ -84,16 +87,16 @@ namespace Proeve
 		{
 			if(wasActive && !node.Active)
 			{
-				foreach(Entry entry in entries)
+				foreach(GridNode n in node.Connections)
 				{
-					StartCoroutine(GridConnectionDrawer.End(entry));
+					n.AddBlockade(node);
 				}
 			}
 			else if(!wasActive && node.Active)
 			{
-				foreach(Entry entry in entries)
+				foreach(GridNode n in node.Connections)
 				{
-					StartCoroutine(GridConnectionDrawer.Start(entry));
+					n.RemoveBlockade(node);
 				}
 			}
 
