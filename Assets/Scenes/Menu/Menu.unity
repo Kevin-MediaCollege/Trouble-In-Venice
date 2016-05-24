@@ -2085,6 +2085,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 625768852}
   - 114: {fileID: 625768851}
+  - 114: {fileID: 625768853}
   m_Layer: 5
   m_Name: ScreenMainMenu
   m_TagString: Untagged
@@ -2125,6 +2126,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.0000076293945}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &625768853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 625768850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfc2c7e192d18449a5f252c72257b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenName: Main Menu
 --- !u!1 &634737425
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,6 +2802,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 813825611}
   - 114: {fileID: 813825612}
+  - 114: {fileID: 813825613}
   m_Layer: 5
   m_Name: ScreenStart
   m_TagString: Untagged
@@ -2832,6 +2846,18 @@ MonoBehaviour:
   group_overlay: {fileID: 1193674624}
   text: {fileID: 27603393}
   background: {fileID: 921067102}
+--- !u!114 &813825613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 813825610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfc2c7e192d18449a5f252c72257b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenName: Start Screen
 --- !u!1 &921067100
 GameObject:
   m_ObjectHideFlags: 0
@@ -3013,6 +3039,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1004205035}
   - 114: {fileID: 1004205034}
+  - 114: {fileID: 1004205036}
   m_Layer: 5
   m_Name: ScreenCredits
   m_TagString: Untagged
@@ -3051,6 +3078,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.0000076293945}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1004205036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1004205033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfc2c7e192d18449a5f252c72257b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenName: Credits
 --- !u!1 &1010231858
 GameObject:
   m_ObjectHideFlags: 0
@@ -3060,6 +3099,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1010231860}
   - 114: {fileID: 1010231859}
+  - 114: {fileID: 1010231861}
   m_Layer: 5
   m_Name: ScreenLevelSelect
   m_TagString: Untagged
@@ -3124,6 +3164,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.0000076293945}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1010231861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1010231858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfc2c7e192d18449a5f252c72257b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenName: Level Select
 --- !u!1 &1124250442
 GameObject:
   m_ObjectHideFlags: 0
@@ -4401,6 +4453,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1448109956}
   - 114: {fileID: 1448109955}
+  - 114: {fileID: 1448109957}
   m_Layer: 5
   m_Name: ScreenSettings
   m_TagString: Untagged
@@ -4445,6 +4498,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.0000076293945}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1448109957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1448109954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfc2c7e192d18449a5f252c72257b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenName: Settings
 --- !u!1 &1449131219
 GameObject:
   m_ObjectHideFlags: 0
