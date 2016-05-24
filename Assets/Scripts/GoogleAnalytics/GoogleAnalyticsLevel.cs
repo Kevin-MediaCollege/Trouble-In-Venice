@@ -14,7 +14,8 @@ namespace Proeve
 		{
 			base.Awake();
 
-			levelIndex = int.Parse(screenName);
+			string[] parts = screenName.Split('_');
+			levelIndex = int.Parse(parts[1]);
 			levelUnlocker = Dependency.Get<LevelUnlocker>();
 		}
 
