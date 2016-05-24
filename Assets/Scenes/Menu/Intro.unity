@@ -522,6 +522,7 @@ MonoBehaviour:
   logoAlphaGroup: {fileID: 2139753377}
   logoRect: {fileID: 2139753374}
   overlayAlphaGroup: {fileID: 1290000875}
+  scream: {fileID: 11400000, guid: a49fb753ef61b884f9691f32703263d6, type: 2}
 --- !u!224 &1125425443
 RectTransform:
   m_ObjectHideFlags: 0

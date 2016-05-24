@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System;
+using Snakybo.Audio;
 
 namespace Proeve
 {
@@ -17,6 +18,7 @@ namespace Proeve
 		public CanvasGroup logoAlphaGroup;
 		public RectTransform logoRect;
 		public CanvasGroup overlayAlphaGroup;
+		public AudioObject scream;
 
 		/// <summary>
 		/// Called when switched to this screen
@@ -78,6 +80,8 @@ namespace Proeve
 
 			yield return new WaitForSeconds(0.3f);
 
+			StartCoroutine(PlayNaughtyGoatAudioDelayed());
+
 			//Fade out all prints except print 2
 			for(int i = 0; i < 5; i++)
 			{
@@ -95,6 +99,13 @@ namespace Proeve
 			yield return new WaitForSeconds(0.6f);
 
 			SceneManager.LoadSceneAsync("Menu");
+		}
+
+		private IEnumerator PlayNaughtyGoatAudioDelayed()
+		{
+			yield return new WaitForSeconds(0.15f);
+
+			scream.Play();
 		}
 
 		/// <summary>
