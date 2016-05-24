@@ -52,7 +52,7 @@ namespace Utils
 		{
 			T obj = CreateInstance<T>();
 
-			UnityEditor.AssetDatabase.CreateAsset(obj, _path + ".asset");
+			UnityEditor.AssetDatabase.CreateAsset(obj, _path);
 			UnityEditor.AssetDatabase.SaveAssets();
 
 			UnityEditor.Selection.activeObject = obj;
