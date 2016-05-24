@@ -1330,6 +1330,7 @@ Transform:
   - {fileID: 1332691486}
   - {fileID: 1948526408}
   - {fileID: 1731313762}
+  - {fileID: 1302703832}
   m_Father: {fileID: 0}
   m_RootOrder: 1
 --- !u!1 &791723397
@@ -1363,7 +1364,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentNode: {fileID: 122919202}
-  manualY: 0
 --- !u!114 &791723399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1900,6 +1900,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 205ad6788b4063a43b45b82a650d8e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1302703831
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1302703832}
+  - 114: {fileID: 1302703833}
+  m_Layer: 0
+  m_Name: Google Analytics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 4294967295
+  m_IsActive: 1
+--- !u!4 &1302703832
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1302703831}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 660302217}
+  m_RootOrder: 5
+--- !u!114 &1302703833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1302703831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2afea6926635a0a459b7f9cf647f2a8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenName: Level_1
 --- !u!4 &1323061385
 Transform:
   m_ObjectHideFlags: 0
@@ -2503,7 +2543,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentNode: {fileID: 804731771}
-  manualY: 0
 --- !u!114 &1731313757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2568,7 +2607,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1731313755}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5, y: 7.7, z: 13.5}
+  m_LocalPosition: {x: -4.5, y: 6.7, z: 13.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 660302217}
@@ -2831,7 +2870,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentNode: {fileID: 344900288}
-  manualY: 0
 --- !u!114 &1986047391
 MonoBehaviour:
   m_ObjectHideFlags: 0
