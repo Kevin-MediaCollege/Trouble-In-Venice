@@ -38,16 +38,30 @@ namespace Proeve
 					{
 						node.Active = false;
 					}
-
-					foreach(Rigidbody rigidbody in rigidbodies)
-					{
-						rigidbody.isKinematic = false;
-					}
+					
+					StartCoroutine(HandleRigidbodies());
 				}
 			}
 			else if(!IsValid(evt.From) && IsValid(evt.To))
 			{
 				remaining--;
+			}
+		}
+
+		private IEnumerator HandleRigidbodies()
+		{
+			SetKinematic(false);
+
+			yield return new WaitForSeconds(1.5f);
+
+			SetKinematic(true);
+		}
+
+		private void SetKinematic(bool kinematic)
+		{
+			foreach(Rigidbody rigidbody in rigidbodies)
+			{
+				rigidbody.isKinematic = kinematic;
 			}
 		}
 
