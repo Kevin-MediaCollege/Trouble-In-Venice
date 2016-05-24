@@ -6,7 +6,9 @@ namespace Proeve
 {
 	public class LimitedUsesPickup : MonoBehaviour
 	{
+		[SerializeField] private Rigidbody[] rigidbodies;
 		[SerializeField] private GridNode[] nodes;
+
 		[SerializeField] private int numUses;
 
 		private int remaining;
@@ -35,6 +37,11 @@ namespace Proeve
 					foreach(GridNode node in nodes)
 					{
 						node.Active = false;
+					}
+
+					foreach(Rigidbody rigidbody in rigidbodies)
+					{
+						rigidbody.isKinematic = false;
 					}
 				}
 			}
