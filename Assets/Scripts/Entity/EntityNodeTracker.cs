@@ -31,6 +31,6 @@ namespace Proeve
 			}
 		}
 
-		private GridNode currentNode;
+		[SerializeField, HideInInspector] private GridNode currentNode;
 	}
 }
