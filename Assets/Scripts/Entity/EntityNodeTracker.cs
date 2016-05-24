@@ -7,6 +7,7 @@ namespace Proeve
 	/// <summary>
 	/// The Entity Node Tracker, automatically tracks which <see cref="GridNode"/> the entity is on.
 	/// </summary>
+	[RequireComponent(typeof(Entity))]
 	public class EntityNodeTracker : MonoBehaviour
 	{
 		/// <summary>
@@ -20,44 +21,16 @@ namespace Proeve
 			}
 			get
 			{
+				if(currentNode == null)
+				{
+					currentNode = GridUtils.GetNodeAt(new Vector2(Mathf.Round((transform.position.x - 1.5f) / Grid.SIZE), Mathf.Round((transform.position.z - 1.5f) / Grid.SIZE)));
+					currentNode.AddEntity(GetComponent<Entity>());
+				}
+
 				return currentNode;
 			}
 		}
 
-		[SerializeField, HideInInspector] private GridNode currentNode;
-
-		protected void Start()
-		{
-			if(CurrentNode == null)
-			{
-				Grid grid = FindObjectOfType<Grid>();
-				GridNode nearest = null;
-				float nearestDistance = float.PositiveInfinity;
-
-				foreach(GridNode node in grid.Nodes)
-				{
-					if(node == null)
-					{
-						continue;
-					}
-
-					float distance = (node.transform.position - transform.position).sqrMagnitude;
-
-					if(distance < nearestDistance)
-					{
-						nearest = node;
-						nearestDistance = distance;
-					}
-				}
-
-				if(nearest != null)
-				{
-					transform.position = nearest.transform.position;
-					CurrentNode = nearest;
-				}
-			}
-
-			CurrentNode.AddEntity(GetComponent<Entity>());
-		}
+		private GridNode currentNode;
 	}
 }
