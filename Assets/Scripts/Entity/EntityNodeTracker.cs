@@ -7,11 +7,14 @@ namespace Proeve
 	/// <summary>
 	/// The Entity Node Tracker, automatically tracks which <see cref="GridNode"/> the entity is on.
 	/// </summary>
+	/// <remarks>
+	/// Requires the <see cref="Entity"/> component to work.
+	/// </remarks>
 	[RequireComponent(typeof(Entity))]
 	public class EntityNodeTracker : MonoBehaviour
 	{
 		/// <summary>
-		/// The current node.
+		/// Set or get the current node.
 		/// </summary>
 		public GridNode CurrentNode
 		{

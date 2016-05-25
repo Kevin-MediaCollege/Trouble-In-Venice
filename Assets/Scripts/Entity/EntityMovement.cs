@@ -68,12 +68,31 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// Check whether or not the entity can move in the specified direction.
+		/// </summary>
+		/// <remarks>
+		/// <paramref name="_direction"/> is a normalized Vector2.
+		/// </remarks>
+		/// <param name="_direction">The direction to check, should be normalized.</param>
+		/// <returns></returns>
 		public bool CanMove(Vector2 _direction)
 		{
 			GridNode destination;
 			return CanMove(_direction, out destination);
 		}
 
+		/// <summary>
+		/// Check whether or not the entity can move in the specified direction.
+		/// If it is, <paramref name="_destination"/> is set.
+		/// </summary>
+		/// <remarks>
+		/// <paramref name="_direction"/> is a normalized Vector2.
+		/// </remarks>
+		/// <param name="_direction">The direction to check, should be normalized.</param>
+		/// <param name="_destination">The destination, will be set to <code>null</code>
+		/// if it isn't possible to move in the specified direction.</param>
+		/// <returns></returns>
 		public bool CanMove(Vector2 _direction, out GridNode _destination)
 		{
 			_direction.Normalize();
