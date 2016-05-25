@@ -1,41 +1,72 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Handles connections drawn between grid nodes, registers one or more <see cref="Entry"/> to <see cref="GridConnectionDrawer"/>.
+	/// </summary>
 	public class GridConnection : MonoBehaviour
 	{
+		/// <summary>
+		/// A grid connection entry. 
+		/// <para>
+		/// An entry is half a line between <see cref="GridNode"/>s.
+		/// </para>
+		/// </summary>
 		public class Entry
 		{
-			public GridNode Start { private set; get; }
-			public GridNode End { private set; get; }
+			/// <summary>
+			/// The source <see cref="GridNode"/> of the entry.
+			/// </summary>
+			public GridNode Source { private set; get; }
 
+			/// <summary>
+			/// The destination <see cref="GridNode"/> of the entry.
+			/// </summary>
+			public GridNode Destination { private set; get; }
+
+			/// <summary>
+			/// Array of indices of the vertices at the source position.
+			/// </summary>
 			public int[] StartIndices { set; get; }
+
+			/// <summary>
+			/// Array of indices of the vertices at the destination position.
+			/// </summary>
 			public int[] EndIndices { set; get; }
 
-			public Vector3 StartPosition
+			/// <summary>
+			/// The source position.
+			/// </summary>
+			public Vector3 SourcePosition
 			{
 				get
 				{
-					return Start.Position;
+					return Source.Position;
 				}
 			}
 
-			public Vector3 EndPosition
+			/// <summary>
+			/// The destination position, the destination position is halfway between the <see cref="Source"/> and <see cref="Destination"/> nodes.
+			/// </summary>
+			public Vector3 DestinationPosition
 			{
 				get
 				{
-					return Start.Position + ((End.Position - Start.Position) * 0.5f);
+					return Source.Position + ((Destination.Position - Source.Position) * 0.5f);
 				}
 			}
 
-			public Entry(GridNode _start, GridNode _end)
+			/// <summary>
+			/// Create a new entry.
+			/// </summary>
+			/// <param name="_source">The source <see cref="GridNode"/>.</param>
+			/// <param name="_destination">The destination <see cref="GridNode"/></param>
+			public Entry(GridNode _source, GridNode _destination)
 			{
-				Start = _start;
-				End = _end;
+				Source = _source;
+				Destination = _destination;
 			}
 		}
 
@@ -66,7 +97,7 @@ namespace Proeve
 			{
 				foreach(Entry entry in entries)
 				{
-					if(node.HasConnection(entry.End) && entry.End.Active)
+					if(node.HasConnection(entry.Destination) && entry.Destination.Active)
 					{
 						StartCoroutine(GridConnectionDrawer.Start(entry));
 					}
@@ -85,6 +116,7 @@ namespace Proeve
 
 		protected void LateUpdate()
 		{
+			// Add blockades if this node has become inactive.
 			if(wasActive && !node.Active)
 			{
 				foreach(GridNode n in node.Connections)
@@ -92,6 +124,7 @@ namespace Proeve
 					n.AddBlockade(node);
 				}
 			}
+			// Remove blockades if this node has become active.
 			else if(!wasActive && node.Active)
 			{
 				foreach(GridNode n in node.Connections)
@@ -125,7 +158,7 @@ namespace Proeve
 		{
 			foreach(Entry entry in entries)
 			{
-				if(entry.End == to)
+				if(entry.Destination == to)
 				{
 					return entry;
 				}

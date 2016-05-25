@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Grid connection drawer, draws all registered <see cref="GridConnection.Entry"/>.
+	/// </summary>
 	[RequireComponent(typeof(MeshFilter))]
 	[RequireComponent(typeof(MeshRenderer))]
 	public class GridConnectionDrawer : MonoBehaviour
@@ -13,6 +13,9 @@ namespace Proeve
 		private const float SPEED = 7f;
 		private const float LINE_WIDTH = 0.03f;
 
+		/// <summary>
+		/// The mesh of the connections.
+		/// </summary>
 		public static Mesh Mesh { private set; get; }
 
 		protected void Awake()
@@ -23,6 +26,10 @@ namespace Proeve
 			GetComponent<MeshRenderer>().material = Resources.Load<Material>("Grid Connection");
 		}
 
+		/// <summary>
+		/// Register an <see cref="GridConnection.Entry"/>.
+		/// </summary>
+		/// <param name="_entry">The entry to register.</param>
 		public static void RegisterEntry(GridConnection.Entry _entry)
 		{
 			// Assign vertex indices
@@ -43,7 +50,7 @@ namespace Proeve
 				indices[i] = Mesh.GetIndices(0)[i];
 			}
 
-			Vector3[] startPosition = GetLinePosition(_entry, _entry.StartPosition);
+			Vector3[] startPosition = GetLinePosition(_entry, _entry.SourcePosition);
 
 			// Assign new vertices
 			vertices[_entry.StartIndices[0]] = startPosition[0];
@@ -65,18 +72,22 @@ namespace Proeve
 			Mesh.RecalculateBounds();
 		}
 
+		/// <summary>
+		/// Play the start/appear animation of an <see cref="GridConnection.Entry"/>.
+		/// </summary>
+		/// <param name="_entry">The entry.</param>
 		public static IEnumerator Start(GridConnection.Entry _entry)
 		{
 			float st = Time.time;
 			float t = 0;
 
-			float length = (_entry.StartPosition - _entry.EndPosition).sqrMagnitude;
+			float length = (_entry.SourcePosition - _entry.DestinationPosition).sqrMagnitude;
 
 			while(t < 1)
 			{
 				t = ((Time.time - st) * SPEED) / (length * length);
 
-				Vector3 position = Vector3.Lerp(_entry.StartPosition, _entry.EndPosition, t);
+				Vector3 position = Vector3.Lerp(_entry.SourcePosition, _entry.DestinationPosition, t);
 				Vector3[] vertices = Mesh.vertices;
 
 				Vector3[] linePosition = GetLinePosition(_entry, position);
@@ -89,18 +100,22 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// Play the end/dissapear animation of an <see cref="GridConnection.Entry"/>.
+		/// </summary>
+		/// <param name="_entry">The entry.</param>
 		public static IEnumerator End(GridConnection.Entry _entry)
 		{
 			float st = Time.time;
 			float t = 0;
 
-			float length = (_entry.StartPosition - _entry.EndPosition).sqrMagnitude;
+			float length = (_entry.SourcePosition - _entry.DestinationPosition).sqrMagnitude;
 
 			while(t < 1)
 			{
 				t = ((Time.time - st) * SPEED) / (length * length);
 
-				Vector3 position = Vector3.Lerp(_entry.EndPosition, _entry.StartPosition, t);
+				Vector3 position = Vector3.Lerp(_entry.DestinationPosition, _entry.SourcePosition, t);
 				Vector3[] vertices = Mesh.vertices;
 
 				Vector3[] linePosition = GetLinePosition(_entry, position);
@@ -113,11 +128,25 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// Play the interrupt animation of an <see cref="GridConnection.Entry"/>.
+		/// </summary>
+		/// <remarks>
+		/// Unused
+		/// </remarks>
+		/// <param name="_entry">The entry</param>
 		public static IEnumerator Interrupt(GridConnection.Entry _entry)
 		{
 			yield break;
 		}
 
+		/// <summary>
+		/// Play the restore animation of an <see cref="GridConnection.Entry"/>.
+		/// </summary>
+		/// <remarks>
+		/// Unused
+		/// </remarks>
+		/// <param name="_entry">The entry</param>
 		public static IEnumerator Restore(GridConnection.Entry _entry)
 		{
 			yield break;
@@ -125,7 +154,7 @@ namespace Proeve
 
 		private static Vector3[] GetLinePosition(GridConnection.Entry _entry, Vector3 _position)
 		{
-			Vector3 axis = (_entry.End.GridPosition - _entry.Start.GridPosition).normalized;
+			Vector3 axis = (_entry.Destination.GridPosition - _entry.Source.GridPosition).normalized;
 
 			// Add width on Z axis
 			if(Mathf.Abs(axis.x) == 1)
