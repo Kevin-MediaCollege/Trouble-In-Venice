@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// AI guard, has multiple modes.
+	/// </summary>
 	public class Guard : AIBase
 	{
+		/// <summary>
+		/// All available patrol modes for the guard.
+		/// </summary>
 		public enum GuardPatrolMode
 		{
 			Static,
@@ -14,6 +19,9 @@ namespace Proeve
 			Patrolling
 		}
 
+		/// <summary>
+		/// Set or get The direction the guard is facing.
+		/// </summary>
 		public GridDirection Direction
 		{
 			set
@@ -26,6 +34,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// Get the patrol mode of the guard.
+		/// </summary>
 		public GuardPatrolMode PatrolMode
 		{
 			get
@@ -52,14 +63,6 @@ namespace Proeve
 		protected override void OnDisable()
 		{
 			GlobalEvents.RemoveListener<PlayerMovedEvent>(OnPlayerMovedEvent);
-		}
-
-		protected override void OnEntityEntered(Entity _entity)
-		{
-			if(_entity.HasTag("Player") && Movement.CurrentNode.HasConnection(node))
-			{
-				ExecuteCommand<GuardCommandAttackPlayer>();
-			}
 		}
 
 		protected void OnDrawGizmosSelected()
@@ -99,20 +102,17 @@ namespace Proeve
 			transform.rotation = rotation;
 		}
 
-		private void UpdateState()
+		protected override void OnEntityEntered(Entity _entity)
 		{
-			switch(patrolMode)
+			if(_entity.HasTag("Player") && Movement.CurrentNode.HasConnection(node))
 			{
-			case GuardPatrolMode.RotatingClockwise:
-			case GuardPatrolMode.RotatingCounterClockwise:
-				ExecuteCommand<GuardCommandRotate>();
-				break;
-			case GuardPatrolMode.Patrolling:
-				ExecuteCommand<GuardCommandMove>();
-				break;
+				ExecuteCommand<GuardCommandAttackPlayer>();
 			}
 		}
 
+		/// <summary>
+		/// Find the target node of the guard.
+		/// </summary>
 		public void FindTargetNode()
 		{
 			base.OnDisable();
@@ -132,6 +132,27 @@ namespace Proeve
 			base.OnEnable();
 		}
 
+		/// <summary>
+		/// Update the state of the guard, happens right after the player moves.
+		/// </summary>
+		private void UpdateState()
+		{
+			switch(patrolMode)
+			{
+			case GuardPatrolMode.RotatingClockwise:
+			case GuardPatrolMode.RotatingCounterClockwise:
+				ExecuteCommand<GuardCommandRotate>();
+				break;
+			case GuardPatrolMode.Patrolling:
+				ExecuteCommand<GuardCommandMove>();
+				break;
+			}
+		}
+
+		/// <summary>
+		/// Event called by <see cref="PlayerMovedEvent"/>.
+		/// </summary>
+		/// <param name="_evt">The event.</param>
 		private void OnPlayerMovedEvent(PlayerMovedEvent _evt)
 		{
 			UpdateState();

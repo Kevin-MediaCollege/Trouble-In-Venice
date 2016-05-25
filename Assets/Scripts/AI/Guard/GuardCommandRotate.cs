@@ -4,6 +4,9 @@ using UnityEngine;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Guard command to rotate.
+	/// </summary>
 	public class GuardCommandRotate : AICommand
 	{
 		public override void Execute(AIBase _ai)

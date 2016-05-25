@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Guard command to move.
+	/// </summary>
 	public class GuardCommandMove : AICommand
 	{
 		public override void Execute(AIBase _ai)
