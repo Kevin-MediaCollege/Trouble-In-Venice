@@ -2,6 +2,9 @@
 
 namespace Proeve
 {
+	/// <summary>
+	/// Google Analytics tracker for pickups.
+	/// </summary>
 	public class GAPickupTracker : GATracker
 	{
 		public GAPickupTracker(GoogleAnalytics _googleAnalytics, int _levelIndex) : base(_googleAnalytics, _levelIndex)

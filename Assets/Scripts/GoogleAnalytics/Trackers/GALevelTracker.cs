@@ -2,6 +2,9 @@
 
 namespace Proeve
 {
+	/// <summary>
+	/// Google Analytics tracker for level start and stop.
+	/// </summary>
 	public class GALevelTracker : GATracker
 	{
 		private LevelUnlocker levelUnlocker;

@@ -5,6 +5,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// The Google Analytics tracker for levels.
+	/// </summary>
 	public class GoogleAnalyticsLevel : MonoBehaviour
 	{
 		private List<GATracker> trackers;
@@ -18,6 +21,7 @@ namespace Proeve
 
 			googleAnalytics.LogScreen(new AppViewHitBuilder().SetScreenName(SceneManager.GetActiveScene().name));
 
+			// Add trackers
 			trackers = new List<GATracker>();
 			trackers.Add(new GACompletionTracker(googleAnalytics, levelIndex));
 			trackers.Add(new GALevelTracker(googleAnalytics, levelIndex));

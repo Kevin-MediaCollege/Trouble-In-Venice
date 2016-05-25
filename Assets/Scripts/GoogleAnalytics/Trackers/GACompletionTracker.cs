@@ -2,6 +2,9 @@
 
 namespace Proeve
 {
+	/// <summary>
+	/// Google Analytics tracker for level completion.
+	/// </summary>
 	public class GACompletionTracker : GATracker
 	{
 		public GACompletionTracker(GoogleAnalytics _googleAnalytics, int _levelIndex) : base(_googleAnalytics, _levelIndex)
