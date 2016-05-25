@@ -42,8 +42,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 496102}
   - 114: {fileID: 11471298}
+  - 114: {fileID: 11437582}
   m_Layer: 0
-  m_Name: Google Analytics
+  m_Name: Trackers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,6 +161,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df2635f2975828740b9fc7639dbceb9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &11437582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 190316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eddd6819c8e95ed479b3e56b88cae688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &11441092

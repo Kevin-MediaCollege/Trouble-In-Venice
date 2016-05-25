@@ -51,6 +51,8 @@ namespace Proeve
 					levelUnlocker.Unlock(nextLevelIndex);
 				}
 
+				GlobalEvents.Invoke(new LevelCompletedEvent(levelIndex));
+
 				// Go back to level select
 				SceneManager.LoadSceneAsync("Menu");
 			}

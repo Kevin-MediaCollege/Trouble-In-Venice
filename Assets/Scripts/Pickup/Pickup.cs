@@ -9,18 +9,7 @@ namespace Proeve
 	/// </summary>
 	public abstract class Pickup : GridNodeObject
 	{
-		private GoogleAnalytics googleAnalytics;
-		private string eventCategory;
-
 		private bool active;
-
-		protected override void Awake()
-		{
-			base.Awake();
-
-			googleAnalytics = Dependency.Get<GoogleAnalytics>();
-			eventCategory = transform.root.gameObject.name;
-		}
 
 		protected void LateUpdate()
 		{
@@ -37,12 +26,6 @@ namespace Proeve
 				active = true;
 
 				GlobalEvents.Invoke(new PickupActivatedEvent(this, _entity));
-
-				EventHitBuilder ehb = new EventHitBuilder();
-				ehb.SetEventCategory(eventCategory);
-				ehb.SetEventAction("Pickup Activated");
-				googleAnalytics.LogEvent(ehb);
-
 				OnActivate();
 			}
 		}
@@ -51,11 +34,6 @@ namespace Proeve
 		{
 			if(_entity.HasTag("Player"))
 			{
-				EventHitBuilder ehb = new EventHitBuilder();
-				ehb.SetEventCategory(eventCategory);
-				ehb.SetEventAction("Pickup Deactivated");
-				googleAnalytics.LogEvent(ehb);
-
 				OnDeactivate();
 
 				active = false;
