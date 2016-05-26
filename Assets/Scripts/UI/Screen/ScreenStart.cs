@@ -14,14 +14,12 @@ namespace Proeve
 
 		public Text text;
 		public Image background;
-		private bool fading;
 
 		/// <summary>
 		/// Called when switched to this screen
 		/// </summary>
 		public override void OnScreenEnter()
 		{
-			fading = true;
 			StartCoroutine ("OnScreenFadein");
 			text.text = Application.isMobilePlatform ? "Touch to start" : "Press any key to start";
 		}
@@ -38,7 +36,6 @@ namespace Proeve
 			StartCoroutine("FlashAnyKey");
 			group_main.DOFade (1f, 0.5f);
 			yield return new WaitForSeconds (0.5f);
-			fading = false;
 		}
 
 		/// <summary>
