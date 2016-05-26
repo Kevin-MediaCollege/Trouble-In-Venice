@@ -19,11 +19,14 @@ namespace Proeve
 		private SwipeHandle swipeHandle;
 
 		private bool inputEnabled;
+		private bool canMove;
 
 		protected void Awake()
 		{
 			originalNodeColors = new Dictionary<SpriteRenderer, Color>();
+
 			inputEnabled = true;
+			canMove = true;
 		}
 
 		protected void OnEnable()
@@ -33,6 +36,7 @@ namespace Proeve
 			GlobalEvents.AddListener<SwipeEndedEvent>(OnSwipeEndedEvent);
 
 			GlobalEvents.AddListener<SetInputEvent>(OnSetInputEvent);
+			GlobalEvents.AddListener<PlayerMovedEvent>(OnPlayerMovedEvent);
 		}
 
 		protected void OnDisable()
@@ -42,6 +46,7 @@ namespace Proeve
 			GlobalEvents.RemoveListener<SwipeEndedEvent>(OnSwipeEndedEvent);
 
 			GlobalEvents.RemoveListener<SetInputEvent>(OnSetInputEvent);
+			GlobalEvents.RemoveListener<PlayerMovedEvent>(OnPlayerMovedEvent);
 		}
 
 		protected void Reset()
@@ -51,7 +56,7 @@ namespace Proeve
 
 		protected void Update()
 		{
-			if(!inputEnabled)
+			if(!inputEnabled || !canMove)
 			{
 				return;
 			}
@@ -140,7 +145,7 @@ namespace Proeve
 		
 		private void OnSwipeBeganEvent(SwipeBeganEvent _evt)
 		{
-			if(!inputEnabled)
+			if(!inputEnabled || !canMove)
 			{
 				return;
 			}
@@ -172,7 +177,7 @@ namespace Proeve
 
 		private void OnSwipeUpdateEvent(SwipeUpdateEvent _evt)
 		{
-			if(!inputEnabled)
+			if(!inputEnabled || !canMove)
 			{
 				return;
 			}
@@ -209,7 +214,7 @@ namespace Proeve
 		
 		private void OnSwipeEndedEvent(SwipeEndedEvent _evt)
 		{
-			if(!inputEnabled)
+			if(!inputEnabled || !canMove)
 			{
 				return;
 			}
@@ -234,11 +239,17 @@ namespace Proeve
 			inputEnabled = _evt.Enabled;
 		}
 
+		private void OnPlayerMovedEvent(PlayerMovedEvent _evt)
+		{
+			canMove = true;
+		}
+
 		private void Move(Vector2 _direction)
 		{
 			GridNode target;
 			if(movement.CanMove(_direction, out target))
 			{
+				canMove = false;
 				movement.Move(_direction);
 			}
 		}

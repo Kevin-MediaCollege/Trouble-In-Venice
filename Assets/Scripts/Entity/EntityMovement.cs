@@ -143,7 +143,7 @@ namespace Proeve
 			
 			while(t < 1)
 			{
-				t = ((Time.time - st) * 75) / (length * length);
+				t = ((Time.time - st) * 100) / (length * length);
 				transform.position = Vector3.Lerp(from.Position, from.Position + ((to.Position - from.Position) / 2) + new Vector3(0, 0.5f, 0), t);
 
 				yield return null;
@@ -154,7 +154,7 @@ namespace Proeve
 
 			while(t < 1)
 			{
-				t = ((Time.time - st) * 75) / (length * length);
+				t = ((Time.time - st) * 100) / (length * length);
 				transform.position = Vector3.Lerp(from.Position + ((to.Position - from.Position) / 2) + new Vector3(0, 0.5f, 0), to.Position, t);
 
 				yield return null;

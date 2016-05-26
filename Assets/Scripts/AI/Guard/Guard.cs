@@ -106,7 +106,17 @@ namespace Proeve
 		{
 			if(_entity.HasTag("Player") && Movement.CurrentNode.HasConnection(node))
 			{
-				ExecuteCommand<GuardCommandAttackPlayer>();
+				if(patrolMode != GuardPatrolMode.Patrolling)
+				{
+					GlobalEvents.Invoke(new SetInputEvent(false));
+					
+					Movement.onMoveEvent += OnMoveToPlayer;
+					ExecuteCommand<GuardCommandMove>();
+				}
+				else
+				{
+					ExecuteCommand<GuardCommandAttackPlayer>();
+				}
 			}
 		}
 
@@ -156,6 +166,13 @@ namespace Proeve
 		private void OnPlayerMovedEvent(PlayerMovedEvent _evt)
 		{
 			UpdateState();
+		}
+
+		private void OnMoveToPlayer(GridNode _old, GridNode _new)
+		{
+			Movement.onMoveEvent -= OnMoveToPlayer;
+
+			ExecuteCommand<GuardCommandAttackPlayer>();
 		}
 	}
 }
