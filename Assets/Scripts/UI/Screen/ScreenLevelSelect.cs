@@ -24,7 +24,7 @@ namespace Proeve
 		{
 			for(int i = 0; i < 3; i++)
 			{
-				items[i].init(this);
+				items[i].Init(this);
 			}
 
 			if (Application.isMobilePlatform)
@@ -38,7 +38,7 @@ namespace Proeve
 				button_right.OnPointerDownEvent += OnButtonPageRight;
 			}
 
-			maxPages = Mathf.CeilToInt(LevelManager.getLevelList().Length / 3f);
+			maxPages = Mathf.CeilToInt(LevelManager.Levels.Length / 3f);
 			UpdatePage ();
 		}
 
@@ -73,9 +73,8 @@ namespace Proeve
 		{
 			button_left.gameObject.SetActive (currentPage > 0 ? true : false);
 			button_right.gameObject.SetActive (currentPage < maxPages - 1 ? true : false);
-
-			LevelData[] levels = LevelManager.getLevelList ();
-			int levelLenght = levels.Length;
+			
+			int levelLenght = LevelManager.Levels.Length;
 			int levelID = 0;
 
 			for(int i = 0; i < 3; i++)
@@ -84,10 +83,10 @@ namespace Proeve
 				if ((currentPage * 3) + i < levelLenght) 
 				{
 					items[i].rect.gameObject.SetActive(true);
-					items[i].levelName = levels[levelID].levelName;
-					items[i].setStars(levels[levelID].maxStars);
-					items[i].level.sprite = levels[levelID].levelImage;
-					items[i].debugText.text = levels[levelID].levelName;
+					items[i].levelName = LevelManager.Levels[levelID].levelName;
+					items[i].SetStars(LevelManager.Levels[levelID].maxStars);
+					items[i].level.sprite = LevelManager.Levels[levelID].levelImage;
+					items[i].debugText.text = LevelManager.Levels[levelID].levelName;
 				}
 				else 
 				{
@@ -141,23 +140,23 @@ namespace Proeve
 		[System.NonSerialized]
 		public ScreenLevelSelect levelSelect;
 
-		public void init(ScreenLevelSelect _screen)
+		public void Init(ScreenLevelSelect _screen)
 		{
 			if (Application.isMobilePlatform) { button.OnPointerUpEvent += OnButton; } else { button.OnPointerDownEvent += OnButton; }
 			levelSelect = _screen;
 		}
 
-		void OnButton (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
-		{
-			levelSelect.OnLevelButton(this);
-		}
-
-		public void setStars(int _stars)
+		public void SetStars(int _stars)
 		{
 			for(int i = 0; i < 3; i++)
 			{
 				stars [i].enabled = i < _stars ? true : false;
 			}
+		}
+
+		private void OnButton(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		{
+			levelSelect.OnLevelButton(this);
 		}
 	}
 }

@@ -42,7 +42,7 @@ namespace Proeve
 		/// <summary>
 		/// Get all available levels.
 		/// </summary>
-		public LevelData[] Levels
+		public static LevelData[] Levels
 		{
 			get
 			{
