@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using Utils;
 
 namespace Proeve
@@ -28,6 +29,7 @@ namespace Proeve
 
 		[SerializeField] private EntityNodeTracker nodeTracker;
 
+		private Coroutine coroutine;
 		private Entity entity;
 
 		protected void Awake()
@@ -63,11 +65,15 @@ namespace Proeve
 				Vector3 nodePosition = nodeTracker.CurrentNode.Position;
 				transform.position = new Vector3(nodePosition.x, nodePosition.y, nodePosition.z);
 
-				// (Un)register the entity
+				// register the entity
 				old.RemoveEntity(entity);
-				target.AddEntity(entity);
 
-				onMoveEvent(old, target);
+				if(coroutine != null)
+				{
+					StopCoroutine(coroutine);
+				}
+
+				coroutine = StartCoroutine(MoveAnimation(old, target));
 			}
 		}
 
@@ -127,6 +133,38 @@ namespace Proeve
 
 			Quaternion rotation = Quaternion.LookRotation(new Vector3(_direction.x, 0, _direction.y));
 			transform.rotation = rotation;
+		}
+
+		private IEnumerator MoveAnimation(GridNode from, GridNode to)
+		{
+			float length = (from.Position - to.Position).sqrMagnitude / 2;
+			float st = Time.time;
+			float t = 0;
+			
+			while(t < 1)
+			{
+				t = ((Time.time - st) * 75) / (length * length);
+				transform.position = Vector3.Lerp(from.Position, from.Position + ((to.Position - from.Position) / 2) + new Vector3(0, 0.5f, 0), t);
+
+				yield return null;
+			}
+
+			st = Time.time;
+			t = 0;
+
+			while(t < 1)
+			{
+				t = ((Time.time - st) * 75) / (length * length);
+				transform.position = Vector3.Lerp(from.Position + ((to.Position - from.Position) / 2) + new Vector3(0, 0.5f, 0), to.Position, t);
+
+				yield return null;
+			}
+
+
+			to.AddEntity(entity);
+
+			onMoveEvent(from, to);
+			GlobalEvents.Invoke(new PlayerMovedEvent(from, to));
 		}
 	}
 }

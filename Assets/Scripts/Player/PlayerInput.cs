@@ -207,8 +207,6 @@ namespace Proeve
 			GridNode target;
 			if(movement.CanMove(_direction, out target))
 			{
-				GlobalEvents.Invoke(new PlayerMovedEvent(nodeTracker.CurrentNode, target));
-
 				movement.Move(_direction);
 			}
 		}
