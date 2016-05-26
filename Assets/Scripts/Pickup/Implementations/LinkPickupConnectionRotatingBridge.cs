@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Rotating bridge behaviour.
+	/// </summary>
 	public class LinkPickupConnectionRotatingBridge : LinkPickupConnection
 	{
 		[SerializeField] private Animator animator;

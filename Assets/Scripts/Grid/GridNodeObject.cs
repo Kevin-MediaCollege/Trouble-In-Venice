@@ -3,6 +3,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// A grid node object, base class for all objects on the grid.
+	/// </summary>
 	[RequireComponent(typeof(EntityNodeTracker))]
 	public class GridNodeObject : MonoBehaviour
 	{
@@ -25,10 +28,18 @@ namespace Proeve
 			node.onEntityLeftEvent -= OnEntityLeft;
 		}
 
+		/// <summary>
+		/// Called when an entity has entered this node.
+		/// </summary>
+		/// <param name="_entity">The entity.</param>
 		protected virtual void OnEntityEntered(Entity _entity)
 		{
 		}
 
+		/// <summary>
+		/// Called when an entity has left this node.
+		/// </summary>
+		/// <param name="_entity">The entity.</param>
 		protected virtual void OnEntityLeft(Entity _entity)
 		{
 		}

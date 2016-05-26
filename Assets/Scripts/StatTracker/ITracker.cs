@@ -1,16 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public interface ITracker
+namespace Proeve
 {
-	void OnEnable();
+	/// <summary>
+	/// Non-generic interface for stat trackers.
+	/// </summary>
+	public interface ITracker
+	{
+		/// <summary>
+		/// Called when the tracker should be enabled.
+		/// </summary>
+		void OnEnable();
 
-	void OnDisable();
+		/// <summary>
+		/// Called when the tracker should be disabled.
+		/// </summary>
+		void OnDisable();
 
-	object GetValue();
-}
+		/// <summary>
+		/// Get the value of the tracker.
+		/// </summary>
+		/// <returns></returns>
+		object GetValue();
+	}
 
-public interface ITracker<T> : ITracker
-{
-	new T GetValue();
+	/// <summary>
+	/// Generic interface for stat trackers.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public interface ITracker<T> : ITracker
+	{
+		/// <summary>
+		/// Get the value of the tracker.
+		/// </summary>
+		/// <returns></returns>
+		new T GetValue();
+	}
 }

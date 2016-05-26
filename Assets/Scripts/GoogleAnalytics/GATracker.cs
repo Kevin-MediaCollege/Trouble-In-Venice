@@ -14,6 +14,11 @@ namespace Proeve
 		
 		private GoogleAnalytics googleAnalytics;
 
+		/// <summary>
+		/// Create a new Google Analytics tracker.
+		/// </summary>
+		/// <param name="_googleAnalytics">The Google Analytics dependency.</param>
+		/// <param name="_levelIndex">The index of the current level.</param>
 		public GATracker(GoogleAnalytics _googleAnalytics, int _levelIndex)
 		{
 			googleAnalytics = _googleAnalytics;

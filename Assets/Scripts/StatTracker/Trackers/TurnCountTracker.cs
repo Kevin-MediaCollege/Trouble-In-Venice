@@ -4,6 +4,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Turn count tracker, tracks the number of turns the player needs.
+	/// </summary>
 	public class TurnCountTracker : ITracker<int>
 	{
 		private int turnCount;

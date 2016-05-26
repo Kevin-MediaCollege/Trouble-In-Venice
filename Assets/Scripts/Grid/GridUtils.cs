@@ -8,25 +8,6 @@ namespace Proeve
 	/// </summary>
 	public static class GridUtils
 	{
-		/// <summary>
-		/// Get the end node of the <see cref="Grid"/>.
-		/// </summary>
-		public static GridNode End
-		{
-			get
-			{
-				foreach(GridNode node in Grid.Nodes)
-				{
-					if(node.IsEnd)
-					{
-						return node;
-					}
-				}
-
-				return null;
-			}
-		}
-
 		private static Grid grid;
 		private static Grid Grid
 		{
@@ -42,11 +23,40 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// Get all neighbours of a <see cref="GridNode"/>.
+		/// Get neighbours of a <see cref="GridNode"/>.
 		/// </summary>
+		/// <remarks>
+		///   +
+		/// + o +
+		///   +
+		/// </remarks>
 		/// <param name="_node">The target node.</param>
-		/// <returns>All neighbours of <paramref name="_node"/>.</returns>
-		public static IEnumerable<GridNode> GetNeighbours(GridNode _node)
+		/// <returns>The neighbours of <paramref name="_node"/>.</returns>
+		public static IEnumerable<GridNode> GetNeighbours4(GridNode _node)
+		{
+			List<GridNode> result = new List<GridNode>();
+
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(0, 1))); // Up
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(-1, 0))); // Left
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(0, -1))); // Down
+			result.Add(GetNodeAt(_node.GridPosition + new Vector2(1, 0))); // Right
+
+			// Remove all null-entries
+			result.RemoveAll(element => element == null);
+			return result;
+		}
+
+		/// <summary>
+		/// Get neighbours of a <see cref="GridNode"/>.
+		/// </summary>
+		/// <remarks>
+		/// + + +
+		/// + o +
+		/// + + +
+		/// </remarks>
+		/// <param name="_node">The target node.</param>
+		/// <returns>The neighbours of <paramref name="_node"/>.</returns>
+		public static IEnumerable<GridNode> GetNeighbours8(GridNode _node)
 		{
 			List<GridNode> result = new List<GridNode>();
 
@@ -78,16 +88,33 @@ namespace Proeve
 			return Grid.GetNodeAt(_position);
 		}
 
-		public static GridNode GetConnectionInDirection(GridNode origin, Vector2 direction)
+		/// <summary>
+		/// Get the connection of a <see cref="GridNode"/> in the specified <paramref name="_direction"/>.
+		/// </summary>
+		/// <param name="_origin">The origin node.</param>
+		/// <param name="_direction">The direction to get the connection in.</param>
+		/// <returns>The connection in the specified <paramref name="_direction"/>, or null.</returns>
+		public static GridNode GetConnectionInDirection(GridNode _origin, GridDirection _direction)
 		{
-			if(origin == null)
+			return GetConnectionInDirection(_origin, GetDirectionVector(_direction));
+		}
+
+		/// <summary>
+		/// Get the connection of a <see cref="GridNode"/> in the specified <paramref name="_direction"/>.
+		/// </summary>
+		/// <param name="_origin">The origin node.</param>
+		/// <param name="_direction">The direction to get the connection in.</param>
+		/// <returns>The connection in the specified <paramref name="_direction"/>, or null.</returns>
+		public static GridNode GetConnectionInDirection(GridNode _origin, Vector2 _direction)
+		{
+			if(_origin == null)
 			{
 				return null;
 			}
 
-			GridNode node = GetNodeAt(origin.GridPosition + direction);
+			GridNode node = GetNodeAt(_origin.GridPosition + _direction);
 
-			if(node != null && origin.HasConnection(node))
+			if(node != null && _origin.HasConnection(node))
 			{
 				return node;
 			}
@@ -124,6 +151,11 @@ namespace Proeve
 			return null;
 		}
 
+		/// <summary>
+		/// Convert a <see cref="GridDirection"/> to a Vector2.
+		/// </summary>
+		/// <param name="_direction">The direction to convert.</param>
+		/// <returns>The specified <paramref name="_direction"/> in a Vector2 representation.</returns>
 		public static Vector2 GetDirectionVector(GridDirection _direction)
 		{
 			switch(_direction)

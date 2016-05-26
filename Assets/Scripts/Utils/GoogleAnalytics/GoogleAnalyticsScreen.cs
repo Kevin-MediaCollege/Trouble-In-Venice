@@ -2,6 +2,9 @@
 
 namespace Utils
 {
+	/// <summary>
+	/// Log a screen to Google Analytics.
+	/// </summary>
 	public class GoogleAnalyticsScreen : MonoBehaviour
 	{
 		[SerializeField] protected string screenName;

@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Manages all tutorial segments.
+	/// </summary>
 	public class TutorialController : MonoBehaviour
 	{
 		[SerializeField] private Canvas canvas;
@@ -30,6 +33,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// Go to the next segment.
+		/// </summary>
 		private void NextSegment()
 		{
 			if(currentSegmentIndex >= 0 && currentSegmentIndex < segments.Length)

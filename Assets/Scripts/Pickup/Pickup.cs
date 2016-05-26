@@ -18,7 +18,7 @@ namespace Proeve
 				OnUpdate();
 			}
 		}
-		
+
 		protected override void OnEntityEntered(Entity _entity)
 		{
 			if(_entity.HasTag("Player"))

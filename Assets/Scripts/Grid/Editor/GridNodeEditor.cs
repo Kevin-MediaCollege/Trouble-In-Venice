@@ -39,7 +39,7 @@ namespace Proeve
 			EditorGUILayout.PropertyField(prop_type);
 			connections.DoLayoutList();
 
-			List<GridNode> c = new List<GridNode>(GridUtils.GetNeighbours(target as GridNode));
+			List<GridNode> c = new List<GridNode>(GridUtils.GetNeighbours8(target as GridNode));
 			connections.displayAdd = prop_connections.arraySize != c.Count;
 
 			serializedObject.ApplyModifiedProperties();

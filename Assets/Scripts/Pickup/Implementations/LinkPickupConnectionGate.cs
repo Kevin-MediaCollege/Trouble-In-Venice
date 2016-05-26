@@ -17,7 +17,7 @@ namespace Proeve
 		{
 			base.Awake();
 
-			blockedNode = GridUtils.GetConnectionInDirection(node, GridUtils.GetDirectionVector(direction));
+			blockedNode = GridUtils.GetConnectionInDirection(node, direction);
 
 			if(blockedNode != null && !startOpen)
 			{
@@ -35,7 +35,7 @@ namespace Proeve
 		protected void OnDrawGizmosSelected()
 		{
 			GridNode n = GetComponent<EntityNodeTracker>().CurrentNode;
-			n = GridUtils.GetConnectionInDirection(n, GridUtils.GetDirectionVector(direction));
+			n = GridUtils.GetConnectionInDirection(n, direction);
 
 			if(n != null)
 			{

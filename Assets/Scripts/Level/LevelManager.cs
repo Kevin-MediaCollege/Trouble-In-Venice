@@ -1,31 +1,55 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections;
-using DG;
-using DG.Tweening;
+﻿using System;
+using UnityEngine;
+using Utils;
 
-public class LevelManager : Utils.ScriptableObjectSingleton<LevelManager> 
+namespace Proeve
 {
-	#if UNITY_EDITOR
-	[UnityEditor.MenuItem("Assets/Create/LevelManager")]
-	private static void create()
+	/// <summary>
+	/// Level data.
+	/// </summary>
+	[Serializable]
+	public struct LevelData
 	{
-		CreateAsset ("LevelManager", "LevelManager", "LevelManager");
+		/// <summary>
+		/// The name of the level.
+		/// </summary>
+		public string levelName;
+
+		/// <summary>
+		/// The image of the level.
+		/// </summary>
+		public Sprite levelImage;
+
+		/// <summary>
+		/// The maximum amount of stars the player can earn in this level.
+		/// </summary>
+		public int maxStars;
 	}
-	#endif
 
-	public LevelData[] levels;
-
-	public static LevelData[] getLevelList()
+	/// <summary>
+	/// Level manager asset.
+	/// </summary>
+	public class LevelManager : ScriptableObjectSingleton<LevelManager>
 	{
-		return Instance.levels;
-	}
-}
+#if UNITY_EDITOR
+		[UnityEditor.MenuItem("Assets/Create/LevelManager")]
+		private static void create()
+		{
+			CreateAsset("LevelManager", "LevelManager", "LevelManager");
+		}
+#endif
 
-[System.Serializable]
-public class LevelData
-{
-	public string levelName;
-	public Sprite levelImage;
-	public int maxStars;
+		/// <summary>
+		/// Get all available levels.
+		/// </summary>
+		public LevelData[] Levels
+		{
+			get
+			{
+				return Instance.levels;
+			}
+		}
+
+		[SerializeField] private LevelData[] levels;
+	}
 }

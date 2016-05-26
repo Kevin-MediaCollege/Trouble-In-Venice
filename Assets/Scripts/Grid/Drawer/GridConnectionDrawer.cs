@@ -83,6 +83,7 @@ namespace Proeve
 
 			float length = (_entry.SourcePosition - _entry.DestinationPosition).sqrMagnitude;
 
+			// Animate the vertices
 			while(t < 1)
 			{
 				t = ((Time.time - st) * SPEED) / (length * length);
@@ -111,6 +112,7 @@ namespace Proeve
 
 			float length = (_entry.SourcePosition - _entry.DestinationPosition).sqrMagnitude;
 
+			// Animate the vertices
 			while(t < 1)
 			{
 				t = ((Time.time - st) * SPEED) / (length * length);
