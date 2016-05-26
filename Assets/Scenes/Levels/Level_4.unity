@@ -702,15 +702,20 @@ MonoBehaviour:
   maxAngle: 75
   minAngle: 10
   minZoom: 8
-  maxZoom: 20
+  maxZoom: 30
   cutsceneUpdateInEditor: 0
   cutsceneAngle: 40
   cutsceneRotation: -67
   cutsceneZoom: 17.1
-  startUpdateInEditor: 1
+  startUpdateInEditor: 0
   startAngle: 38.5
   startRotation: -21
   startZoom: 20
+  orthographicUpdateInEditor: 0
+  orthographicSize: 12.8
+  orthographicDistance: 30
+  topdownUpdateInEditor: 0
+  topDownDistance: 24.1
 --- !u!4 &286633834
 Transform:
   m_ObjectHideFlags: 0
@@ -718,7 +723,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 286633832}
   m_LocalRotation: {x: -0.32416996, y: -0.17204657, z: -0.060081348, w: 0.9282802}
-  m_LocalPosition: {x: -12.71, y: 6.76, z: 5.12}
+  m_LocalPosition: {x: -13.1, y: 6.76, z: 3.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 306276133}
@@ -786,7 +791,7 @@ Camera:
   far clip plane: 1000
   field of view: 70
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 12.8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -806,7 +811,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 306276128}
-  m_LocalRotation: {x: 0.00000004097819, y: 1, z: -0.0000000372529, w: 0.0000000372529}
+  m_LocalRotation: {x: 0.000000040978193, y: 1, z: 0.00000005401671, w: 0.000000016763806}
   m_LocalPosition: {x: 0, y: 0, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
