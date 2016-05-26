@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: d10023702d524fa4eaf8b34e4ff8659c
-timeCreated: 1461221146
+guid: 32716a48196ff8d4884f9a73a90f0678
+timeCreated: 1464276488
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
-    linearTexture: 0
+    enableMipMap: 1
+    linearTexture: 1
     correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
@@ -16,7 +16,7 @@ TextureImporter:
     mipMapFadeDistanceEnd: 3
   bumpmap:
     convertToNormalMap: 0
-    externalNormalMap: 0
+    externalNormalMap: 1
     heightScale: 0.25
     normalMapFilter: 0
   isReadable: 0
@@ -27,7 +27,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 1024
+  maxTextureSize: 2048
   textureSettings:
     filterMode: -1
     aniso: -1
@@ -46,18 +46,8 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 0
-  textureType: 5
-  buildTargetSettings:
-  - buildTarget: Android
-    maxTextureSize: 512
-    textureFormat: 34
-    compressionQuality: 50
-    allowsAlphaSplitting: 0
-  - buildTarget: WebGL
-    maxTextureSize: 1024
-    textureFormat: 28
-    compressionQuality: 50
-    allowsAlphaSplitting: 0
+  textureType: 1
+  buildTargetSettings: []
   spriteSheet:
     sprites: []
     outline: []
