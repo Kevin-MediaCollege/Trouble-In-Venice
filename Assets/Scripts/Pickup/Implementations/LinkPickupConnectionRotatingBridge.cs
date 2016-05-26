@@ -23,6 +23,9 @@ namespace Proeve
 
 			SetActive(side2, false);
 			SetActive(side1, true);
+
+			animator.SetInteger("Rotation", 1);
+			animator.SetTrigger("Rotate");
 		}
 		
 		public override void OnPickup()

@@ -76,6 +76,12 @@ namespace Proeve
 					continue;
 				}
 
+				if(nodeCache.ContainsKey(nodes[i].GridPosition))
+				{
+					Debug.LogError("Grid already contains a node with position: " + nodes[i].GridPosition, nodes[i]);
+					continue;
+				}
+
 				nodeCache.Add(nodes[i].GridPosition, nodes[i]);
 			}
 
