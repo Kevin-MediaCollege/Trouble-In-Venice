@@ -15,6 +15,9 @@ namespace Proeve
 		public delegate void OnMove(GridNode _old, GridNode _new);
 		public event OnMove onMoveEvent = delegate { };
 
+		/// <summary>
+		/// Shorthand to <see cref="EntityNodeTracker.CurrentNode"/>.
+		/// </summary>
 		public GridNode CurrentNode
 		{
 			get
