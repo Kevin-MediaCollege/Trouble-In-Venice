@@ -1188,6 +1188,11 @@ MonoBehaviour:
   startAngle: 38.5
   startRotation: -21
   startZoom: 20
+  orthographicUpdateInEditor: 0
+  orthographicSize: 10
+  orthographicDistance: 10
+  topdownUpdateInEditor: 0
+  topDownDistance: 10
 --- !u!4 &286633834
 Transform:
   m_ObjectHideFlags: 0
@@ -3425,7 +3430,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!95 &1048374959
 Animator:
