@@ -29,7 +29,7 @@ namespace Proeve
 		public float cutsceneAngle = 40f;
 		[Range(-180f, 180f)]
 		public float cutsceneRotation = 0f;
-		[Range(8f, 20f)]
+		[Range(8f, 30f)]
 		public float cutsceneZoom = 10f;
 
 		[Header("final camera start position")]
@@ -38,8 +38,20 @@ namespace Proeve
 		public float startAngle = 40f;
 		[Range(-180f, 180f)]
 		public float startRotation = 0f;
-		[Range(8f, 20f)]
+		[Range(8f, 30f)]
 		public float startZoom = 10f;
+
+		[Header("orthographic mode")]
+		public bool orthographicUpdateInEditor = false;
+		[Range(4f, 30f)]
+		public float orthographicSize = 10f;
+		[Range(4f, 30f)]
+		public float orthographicDistance = 10f;
+
+		[Header("top down mode")]
+		public bool topdownUpdateInEditor = false;
+		[Range(4f, 30f)]
+		public float topDownDistance = 10f;
 
 		private bool cutscene;
 		private CameraInput cameraInput;
@@ -47,8 +59,9 @@ namespace Proeve
 		private float currentAngle;
 		private float currentRotation;
 		private float currentZoom;
-
+		
 		private bool inputEnabled;
+		private int cameraMode;
 
 		protected void Awake()
 		{
@@ -61,11 +74,15 @@ namespace Proeve
 			currentZoom = startZoom;
 
 			inputEnabled = true;
+			SetCameraPosition(cutsceneAngle, cutsceneRotation, cutsceneZoom);
 		}
 
 		protected void OnEnable()
 		{
 			GlobalEvents.AddListener<SetInputEvent>(OnSetInputEvent);
+			
+			cameraMode = 0;
+			cam.orthographic = false;
 		}
 
 		protected void OnDisable()
@@ -100,33 +117,87 @@ namespace Proeve
 
 			if(!cutscene)
 			{
-				cameraInput.UpdateInput();
+				if(Input.GetKeyDown(KeyCode.Space))
+				{
+					cameraMode = cameraMode == 0 ? 1 : cameraMode == 1 ? 2 : 0;
 
-				currentAngle -= cameraInput.moveY * 0.02f * (currentZoom);//* (currentZoom * 0.08f);
-				currentAngle = currentAngle < minAngle ? minAngle : currentAngle > maxAngle ? maxAngle : currentAngle;
+					if(cameraMode == 1)
+					{
+						cam.orthographic = true;
+						cam.orthographicSize = 15f;
+					}
+					else if(cameraMode == 2)
+					{
+						cam.orthographic = false;
+					}
+					else
+					{
+						cam.orthographic = false;
+						SetCameraPosition(currentAngle, currentRotation, currentZoom);
+					}
+				}
 
-				currentRotation += cameraInput.moveX * 0.02f * (currentZoom);// * (currentZoom * 0.08f);
-				currentRotation %= 360f;
+				if (cameraMode == 1 || cameraMode == 2)
+				{
+					cameraInput.UpdateInput();
 
-				currentZoom -= cameraInput.deltaZoom / 40f;
-				currentZoom = currentZoom < minZoom ? minZoom : currentZoom > maxZoom ? maxZoom : currentZoom;
+					//currentRotation += cameraInput.moveX * 0.02f * (currentZoom);// * (currentZoom * 0.08f);
+					//currentRotation %= 360f;
 
-				SetCameraPosition(currentAngle, currentRotation, currentZoom);
+					SetCameraPosition(90f, 0f, 0f);
+					cam.transform.position = new Vector3 (cam.transform.position.x, cameraMode == 1 ? orthographicDistance : topDownDistance, cam.transform.position.z);
+				} 
+				else
+				{
+					cameraInput.UpdateInput();
+
+					currentAngle -= cameraInput.moveY * 0.02f * (currentZoom);//* (currentZoom * 0.08f);
+					currentAngle = currentAngle < minAngle ? minAngle : currentAngle > maxAngle ? maxAngle : currentAngle;
+
+					currentRotation += cameraInput.moveX * 0.02f * (currentZoom);// * (currentZoom * 0.08f);
+					currentRotation %= 360f;
+
+					currentZoom -= cameraInput.deltaZoom / 40f;
+					currentZoom = currentZoom < minZoom ? minZoom : currentZoom > maxZoom ? maxZoom : currentZoom;
+
+					SetCameraPosition(currentAngle, currentRotation, currentZoom);
+				}
 			}
 		}
 
 		protected void OnValidate()
 		{
-			if(cutsceneUpdateInEditor && startUpdateInEditor)
+			int c = 0;
+			if(topdownUpdateInEditor) { c++; }
+			if(cutsceneUpdateInEditor) { c++; }
+			if(orthographicUpdateInEditor) { c++; }
+			if(startUpdateInEditor) { c++; }
+
+			if(c > 1)
 			{
-				Debug.LogError("Please turn off cutsceneUpdateInEditor or startUpdateInEditor");
+				Debug.LogError("Please turn off cutsceneUpdateInEditor, startUpdateInEditor, orthographicUpdateInEditor or topdownUpdateInEditor");
+			}
+			else if(orthographicUpdateInEditor)
+			{
+				cam.orthographic = true;
+				cam.orthographicSize = orthographicSize;
+				SetCameraPosition(90f, 0f, 0f);
+				cam.transform.position = new Vector3 (cam.transform.position.x, orthographicDistance, cam.transform.position.z);
+			}
+			else if(topdownUpdateInEditor)
+			{
+				cam.orthographic = false;
+				SetCameraPosition(90f, 0f, 0f);
+				cam.transform.position = new Vector3 (cam.transform.position.x, topDownDistance, cam.transform.position.z);
 			}
 			else if(cutsceneUpdateInEditor)
 			{
+				cam.orthographic = false;
 				SetCameraPosition(cutsceneAngle, cutsceneRotation, cutsceneZoom);
 			}
 			else if(startUpdateInEditor)
 			{
+				cam.orthographic = false;
 				SetCameraPosition(startAngle, startRotation, startZoom);
 			}
 		}
