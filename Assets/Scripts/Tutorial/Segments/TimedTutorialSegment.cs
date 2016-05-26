@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace Proeve
 {
-	public class InformativeTutorialSegment : TutorialSegment
+	/// <summary>
+	/// Tutorial segments which appears for a certain duration before being completed.
+	/// </summary>
+	public class TimedTutorialSegment : TutorialSegment
 	{
 		public override bool IsComplete
 		{

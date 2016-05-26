@@ -13,7 +13,7 @@ namespace Proeve
 
 		protected override void OnActivate()
 		{
-			nodes = new List<GridNode>(GridUtils.GetNeighbours(node));
+			nodes = new List<GridNode>(GridUtils.GetNeighbours8(node));
 
 			HighlightNodes(Color.blue);
 		}

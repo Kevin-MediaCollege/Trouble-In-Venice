@@ -5,6 +5,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Tutorial segment which waits for a specific event before being completed.
+	/// </summary>
 	public class EventTutorialSegment : TutorialSegment
 	{
 		public override bool IsComplete

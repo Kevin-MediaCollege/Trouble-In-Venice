@@ -3,11 +3,29 @@ using System.Collections.Generic;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Represents a direction in the grid.
+	/// </summary>
 	public enum GridDirection
 	{
+		/// <summary>
+		/// Up (0, 1)
+		/// </summary>
 		Up,
+
+		/// <summary>
+		/// Left (-1, 0)
+		/// </summary>
 		Left,
+
+		/// <summary>
+		/// Down (0, -1)
+		/// </summary>
 		Down,
+
+		/// <summary>
+		/// Right (1, 0)
+		/// </summary>
 		Right
 	}
 

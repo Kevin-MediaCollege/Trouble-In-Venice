@@ -4,6 +4,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Pickup with a limited amount of uses.
+	/// </summary>
 	public class LimitedUsesPickup : MonoBehaviour
 	{
 		[SerializeField] private Rigidbody[] rigidbodies;

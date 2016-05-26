@@ -68,7 +68,7 @@ namespace Proeve
 		protected void OnDrawGizmosSelected()
 		{
 			GridNode n = GetComponent<EntityNodeTracker>().CurrentNode;
-			n = GridUtils.GetConnectionInDirection(n, GridUtils.GetDirectionVector(direction));
+			n = GridUtils.GetConnectionInDirection(n, direction);
 
 			if(n != null)
 			{
@@ -122,7 +122,7 @@ namespace Proeve
 			case GuardPatrolMode.Static:
 			case GuardPatrolMode.RotatingClockwise:
 			case GuardPatrolMode.RotatingCounterClockwise:
-				node = GridUtils.GetConnectionInDirection(node, GridUtils.GetDirectionVector(direction));
+				node = GridUtils.GetConnectionInDirection(node, direction);
 				break;
 			case GuardPatrolMode.Patrolling:
 				base.Awake();

@@ -126,6 +126,9 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// Set or get the active state of the node.
+		/// </summary>
 		public bool Active
 		{
 			set
@@ -265,6 +268,11 @@ namespace Proeve
 			}
 		}
 		
+		/// <summary>
+		/// Add a blockade, entities are unable to move from this
+		/// node to a connection which has been blocked.
+		/// </summary>
+		/// <param name="_node">The target node.</param>
 		public void AddBlockade(GridNode _node)
 		{
 			blockedConnections.Add(_node);
@@ -274,6 +282,10 @@ namespace Proeve
 			_node.onBlockadeAddedEvent(this);
 		}
 
+		/// <summary>
+		/// Remove a blockade.
+		/// </summary>
+		/// <param name="_node">The target node.</param>
 		public void RemoveBlockade(GridNode _node)
 		{
 			blockedConnections.Remove(_node);

@@ -14,11 +14,14 @@ namespace Proeve
 
 		protected void Awake()
 		{
+			// Get the Google Analytics dependency
 			GoogleAnalytics googleAnalytics = Dependency.Get<GoogleAnalytics>();
 
+			// Get the level index
 			string[] parts = SceneManager.GetActiveScene().name.Split('_');
 			int levelIndex = int.Parse(parts[parts.Length - 1]);
 
+			// Send a Google Analytics screen event
 			googleAnalytics.LogScreen(new AppViewHitBuilder().SetScreenName(SceneManager.GetActiveScene().name));
 
 			// Add trackers
@@ -31,6 +34,7 @@ namespace Proeve
 
 		protected void OnEnable()
 		{
+			// Enable trackers
 			foreach(GATracker tracker in trackers)
 			{
 				tracker.OnEnable();
@@ -39,6 +43,7 @@ namespace Proeve
 
 		protected void OnDisable()
 		{
+			// Disable trackers
 			foreach(GATracker tracker in trackers)
 			{
 				tracker.OnDisable();
