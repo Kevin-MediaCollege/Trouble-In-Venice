@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: 9fc06acff3cc1904e9e0c15ad7fc63bc
-timeCreated: 1463662921
+timeCreated: 1464263338
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: grid_icons_0
     21300002: grid_icons_1
+    21300004: grid_icons_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -63,16 +64,14 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -16, y: 16}
-        - {x: -16, y: -14}
-        - {x: -15, y: -16}
-        - {x: 16, y: -16}
-        - {x: 16, y: 15}
-        - {x: 13, y: 16}
-      - - {x: -10, y: -3}
-        - {x: -3, y: 10}
-        - {x: 8, y: 6}
-        - {x: 3, y: -10}
+      - - {x: -3, y: 6}
+        - {x: -6, y: 3}
+        - {x: -6, y: -3}
+        - {x: -3, y: -6}
+        - {x: 3, y: -6}
+        - {x: 6, y: -3}
+        - {x: 6, y: 3}
+        - {x: 3, y: 6}
     - name: grid_icons_1
       rect:
         serializedVersion: 2
@@ -104,6 +103,25 @@ TextureImporter:
         - {x: 14, y: 8}
         - {x: 16, y: 8}
         - {x: 16, y: 16}
+    - name: grid_icons_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4, y: 8}
+        - {x: -5, y: 8}
+        - {x: -9, y: 2}
+        - {x: -12, y: -4}
+        - {x: -12, y: -10}
+        - {x: 12, y: -10}
+        - {x: 12, y: -5}
+        - {x: 8, y: 7}
     outline: []
   spritePackingTag: 
   userData: 
