@@ -32,6 +32,8 @@ namespace Proeve
 
 		private void OnButtonOptions(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
 		{
+			GlobalEvents.Invoke(new SetInputEvent(false));
+
 			ScreenManager.SwitchScreen ("ScreenPause");
 		}
 

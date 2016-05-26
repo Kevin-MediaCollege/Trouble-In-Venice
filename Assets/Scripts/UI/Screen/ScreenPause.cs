@@ -32,6 +32,8 @@ namespace Proeve
 
 		private void OnButtonResume(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
 		{
+			GlobalEvents.Invoke(new SetInputEvent(true));
+
 			ScreenManager.SwitchScreen ("ScreenGame");
 		}
 
