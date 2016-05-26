@@ -18,9 +18,12 @@ namespace Proeve
 
 		private SwipeHandle swipeHandle;
 
+		private bool inputEnabled;
+
 		protected void Awake()
 		{
 			originalNodeColors = new Dictionary<SpriteRenderer, Color>();
+			inputEnabled = true;
 		}
 
 		protected void OnEnable()
@@ -28,6 +31,8 @@ namespace Proeve
 			GlobalEvents.AddListener<SwipeBeganEvent>(OnSwipeBeganEvent);
 			GlobalEvents.AddListener<SwipeUpdateEvent>(OnSwipeUpdateEvent);
 			GlobalEvents.AddListener<SwipeEndedEvent>(OnSwipeEndedEvent);
+
+			GlobalEvents.AddListener<SetInputEvent>(OnSetInputEvent);
 		}
 
 		protected void OnDisable()
@@ -35,6 +40,8 @@ namespace Proeve
 			GlobalEvents.RemoveListener<SwipeBeganEvent>(OnSwipeBeganEvent);
 			GlobalEvents.RemoveListener<SwipeUpdateEvent>(OnSwipeUpdateEvent);
 			GlobalEvents.RemoveListener<SwipeEndedEvent>(OnSwipeEndedEvent);
+
+			GlobalEvents.RemoveListener<SetInputEvent>(OnSetInputEvent);
 		}
 
 		protected void Reset()
@@ -44,6 +51,11 @@ namespace Proeve
 
 		protected void Update()
 		{
+			if(!inputEnabled)
+			{
+				return;
+			}
+
 			float arrowRotion = Input.GetKeyDown(KeyCode.A) ? 180f : Input.GetKeyDown(KeyCode.W) ? 90f : Input.GetKeyDown(KeyCode.D) ? 1f : Input.GetKeyDown(KeyCode.S) ? -90f : 0f;
 			if(arrowRotion != 0f)
 			{
@@ -128,6 +140,11 @@ namespace Proeve
 		
 		private void OnSwipeBeganEvent(SwipeBeganEvent _evt)
 		{
+			if(!inputEnabled)
+			{
+				return;
+			}
+
 			if(GridUtils.GetNodeAtGUI(_evt.Handle.StartPosition) == nodeTracker.CurrentNode)
 			{
 				swipeHandle = _evt.Handle;
@@ -155,6 +172,11 @@ namespace Proeve
 
 		private void OnSwipeUpdateEvent(SwipeUpdateEvent _evt)
 		{
+			if(!inputEnabled)
+			{
+				return;
+			}
+
 			if(_evt.Handle == swipeHandle)
 			{
 				GridNode node = GridUtils.GetNodeAt(nodeTracker.CurrentNode.GridPosition + GetSwipeDirection());
@@ -187,6 +209,11 @@ namespace Proeve
 		
 		private void OnSwipeEndedEvent(SwipeEndedEvent _evt)
 		{
+			if(!inputEnabled)
+			{
+				return;
+			}
+
 			if(_evt.Handle == swipeHandle)
 			{
 				foreach(KeyValuePair<SpriteRenderer, Color> kvp in originalNodeColors)
@@ -200,6 +227,11 @@ namespace Proeve
 				swipeHandle = null;
 				selected = null;
 			}
+		}
+
+		private void OnSetInputEvent(SetInputEvent _evt)
+		{
+			inputEnabled = _evt.Enabled;
 		}
 
 		private void Move(Vector2 _direction)

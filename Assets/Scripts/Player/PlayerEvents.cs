@@ -28,4 +28,31 @@ namespace Proeve
 			To = _to;
 		}
 	}
+
+	/// <summary>
+	/// Event for when the player has died.
+	/// </summary>
+	public class PlayerDiedEvent : IEvent
+	{
+		/// <summary>
+		/// The node the player died on.
+		/// </summary>
+		public GridNode Node { private set; get; }
+
+		/// <summary>
+		/// The entity which has killed the player.
+		/// </summary>
+		public Entity Cause { private set; get; }
+
+		/// <summary>
+		/// Create a new instance of this event.
+		/// </summary>
+		/// <param name="_node">The node the player died on.</param>
+		/// <param name="_cause">The entity which has killed the player.</param>
+		public PlayerDiedEvent(GridNode _node, Entity _cause)
+		{
+			Node = _node;
+			Cause = _cause;
+		}
+	}
 }

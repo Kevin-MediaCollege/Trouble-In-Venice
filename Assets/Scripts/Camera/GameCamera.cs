@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Utils;
 
 namespace Proeve
 {
@@ -47,6 +48,8 @@ namespace Proeve
 		private float currentRotation;
 		private float currentZoom;
 
+		private bool inputEnabled;
+
 		protected void Awake()
 		{
 			cutscene = false;
@@ -56,6 +59,18 @@ namespace Proeve
 			currentAngle = startAngle;
 			currentRotation = startRotation;
 			currentZoom = startZoom;
+
+			inputEnabled = true;
+		}
+
+		protected void OnEnable()
+		{
+			GlobalEvents.AddListener<SetInputEvent>(OnSetInputEvent);
+		}
+
+		protected void OnDisable()
+		{
+			GlobalEvents.AddListener<SetInputEvent>(OnSetInputEvent);
 		}
 
 		/// <summary>
@@ -78,6 +93,11 @@ namespace Proeve
 
 		protected void Update()
 		{
+			if(!inputEnabled)
+			{
+				return;
+			}
+
 			if(!cutscene)
 			{
 				cameraInput.UpdateInput();
@@ -133,6 +153,11 @@ namespace Proeve
 		private Quaternion SettingsToQuaternion(float _angle, float _rotation)
 		{
 			return Quaternion.Euler(new Vector3(-_angle, _rotation, 0f));
+		}
+
+		private void OnSetInputEvent(SetInputEvent _evt)
+		{
+			inputEnabled = _evt.Enabled;
 		}
 	}
 }

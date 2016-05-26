@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Utils;
 
 namespace Proeve
 {
@@ -10,6 +11,17 @@ namespace Proeve
 	public class AIBase : GridNodeObject
 	{
 		private static Dictionary<Type, AICommand> commandTypeCache = new Dictionary<Type, AICommand>();
+
+		/// <summary>
+		/// Get the <see cref="Entity"/> of the AI.
+		/// </summary>
+		public Entity Entity
+		{
+			get
+			{
+				return GetComponent<Entity>();
+			}
+		}
 
 		/// <summary>
 		/// The <see cref="EntityMovement"/> of the AI.

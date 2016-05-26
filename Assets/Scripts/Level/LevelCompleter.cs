@@ -52,9 +52,9 @@ namespace Proeve
 				}
 
 				GlobalEvents.Invoke(new LevelCompletedEvent(levelIndex));
+				GlobalEvents.Invoke(new SetInputEvent(false));
 
-				// Go back to level select
-				SceneManager.LoadSceneAsync("Menu");
+				ScreenManager.SwitchScreen("ScreenWin");
 			}
 		}
 	}
