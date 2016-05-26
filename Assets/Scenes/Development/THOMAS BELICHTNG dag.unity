@@ -2432,6 +2432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 942230651}
+  direction: 0
   startOpen: 0
 --- !u!114 &1986047390
 MonoBehaviour:
