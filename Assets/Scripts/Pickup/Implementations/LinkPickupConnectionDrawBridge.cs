@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Snakybo.Audio;
 using UnityEngine;
 
 namespace Proeve
@@ -8,6 +9,7 @@ namespace Proeve
 	{
 		[SerializeField] private GridNode[] nodes;
 
+		[SerializeField] private new AudioObject audio;
 		[SerializeField] private Animator animator;
 		[SerializeField] private bool startOpen;
 
@@ -25,6 +27,7 @@ namespace Proeve
 
 		public override void OnPickup()
 		{
+			audio.Play();
 			SetOpen(!animator.GetBool("Open"));
 		}
 		

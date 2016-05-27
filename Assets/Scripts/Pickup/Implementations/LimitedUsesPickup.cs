@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Utils;
+using Snakybo.Audio;
 
 namespace Proeve
 {
@@ -12,6 +13,7 @@ namespace Proeve
 		[SerializeField] private Rigidbody[] rigidbodies;
 		[SerializeField] private GridNode[] nodes;
 
+		[SerializeField] private new AudioObject audio;
 		[SerializeField] private int numUses;
 
 		private int remaining;
@@ -54,6 +56,7 @@ namespace Proeve
 		private IEnumerator HandleRigidbodies()
 		{
 			SetKinematic(false);
+			audio.Play();
 
 			yield return new WaitForSeconds(1.5f);
 
