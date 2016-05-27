@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using DG;
+using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -15,10 +17,13 @@ namespace Proeve
 		public Touchable button_right;
 		public CanvasGroup group;
 
+		public Touchable button_back;
+
 		public LevelItem[] items;
 
 		private int currentPage;
 		private int maxPages;
+		private bool loading;
 
 		protected void Awake()
 		{
@@ -31,13 +36,16 @@ namespace Proeve
 			{ 
 				button_left.OnPointerUpEvent += OnButtonPageLeft; 
 				button_right.OnPointerUpEvent += OnButtonPageRight; 
+				button_back.OnPointerUpEvent += OnButtonDown;
 			} 
 			else 
 			{ 
 				button_left.OnPointerDownEvent += OnButtonPageLeft;
 				button_right.OnPointerDownEvent += OnButtonPageRight;
+				button_back.OnPointerDownEvent += OnButtonDown;
 			}
 
+			loading = false;
 			maxPages = Mathf.CeilToInt(LevelManager.Levels.Length / 3f);
 			UpdatePage ();
 		}
@@ -49,6 +57,14 @@ namespace Proeve
 		{
 			currentPage = 0;
 			UpdatePage();
+			StartCoroutine ("OnFadeIn");
+		}
+
+		private IEnumerator OnFadeIn()
+		{
+			group.alpha = 0f;
+			group.DOFade (1f, 0.3f);
+			yield return new WaitForSeconds (0.3f);
 		}
 
 		private void OnButtonPageLeft (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
@@ -67,6 +83,11 @@ namespace Proeve
 				currentPage++;
 				UpdatePage();
 			}
+		}
+
+		void OnButtonDown (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		{
+			ScreenManager.SwitchScreen("ScreenMainMenu");
 		}
 
 		public void UpdatePage()
@@ -97,8 +118,21 @@ namespace Proeve
 
 		public void OnLevelButton(LevelItem _item)
 		{
-			SceneManager.LoadScene (_item.levelName);
-			//Load level,  _item.levelName
+			if(!loading)
+			{
+				loading = true;
+				StartCoroutine (loadLevel (_item.levelName));
+			}
+		}
+
+		private IEnumerator loadLevel(string _name)
+		{
+			group.alpha = 1f;
+			group.DOFade (0f, 0.2f);
+
+			yield return new WaitForSeconds (0.4f);
+
+			SceneManager.LoadScene (_name);
 		}
 
 		/// <summary>
@@ -106,7 +140,10 @@ namespace Proeve
 		/// </summary>
 		public override IEnumerator OnScreenFadeout()
 		{
-			yield break;
+			group.alpha = 1f;
+			group.DOFade (0f, 0.2f);
+
+			yield return new WaitForSeconds (0.2f);
 		}
 
 		/// <summary>

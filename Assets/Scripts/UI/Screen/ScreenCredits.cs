@@ -1,6 +1,7 @@
 ﻿using DG;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using Utils;
 
@@ -13,10 +14,30 @@ namespace Proeve
 	{
 		public Touchable button_back;
 		public CanvasGroup group;
+		public Touchable button_easteregg;
+
+		private int easteregg;
 
 		protected void Awake()
 		{
 			if (Application.isMobilePlatform) { button_back.OnPointerUpEvent += OnButtonBack; } else { button_back.OnPointerDownEvent += OnButtonBack; }
+
+			button_easteregg.OnPointerDownEvent += Button_easteregg_OnPointerDownEvent;
+		}
+
+		void Button_easteregg_OnPointerDownEvent (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		{
+			easteregg++;
+			Debug.Log ("" + easteregg);
+
+			if(easteregg == 10)
+			{
+				Text[] texts = ScreenManager.instance.GetComponentsInChildren<Text> (true);
+				for(int i = 0; i < texts.Length; i++)
+				{
+					texts[i].text = "ted is koning";
+				}
+			}
 		}
 
 		/// <summary>

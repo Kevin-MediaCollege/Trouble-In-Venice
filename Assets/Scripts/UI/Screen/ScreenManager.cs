@@ -87,6 +87,11 @@ namespace Proeve
 
 			switching = false;
 		}
+
+		public static string GetCurrentScreenName()
+		{
+			return instance != null ? instance.currentScreen != null ? instance.currentScreen.GetScreenName() : "NULL" : "NULL";
+		}
 			
 		private ScreenBase GetScreenByName(string _name)
 		{
