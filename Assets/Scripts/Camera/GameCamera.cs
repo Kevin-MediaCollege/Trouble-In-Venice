@@ -110,7 +110,7 @@ namespace Proeve
 
 		protected void Update()
 		{
-			if(!inputEnabled)
+			if(!inputEnabled || ScreenManager.GetCurrentScreenName() != "ScreenGame")
 			{
 				return;
 			}
