@@ -61,7 +61,7 @@ namespace Proeve
 				return;
 			}
 
-			float arrowRotion = Input.GetKeyDown(KeyCode.A) ? 180f : Input.GetKeyDown(KeyCode.W) ? 90f : Input.GetKeyDown(KeyCode.D) ? 1f : Input.GetKeyDown(KeyCode.S) ? -90f : 0f;
+			float arrowRotion = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) ? 180f : Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow) ? 90f : Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) ? 1f : Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ? -90f : 0f;
 			if(arrowRotion != 0f)
 			{
 				Vector2 current = Camera.main.WorldToScreenPoint(MathHelper.XYtoXZ(nodeTracker.CurrentNode.PositionXZ));
