@@ -74,6 +74,12 @@ namespace Proeve
 			return result;
 		}
 
+		public static GridNode GetNodeAt(Vector3 _position)
+		{
+			Vector2 pos = new Vector2(Mathf.Round((_position.x - 1.5f) / Grid.SIZE), Mathf.Round((_position.z - 1.5f) / Grid.SIZE));
+			return GetNodeAt(pos);
+		}
+
 		/// <summary>
 		/// Get the <see cref="GridNode"/> at the specified position.
 		/// </summary>

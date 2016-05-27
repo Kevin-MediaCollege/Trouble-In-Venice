@@ -24,16 +24,16 @@ namespace Proeve
 			}
 			get
 			{
-				if(currentNode == null)
-				{
-					currentNode = GridUtils.GetNodeAt(new Vector2(Mathf.Round((transform.position.x - 1.5f) / Grid.SIZE), Mathf.Round((transform.position.z - 1.5f) / Grid.SIZE)));
-					currentNode.AddEntity(GetComponent<Entity>());
-				}
-
 				return currentNode;
 			}
 		}
 
 		[SerializeField, HideInInspector] private GridNode currentNode;
+
+		protected void Awake()
+		{
+			currentNode = GridUtils.GetNodeAt(transform.position);
+			currentNode.AddEntity(GetComponent<Entity>());
+		}
 	}
 }
