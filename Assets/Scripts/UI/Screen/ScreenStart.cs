@@ -12,8 +12,11 @@ namespace Proeve
 		public CanvasGroup group_anyKey;
 		public CanvasGroup group_overlay;
 
+		public Text title;
 		public Text text;
 		public Image background;
+
+		private int easteregg;
 
 		/// <summary>
 		/// Called when switched to this screen
@@ -58,9 +61,17 @@ namespace Proeve
 
 		protected void Update()
 		{ 
-			if(Input.anyKeyDown)
+			if(Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Alpha9))
 			{
 				ScreenManager.SwitchScreen ("ScreenMainMenu");
+			}
+			else if(Input.GetKeyDown(KeyCode.Alpha9))
+			{
+				easteregg++;
+				if(easteregg > 10)
+				{
+					title.text = "Romantix";
+				}
 			}
 		}
 
