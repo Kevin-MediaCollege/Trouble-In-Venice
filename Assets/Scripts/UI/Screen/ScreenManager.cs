@@ -26,6 +26,8 @@ namespace Proeve
 		public string startScreen;
 		private bool switching;
 
+		public static string lastLoadedLevel = "";
+
 		protected void Awake()
 		{
 			instance = this;
@@ -40,7 +42,14 @@ namespace Proeve
 
 		protected void Start()
 		{
-			SwitchScreen(startScreen);
+			if(startScreen == "ScreenStart" && !string.IsNullOrEmpty(lastLoadedLevel))
+			{
+				SwitchScreen("ScreenLevelSelect");
+			}
+			else
+			{
+				SwitchScreen(startScreen);
+			}
 		}
 
 		protected void OnEnable()
