@@ -18,6 +18,7 @@ namespace Proeve
 		public CanvasGroup group;
 
 		public Touchable button_back;
+		public Image background;
 
 		public LevelItem[] items;
 
@@ -55,7 +56,17 @@ namespace Proeve
 		/// </summary>
 		public override void OnScreenEnter()
 		{
-			currentPage = 0;
+			background.enabled = true;
+
+			if(!string.IsNullOrEmpty(ScreenManager.lastLoadedLevel))
+			{
+				currentPage = Mathf.FloorToInt(LevelManager.GetLevelIDFromName(ScreenManager.lastLoadedLevel) / 3f);
+			}
+			else
+			{
+				currentPage = 0;
+			}
+
 			UpdatePage();
 			StartCoroutine ("OnFadeIn");
 		}
@@ -120,6 +131,7 @@ namespace Proeve
 		{
 			if(!loading)
 			{
+				ScreenManager.lastLoadedLevel = _item.levelName;
 				loading = true;
 				StartCoroutine (loadLevel (_item.levelName));
 			}

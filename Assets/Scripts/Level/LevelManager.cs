@@ -50,6 +50,26 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// Get all available levels.
+		/// </summary>
+		public static int GetLevelIDFromName(string _levelName)
+		{
+			LevelData[] levels = Levels;
+			int l = levels.Length;
+
+			for(int i = 0; i < l; i++)
+			{
+				if(levels[i].levelName == _levelName)
+				{
+					return i;
+				}
+			}
+
+			return 0;
+		}
+
+
 		[SerializeField] private LevelData[] levels;
 	}
 }

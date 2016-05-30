@@ -3140,6 +3140,7 @@ MonoBehaviour:
   button_right: {fileID: 265971741}
   group: {fileID: 247187839}
   button_back: {fileID: 427181686}
+  background: {fileID: 921067102}
   items:
   - rect: {fileID: 1322485745}
     level: {fileID: 2121635878}
