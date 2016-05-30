@@ -13,7 +13,7 @@ ModelImporter:
     3300000: LP_Male
     4300000: LP_Male
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:

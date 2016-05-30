@@ -13,7 +13,7 @@ ModelImporter:
     3300000: LP
     4300000: LP
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:

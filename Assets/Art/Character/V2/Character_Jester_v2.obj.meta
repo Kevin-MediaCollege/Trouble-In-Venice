@@ -33,7 +33,7 @@ ModelImporter:
     4300006: Jester_Head_LP
     4300008: Jester_Mask_LP
   materials:
-    importMaterials: 0
+    importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
