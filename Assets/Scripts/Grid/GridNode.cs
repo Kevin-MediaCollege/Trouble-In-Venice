@@ -185,6 +185,11 @@ namespace Proeve
 					UnityEditor.EditorApplication.delayCall += () =>
 					{
 						DestroyImmediate(levelCompleter);
+
+						if(transform.childCount > 0)
+						{
+							DestroyImmediate(transform.GetChild(0).gameObject);
+						}
 					};
 #endif
 				}
@@ -197,6 +202,12 @@ namespace Proeve
 				if(levelCompleter == null)
 				{
 					gameObject.AddComponent<LevelCompleter>();
+				}
+
+				if(transform.childCount == 0)
+				{
+					GameObject instance = Instantiate(Resources.Load("Target NPC")) as GameObject;
+					instance.transform.SetParent(transform, false);
 				}
 
 				sr.sprite = Resources.LoadAll<Sprite>("grid_icons")[1];
