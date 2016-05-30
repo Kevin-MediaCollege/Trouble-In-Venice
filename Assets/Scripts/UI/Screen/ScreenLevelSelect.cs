@@ -3,6 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 using System.Collections;
 using Utils;
 
@@ -25,6 +26,8 @@ namespace Proeve
 		private int currentPage;
 		private int maxPages;
 		private bool loading;
+
+		private LevelUnlocker levelUnlocker;
 
 		protected void Awake()
 		{
@@ -57,6 +60,7 @@ namespace Proeve
 		public override void OnScreenEnter()
 		{
 			background.enabled = true;
+			levelUnlocker = Dependency.Get<LevelUnlocker>();
 
 			if(!string.IsNullOrEmpty(ScreenManager.lastLoadedLevel))
 			{
@@ -119,6 +123,18 @@ namespace Proeve
 					items[i].SetStars(LevelManager.Levels[levelID].maxStars);
 					items[i].level.sprite = LevelManager.Levels[levelID].levelImage;
 					items[i].debugText.text = LevelManager.Levels[levelID].levelName;
+
+					int id = Convert.ToInt32(LevelManager.Levels[levelID].levelName.Split('_')[1]);
+					if(levelUnlocker.IsUnlocked(id))
+					{
+						items[i].imageLock.enabled = false;
+						items[i].locked = false;
+					}
+					else
+					{
+						items[i].imageLock.enabled = true;
+						items[i].locked = true;
+					}
 				}
 				else 
 				{
@@ -182,6 +198,10 @@ namespace Proeve
 		public Touchable button;
 		public Image[] stars;
 		public Text debugText;
+		public Image imageLock;
+
+		[System.NonSerialized]
+		public bool locked;
 
 		[System.NonSerialized]
 		public string levelName;
@@ -193,6 +213,7 @@ namespace Proeve
 		{
 			if (Application.isMobilePlatform) { button.OnPointerUpEvent += OnButton; } else { button.OnPointerDownEvent += OnButton; }
 			levelSelect = _screen;
+			locked = false;
 		}
 
 		public void SetStars(int _stars)
@@ -205,7 +226,10 @@ namespace Proeve
 
 		private void OnButton(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
 		{
-			levelSelect.OnLevelButton(this);
+			if(!locked)
+			{
+				levelSelect.OnLevelButton(this);
+			}
 		}
 	}
 }
