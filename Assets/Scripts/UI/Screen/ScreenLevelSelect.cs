@@ -31,6 +31,7 @@ namespace Proeve
 
 		protected void Awake()
 		{
+			levelUnlocker = Dependency.Get<LevelUnlocker>();
 			for(int i = 0; i < 3; i++)
 			{
 				items[i].Init(this);
@@ -129,11 +130,13 @@ namespace Proeve
 					{
 						items[i].imageLock.enabled = false;
 						items[i].locked = false;
+						items[i].level.color = new Color(1f, 1f, 1f, 1f);
 					}
 					else
 					{
 						items[i].imageLock.enabled = true;
 						items[i].locked = true;
+						items[i].level.color = new Color(0.5f, 0.5f, 0.5f, 1f);
 					}
 				}
 				else 
