@@ -1,12 +1,12 @@
 fileFormatVersion: 2
 guid: 3861479597d5ee542b687712cdc4aeaf
-timeCreated: 1464623319
+timeCreated: 1464625045
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - modelMale: {fileID: 100000, guid: 39b5a56034297264eb27c0691a9039aa, type: 3}
-  - modelFemale: {fileID: 100000, guid: a24bf2f15fd55b74ba46037306a97df2, type: 3}
+  - modelMale: {fileID: 100002, guid: 24ce7e3da9624fc4396b61e83cc7ef82, type: 3}
+  - modelFemale: {fileID: 100000, guid: 898a3ab0f4dd42c41b8a72fdc3d7a068, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
