@@ -18,14 +18,23 @@ namespace Proeve
 
 		protected virtual void OnEnable()
 		{
+			if(node == null)
+			{
+				Debug.LogError("GridNodeObject does not have a node", this);
+				return;
+			}
+
 			node.onEntityEnteredEvent += OnEntityEntered;
 			node.onEntityLeftEvent += OnEntityLeft;
 		}
 
 		protected virtual void OnDisable()
 		{
-			node.onEntityEnteredEvent -= OnEntityEntered;
-			node.onEntityLeftEvent -= OnEntityLeft;
+			if(node != null)
+			{
+				node.onEntityEnteredEvent -= OnEntityEntered;
+				node.onEntityLeftEvent -= OnEntityLeft;
+			}
 		}
 
 		/// <summary>
