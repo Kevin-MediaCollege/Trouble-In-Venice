@@ -10,5 +10,10 @@ namespace Proeve
 		{
 			return StatTracker.GetTracker<RosePickupTracker>().GetValue();
 		}
+
+		public virtual string getString()
+		{
+			return "Pickup the rose.";
+		}
 	}
 }

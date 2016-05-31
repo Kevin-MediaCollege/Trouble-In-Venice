@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Utils;
 using UnityEngine.Serialization;
@@ -15,6 +16,10 @@ namespace Proeve
 		[SerializeField, FormerlySerializedAs("temp_button")] private Touchable buttonContinue;
 		[SerializeField] private Touchable buttonMenu;
 		private int nextLevelID = 0;
+
+		[SerializeField] private Image[] stars;
+		[SerializeField] private Sprite star_empty;
+		[SerializeField] private Sprite star_filled;
 
 		protected void OnEnable()
 		{
@@ -44,6 +49,39 @@ namespace Proeve
 			else 
 			{
 				buttonMenu.OnPointerDownEvent += OnButtonMenu;
+			}
+
+			if(ChallengesManager.instance != null)
+			{
+				setStars(ChallengesManager.instance.stars);
+			}
+			else
+			{
+				setStars(0);
+			}
+		}
+
+		private void setStars(int _stars)
+		{
+			int levelID = Convert.ToInt32(SceneManager.GetActiveScene().name.Split('_')[1]);
+			LevelData ld = LevelManager.Levels [levelID];
+
+			for(int i = 0; i < 3; i++)
+			{
+				if(i >= ld.maxStars)
+				{
+					stars[i].gameObject.SetActive (false);
+				}
+				else if(i < _stars)
+				{
+					stars[i].gameObject.SetActive (true);
+					stars[i].sprite = star_filled;
+				}
+				else
+				{
+					stars[i].gameObject.SetActive (true);
+					stars[i].sprite = star_empty;
+				}
 			}
 		}
 

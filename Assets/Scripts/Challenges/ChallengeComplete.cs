@@ -10,5 +10,10 @@ namespace Proeve
 		{
 			return true;
 		}
+
+		public virtual string getString()
+		{
+			return "Complete the level.";
+		}
 	}
 }

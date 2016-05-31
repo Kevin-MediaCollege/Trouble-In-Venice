@@ -19,5 +19,10 @@ namespace Proeve
 				return false;
 			}
 		}
+
+		public virtual string getString()
+		{
+			return "Complete level in " + numberOfTurns + " turns.";
+		}
 	}
 }

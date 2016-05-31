@@ -7,4 +7,9 @@ public class ChallengeBase : MonoBehaviour
 	{
 		return false;
 	}
+
+	public virtual string getString()
+	{
+		return "NULL";
+	}
 }

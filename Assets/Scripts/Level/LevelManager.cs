@@ -69,6 +69,23 @@ namespace Proeve
 			return 0;
 		}
 
+		/// <summary>
+		/// Get level by name
+		/// </summary>
+		public static LevelData GetLevelFromName(string _levelName)
+		{
+			LevelData[] levels = Levels;
+			int l = levels.Length;
+
+			for(int i = 0; i < l; i++)
+			{
+				if(levels[i].levelName == _levelName)
+				{
+					return levels[i];
+				}
+			}
+			return levels[0];
+		}
 
 		[SerializeField] private LevelData[] levels;
 	}
