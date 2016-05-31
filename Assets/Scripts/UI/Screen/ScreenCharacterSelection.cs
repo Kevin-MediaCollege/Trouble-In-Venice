@@ -16,16 +16,35 @@ namespace Proeve
 
 		[SerializeField] private CanvasGroup group;
 
+		[SerializeField] private Touchable male;
+		[SerializeField] private Touchable female;
+
 		protected void OnEnable()
 		{
 			if(Application.isMobilePlatform)
 			{
 				buttonBack.OnPointerUpEvent += OnButtonBack;
+				male.OnPointerUpEvent += buttonMale;
+				female.OnPointerUpEvent += buttonFemale;
 			}
 			else
 			{
 				buttonBack.OnPointerDownEvent += OnButtonBack;
+				male.OnPointerDownEvent += buttonMale;
+				female.OnPointerDownEvent += buttonFemale;
 			}
+		}
+
+		private void buttonMale (Touchable _sender, PointerEventData _eventData)
+		{
+			Dependency.Get<CharacterInfo>().Player = CharacterID.Male;
+			ScreenManager.SwitchScreen("ScreenLevelSelect");
+		}
+
+		private void buttonFemale (Touchable _sender, PointerEventData _eventData)
+		{
+			Dependency.Get<CharacterInfo>().Player = CharacterID.Female;
+			ScreenManager.SwitchScreen("ScreenLevelSelect");
 		}
 
 		protected void OnDisable()
