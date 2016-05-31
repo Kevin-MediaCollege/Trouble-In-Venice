@@ -1212,6 +1212,7 @@ MonoBehaviour:
   minAngle: 10
   minZoom: 8
   maxZoom: 20
+  fieldOfView3D: 70
   cutsceneUpdateInEditor: 0
   cutsceneAngle: 40
   cutsceneRotation: -67
@@ -1225,6 +1226,7 @@ MonoBehaviour:
   orthographicDistance: 10
   topdownUpdateInEditor: 0
   topDownDistance: 10
+  fieldOfViewTopDown: 70
 --- !u!4 &286633834
 Transform:
   m_ObjectHideFlags: 0
@@ -5075,7 +5077,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1629702801}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
+  m_LocalRotation: {x: 0.50000066, y: 0.4999993, z: -0.49999958, w: 0.50000054}
   m_LocalPosition: {x: -19.5, y: 0, z: -1.5}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
