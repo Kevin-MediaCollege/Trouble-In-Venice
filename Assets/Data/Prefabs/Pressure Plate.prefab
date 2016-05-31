@@ -27,7 +27,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 441852}
-  - 95: {fileID: 9595406}
   m_Layer: 0
   m_Name: Art
   m_TagString: Untagged
@@ -101,7 +100,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 9bbae6ea5aad8cd4698b582fd38b04ee, type: 2}
+  - {fileID: 2100000, guid: 529223488dec467418063fa60b67467c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -134,23 +133,6 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b4f6e6337ea4e1c41ac344e80601f435, type: 3}
   m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!95 &9595406
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 142058}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6287ef8210ee8414086136d5cfa7b4ac, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -207,7 +189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connections:
   - {fileID: 0}
-  animator: {fileID: 9595406}
+  animator: {fileID: 0}
   audio: {fileID: 11400000, guid: cd859662ce018a948a1fdc5a8e094709, type: 2}
 --- !u!1001 &100100000
 Prefab:

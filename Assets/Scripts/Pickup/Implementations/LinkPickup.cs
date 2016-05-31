@@ -17,7 +17,11 @@ namespace Proeve
 		protected override void OnActivate()
 		{
 			audio.Play();
-			animator.SetTrigger("Switch");
+
+			if(animator != null)
+			{
+				animator.SetTrigger("Switch");
+			}
 
 			foreach(LinkPickupConnection connection in connections)
 			{
