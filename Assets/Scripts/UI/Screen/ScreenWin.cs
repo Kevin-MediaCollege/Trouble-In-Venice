@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using Utils;
 using UnityEngine.Serialization;
 using UnityEngine.EventSystems;
+using System;
 
 namespace Proeve
 {
@@ -12,28 +13,61 @@ namespace Proeve
 	public class ScreenWin : ScreenBase
 	{
 		[SerializeField, FormerlySerializedAs("temp_button")] private Touchable buttonContinue;
+		[SerializeField] private Touchable buttonMenu;
+		private int nextLevelID = 0;
 
 		protected void OnEnable()
 		{
-			if(Application.isMobilePlatform)
-			{ 
-				buttonContinue.OnPointerUpEvent += OnButtonContinue;
+			int currentLevelID = Convert.ToInt32(SceneManager.GetActiveScene().name.Split('_')[1]);
+			nextLevelID = 0;
+			if ((nextLevelID = LevelManager.GetLevelIDFromName ("Level_" + (currentLevelID + 1))) > 0) 
+			{
+				buttonContinue.gameObject.SetActive (true);
+				if (Application.isMobilePlatform) 
+				{ 
+					buttonContinue.OnPointerUpEvent += OnButtonContinue;
+				} 
+				else 
+				{
+					buttonContinue.OnPointerDownEvent += OnButtonContinue;
+				}
 			} 
 			else 
 			{
-				buttonContinue.OnPointerDownEvent += OnButtonContinue;
+				buttonContinue.gameObject.SetActive (false);
+			}
+
+			if(Application.isMobilePlatform)
+			{ 
+				buttonMenu.OnPointerUpEvent += OnButtonMenu;
+			} 
+			else 
+			{
+				buttonMenu.OnPointerDownEvent += OnButtonMenu;
 			}
 		}
 
 		protected void OnDisable()
 		{
+			if(nextLevelID != 0)
+			{
+				if(Application.isMobilePlatform)
+				{
+					buttonContinue.OnPointerUpEvent -= OnButtonContinue;
+				}
+				else
+				{
+					buttonContinue.OnPointerDownEvent -= OnButtonContinue;
+				}
+			}
+
 			if(Application.isMobilePlatform)
 			{
-				buttonContinue.OnPointerUpEvent -= OnButtonContinue;
+				buttonMenu.OnPointerUpEvent -= OnButtonMenu;
 			}
 			else
 			{
-				buttonContinue.OnPointerDownEvent -= OnButtonContinue;
+				buttonMenu.OnPointerDownEvent -= OnButtonMenu;
 			}
 		}
 
@@ -46,6 +80,11 @@ namespace Proeve
 		}
 
 		private void OnButtonContinue(Touchable _sender, PointerEventData _eventData)
+		{
+			SceneManager.LoadScene ("Level_" + nextLevelID);
+		}
+
+		private void OnButtonMenu (Touchable _sender, PointerEventData _eventData)
 		{
 			SceneManager.LoadScene ("Menu");
 		}
