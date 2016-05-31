@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: wood_footstep
   m_EditorClassIdentifier: 
   audioClip: {fileID: 8300000, guid: d1519a88d256b7446ba4d83298a42a7d, type: 3}
-  audioMixerGroup: {fileID: 0}
+  audioMixerGroup: {fileID: 24330572, guid: dc81d08c4544c4f43aa376634bd4f449, type: 2}
   type: 0
   volume: 1
   pitch: 1

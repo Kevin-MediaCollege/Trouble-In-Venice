@@ -6,6 +6,7 @@ using System.Collections;
 using Utils;
 using UnityEngine.Serialization;
 using UnityEngine.EventSystems;
+using UnityEngine.Audio;
 
 namespace Proeve
 {
@@ -24,7 +25,26 @@ namespace Proeve
 		[SerializeField, FormerlySerializedAs("image_music")] private Image imageMusic;
 		[SerializeField, FormerlySerializedAs("image_sound")] private Image imageSound;
 
+		[SerializeField] private AudioMixer audioMixer;
+
 		[SerializeField] private CanvasGroup group;
+
+		protected void Awake()
+		{
+			float musicValue;
+			audioMixer.GetFloat("MusicVolume", out musicValue);
+
+			float soundValue;
+			audioMixer.GetFloat("SFXVolume", out soundValue);
+
+			musicValue = (musicValue + 80f) / 100f;
+			soundValue = (soundValue + 80f) / 100f;
+
+			Debug.Log(musicValue + " " + soundValue);
+
+			imageMusic.rectTransform.anchoredPosition = new Vector2(rectMusic.anchoredPosition.x - 270f + (musicValue * 540f), imageMusic.rectTransform.anchoredPosition.y);
+			imageSound.rectTransform.anchoredPosition = new Vector2(rectSound.anchoredPosition.x - 270f + (soundValue * 540f), imageSound.rectTransform.anchoredPosition.y);
+		}
 
 		protected void OnEnable()
 		{
@@ -78,18 +98,13 @@ namespace Proeve
 			return "ScreenSettings";
 		}
 
-		private void Init()
-		{
-			float value = 0.5f; //0f - 1f
-			imageMusic.rectTransform.anchoredPosition = new Vector2 (rectMusic.anchoredPosition.x - 270f + (value * 540f), imageMusic.rectTransform.anchoredPosition.y);
-			imageSound.rectTransform.anchoredPosition = new Vector2 (rectSound.anchoredPosition.x - 270f + (value * 540f), imageSound.rectTransform.anchoredPosition.y);
-		}
-
 		private void OnSliderMusic(Touchable _sender, PointerEventData _eventData)
 		{
 			float value = ((((_eventData.position.x / Screen.width) * 1920f) - 960f - rectMusic.anchoredPosition.x + 270f) / 540f);
 			value = Mathf.Clamp01 (value);
 			imageMusic.rectTransform.anchoredPosition = new Vector2 (rectMusic.anchoredPosition.x - 270f + (value * 540f), imageMusic.rectTransform.anchoredPosition.y);
+
+			audioMixer.SetFloat("MusicVolume", -80 + (value * 100f));
 		}
 
 		private void OnSliderSound (Touchable _sender, PointerEventData _eventData)
@@ -97,9 +112,11 @@ namespace Proeve
 			float value = ((((_eventData.position.x / Screen.width) * 1920f) - 960f - rectSound.anchoredPosition.x + 270f) / 540f);
 			value = Mathf.Clamp01 (value);
 			imageSound.rectTransform.anchoredPosition = new Vector2 (rectSound.anchoredPosition.x - 270f + (value * 540f), imageSound.rectTransform.anchoredPosition.y);
+
+			audioMixer.SetFloat("SFXVolume", -80 + (value * 100f));
 		}
 
-		private void OnButtonBack(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		private void OnButtonBack(Touchable _sender, PointerEventData _eventData)
 		{
 			ScreenManager.SwitchScreen ("ScreenMainMenu");
 		}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Naughty Goat
   m_EditorClassIdentifier: 
   audioClip: {fileID: 8300000, guid: e728fa24f4540eb48a996c52a323d1df, type: 3}
-  audioMixerGroup: {fileID: 0}
+  audioMixerGroup: {fileID: 24330572, guid: dc81d08c4544c4f43aa376634bd4f449, type: 2}
   type: 1
   volume: 0.5
   pitch: 1

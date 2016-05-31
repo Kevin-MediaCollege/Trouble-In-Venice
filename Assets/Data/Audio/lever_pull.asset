@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: lever_pull
   m_EditorClassIdentifier: 
   audioClip: {fileID: 8300000, guid: 270e548f421b23d4293e316f6e521a6c, type: 3}
-  audioMixerGroup: {fileID: 0}
+  audioMixerGroup: {fileID: 24330572, guid: dc81d08c4544c4f43aa376634bd4f449, type: 2}
   type: 0
   volume: 1
   pitch: 1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: draw_bridge
   m_EditorClassIdentifier: 
   audioClip: {fileID: 8300000, guid: 410a2d818bb8dac449afe8f6ddcac594, type: 3}
-  audioMixerGroup: {fileID: 0}
+  audioMixerGroup: {fileID: 24330572, guid: dc81d08c4544c4f43aa376634bd4f449, type: 2}
   type: 0
   volume: 1
   pitch: 1

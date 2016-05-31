@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: concrete_footstep
   m_EditorClassIdentifier: 
   audioClip: {fileID: 8300000, guid: ac4c800e00e5af64ea54be3cbf6d40f9, type: 3}
-  audioMixerGroup: {fileID: 0}
+  audioMixerGroup: {fileID: 24330572, guid: dc81d08c4544c4f43aa376634bd4f449, type: 2}
   type: 0
   volume: 0.3
   pitch: 1

@@ -4932,6 +4932,7 @@ MonoBehaviour:
   rectSound: {fileID: 191148769}
   imageMusic: {fileID: 554021768}
   imageSound: {fileID: 1124250444}
+  audioMixer: {fileID: 24100000, guid: dc81d08c4544c4f43aa376634bd4f449, type: 2}
   group: {fileID: 2128317388}
 --- !u!224 &1448109956
 RectTransform:
