@@ -21,6 +21,8 @@ namespace Proeve
 		public Touchable button_back;
 		public Image background;
 
+		public Text loadingText;
+
 		public LevelItem[] items;
 
 		private int currentPage;
@@ -57,6 +59,7 @@ namespace Proeve
 
 		public override void OnScreenEnter()
 		{
+			loadingText.enabled = false;
 			background.enabled = true;
 			levelUnlocker = Dependency.Get<LevelUnlocker>();
 
@@ -95,6 +98,7 @@ namespace Proeve
 			if(!loading)
 			{
 				ScreenManager.lastLoadedLevel = _item.levelName;
+				loadingText.enabled = true;
 				loading = true;
 				StartCoroutine(LoadLevel(_item.levelName));
 			}
@@ -201,6 +205,17 @@ namespace Proeve
 		public ScreenLevelSelect levelSelect;
 
 		/// <summary>
+		/// Initialize the levelItem
+		/// </summary>
+		/// <param name="_screen"></param>
+		public void Init(ScreenLevelSelect _screen)
+		{
+			if (Application.isMobilePlatform) { button.OnPointerUpEvent += OnButton; } else { button.OnPointerDownEvent += OnButton; }
+			levelSelect = _screen;
+			locked = false;
+		}
+
+		/// <summary>
 		/// Set the amount of stars received for the level.
 		/// </summary>
 		/// <param name="_stars"></param>
@@ -210,13 +225,6 @@ namespace Proeve
 			{
 				stars[i].enabled = i < _stars ? true : false;
 			}
-		}
-
-		private void Init(ScreenLevelSelect _screen)
-		{
-			if (Application.isMobilePlatform) { button.OnPointerUpEvent += OnButton; } else { button.OnPointerDownEvent += OnButton; }
-			levelSelect = _screen;
-			locked = false;
 		}
 
 		private void OnButton(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
