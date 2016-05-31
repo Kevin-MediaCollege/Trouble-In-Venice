@@ -23,7 +23,7 @@ MonoBehaviour:
     maxStars: 2
   - levelName: Level_3
     levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
-    maxStars: 3
+    maxStars: 2
   - levelName: Level_4
     levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
     maxStars: 2
@@ -32,7 +32,7 @@ MonoBehaviour:
     maxStars: 2
   - levelName: Level_6
     levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
-    maxStars: 3
+    maxStars: 2
   - levelName: Level_7
     levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
     maxStars: 2
