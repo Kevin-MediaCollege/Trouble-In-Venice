@@ -11,9 +11,9 @@ namespace Proeve
 			return StatTracker.GetTracker<RosePickupTracker>().GetValue();
 		}
 
-		public virtual string getString()
+		public override string getString()
 		{
-			return "Pickup the rose.";
+			return "Pickup the rose";
 		}
 	}
 }

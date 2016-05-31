@@ -11,9 +11,9 @@ namespace Proeve
 			return true;
 		}
 
-		public virtual string getString()
+		public override string getString()
 		{
-			return "Complete the level.";
+			return "Complete the level";
 		}
 	}
 }

@@ -20,9 +20,9 @@ namespace Proeve
 			}
 		}
 
-		public virtual string getString()
+		public override string getString()
 		{
-			return "Complete level in " + numberOfTurns + " turns.";
+			return "Complete level in " + numberOfTurns + " turns";
 		}
 	}
 }
