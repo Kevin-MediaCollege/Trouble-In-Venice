@@ -3566,7 +3566,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22467400, guid: b5471d10f6946fe4aac04b4519ec1bb7, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 344.93506
+      value: 353.43283
       objectReference: {fileID: 0}
     - target: {fileID: 22467400, guid: b5471d10f6946fe4aac04b4519ec1bb7, type: 2}
       propertyPath: m_AnchoredPosition.y
@@ -3574,7 +3574,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22467400, guid: b5471d10f6946fe4aac04b4519ec1bb7, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 529.8701
+      value: 546.86566
       objectReference: {fileID: 0}
     - target: {fileID: 22467400, guid: b5471d10f6946fe4aac04b4519ec1bb7, type: 2}
       propertyPath: m_SizeDelta.y
@@ -3582,7 +3582,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22447782, guid: b5471d10f6946fe4aac04b4519ec1bb7, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 689.8701
+      value: 706.86566
       objectReference: {fileID: 0}
     - target: {fileID: 22446516, guid: b5471d10f6946fe4aac04b4519ec1bb7, type: 2}
       propertyPath: m_AnchorMin.y
@@ -6115,7 +6115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  connections: []
+  connections:
+  - {fileID: 1461651918}
 --- !u!114 &2026450673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6179,7 +6180,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2026450671}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: -20.844624, y: 0, z: -1.250528}
+  m_LocalPosition: {x: -19.5, y: 0, z: -1.5}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 373570697}
