@@ -13,44 +13,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels:
   - levelName: Level_0
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: 3f9628757be8e1848b88e89c292381f4, type: 3}
     maxStars: 1
   - levelName: Level_1
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: d02f1b85c534b8b498ed763cb9ebb006, type: 3}
     maxStars: 2
   - levelName: Level_2
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: aa7b14ac262cb9f4788d68875af66dba, type: 3}
     maxStars: 2
   - levelName: Level_3
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: c1ea2ef53a7770648b375f914e9ca3b4, type: 3}
     maxStars: 2
   - levelName: Level_4
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: 2c88c1c6426e53b42ae292b662c0d3ea, type: 3}
     maxStars: 2
   - levelName: Level_5
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: 31811ffc0b3eeb1448f1c81ef844401d, type: 3}
     maxStars: 2
   - levelName: Level_6
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: ba4014e3fc3ee974fa6c721a4de305fa, type: 3}
     maxStars: 2
   - levelName: Level_7
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: e6ea2eaa336b36a4384c7023e1234696, type: 3}
     maxStars: 2
   - levelName: Level_8
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: 2e4097106d7e5b64da1e482c8140056e, type: 3}
     maxStars: 2
   - levelName: Level_9
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: 98d56f5c27e8cc34abca27dc0e95aef0, type: 3}
     maxStars: 3
   - levelName: Level_10
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: d0293ed5bf319714cb7345f73705ab9b, type: 3}
     maxStars: 2
   - levelName: Level_11
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: 76e64c0a6a3aceb41abf697d45297c2e, type: 3}
     maxStars: 3
   - levelName: Level_12
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: 50bee3a9d96152343949b5ad784ff7d6, type: 3}
     maxStars: 3
   - levelName: Level_13
-    levelImage: {fileID: 21300000, guid: e29a0657e053ab243b1f132f8590c731, type: 3}
+    levelImage: {fileID: 21300000, guid: 256313f8977024a429f141dabb934dfc, type: 3}
     maxStars: 3
