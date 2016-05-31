@@ -25,6 +25,9 @@ namespace Proeve
 		[SerializeField] private Image background;
 		[SerializeField] private Text loadingText;		
 
+		[SerializeField] private Sprite star_empty;
+		[SerializeField] private Sprite star_fill;
+
 		private LevelUnlocker levelUnlocker;
 
 		private int currentPage;
@@ -141,11 +144,13 @@ namespace Proeve
 				{
 					items[i].rect.gameObject.SetActive(true);
 					items[i].Name = LevelManager.Levels[levelID].levelName;
-					items[i].SetStars(LevelManager.Levels[levelID].maxStars);
 					items[i].level.sprite = LevelManager.Levels[levelID].levelImage;
 					items[i].debugText.text = LevelManager.Levels[levelID].levelName;
 
 					int id = Convert.ToInt32(LevelManager.Levels[levelID].levelName.Split('_')[1]);
+					int stars = Dependency.Get<ChallengesSaver>().GetNumStars (id);
+					items[i].SetStars(LevelManager.Levels[levelID].maxStars, stars, star_empty, star_fill);
+
 					if(levelUnlocker.IsUnlocked(id))
 					{
 						items[i].imageLock.enabled = false;
@@ -246,11 +251,20 @@ namespace Proeve
 		/// Set the amount of stars received for the level.
 		/// </summary>
 		/// <param name="_stars">The amount of stars to activate.</param>
-		public void SetStars(int _stars)
+		public void SetStars(int _max, int _stars, Sprite _empty, Sprite _fill)
 		{
 			for(int i = 0; i < 3; i++)
 			{
-				stars[i].enabled = i < _stars ? true : false;
+				if(i < _stars)
+				{
+					stars[i].sprite = _fill;
+				}
+				else
+				{
+					stars[i].sprite = _empty;
+				}
+
+				stars[i].gameObject.SetActive(i < _max ? true : false);
 			}
 		}
 
