@@ -1,31 +1,61 @@
-﻿using DG;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using Utils;
+using UnityEngine.Serialization;
+using UnityEngine.EventSystems;
 
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Manages character selection UI.
 	/// </summary>
 	public class ScreenCharacterSelection : ScreenBase
 	{
-		public Touchable button_back;
-		public CanvasGroup group;
+		[SerializeField, FormerlySerializedAs("button_back")] private Touchable buttonBack;
 
-		protected void Awake()
+		[SerializeField] private CanvasGroup group;
+
+		protected void OnEnable()
 		{
-			if (Application.isMobilePlatform) { button_back.OnPointerUpEvent += OnButtonBack; } else { button_back.OnPointerDownEvent += OnButtonBack; }
+			if(Application.isMobilePlatform)
+			{
+				buttonBack.OnPointerUpEvent += OnButtonBack;
+			}
+			else
+			{
+				buttonBack.OnPointerDownEvent += OnButtonBack;
+			}
 		}
 
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
+		protected void OnDisable()
+		{
+			if(Application.isMobilePlatform)
+			{
+				buttonBack.OnPointerUpEvent -= OnButtonBack;
+			}
+			else
+			{
+				buttonBack.OnPointerDownEvent -= OnButtonBack;
+			}
+		}
+
 		public override void OnScreenEnter()
 		{
-			StartCoroutine ("OnFadeIn");
+			StartCoroutine("OnFadeIn");
+		}
+
+		public override IEnumerator OnScreenFadeout()
+		{
+			group.alpha = 1f;
+			group.DOFade (0f, 0.2f);
+
+			yield return new WaitForSeconds (0.2f);
+		}
+
+		public override string GetScreenName()
+		{
+			return "ScreenCharacterSelection";
 		}
 
 		private IEnumerator OnFadeIn()
@@ -35,36 +65,9 @@ namespace Proeve
 			yield return new WaitForSeconds (0.3f);
 		}
 
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
-		public override IEnumerator OnScreenFadeout()
+		private void OnButtonBack(Touchable _sender, PointerEventData _eventData)
 		{
-			group.alpha = 1f;
-			group.DOFade (0f, 0.2f);
-
-			yield return new WaitForSeconds (0.2f);
-		}
-
-		/// <summary>
-		/// Called after OnScreenFadeout
-		/// </summary>
-		public override void OnScreenExit()
-		{
-
-		}
-
-		private void OnButtonBack(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
-		{
-			ScreenManager.SwitchScreen ("ScreenMainMenu");
-		}
-
-		/// <summary>
-		/// Returns name of the screen
-		/// </summary>
-		public override string GetScreenName()
-		{
-			return "ScreenCharacterSelection";
+			ScreenManager.SwitchScreen("ScreenMainMenu");
 		}
 	}
 }
