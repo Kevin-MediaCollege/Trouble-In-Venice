@@ -56,7 +56,7 @@ namespace Proeve
 
 		[Header("top down mode")]
 		public bool topdownUpdateInEditor = false;
-		[Range(4f, 30f)]
+		[Range(10f, 45f)]
 		public float topDownDistance = 10f;
 		[Range(20f, 120f)]
 		public float fieldOfViewTopDown = 70f;
