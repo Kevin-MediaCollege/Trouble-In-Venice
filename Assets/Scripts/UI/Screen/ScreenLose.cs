@@ -11,17 +11,20 @@ namespace Proeve
 	/// </summary>
 	public class ScreenLose : ScreenBase
 	{
-		[SerializeField, FormerlySerializedAs("temp_button")] private Touchable buttonContinue;
+		[SerializeField, FormerlySerializedAs("temp_button")] private Touchable buttonRetry;
+		[SerializeField] private Touchable buttonMenu;
 
 		protected void OnEnable()
 		{
 			if(Application.isMobilePlatform)
 			{ 
-				buttonContinue.OnPointerUpEvent += OnButtonContinue;
+				buttonRetry.OnPointerUpEvent += OnButtonRetry;
+				buttonMenu.OnPointerUpEvent += OnButtonMenu;
 			} 
 			else 
 			{
-				buttonContinue.OnPointerDownEvent += OnButtonContinue;
+				buttonRetry.OnPointerDownEvent += OnButtonRetry;
+				buttonMenu.OnPointerDownEvent += OnButtonMenu;
 			}
 		}
 
@@ -29,11 +32,13 @@ namespace Proeve
 		{
 			if(Application.isMobilePlatform)
 			{
-				buttonContinue.OnPointerUpEvent += OnButtonContinue;
+				buttonRetry.OnPointerUpEvent -= OnButtonRetry;
+				buttonMenu.OnPointerUpEvent -= OnButtonMenu;
 			}
 			else
 			{
-				buttonContinue.OnPointerDownEvent += OnButtonContinue;
+				buttonRetry.OnPointerDownEvent -= OnButtonRetry;
+				buttonMenu.OnPointerDownEvent -= OnButtonMenu;
 			}
 		}
 
@@ -42,9 +47,14 @@ namespace Proeve
 			return "ScreenLose";
 		}
 
-		private void OnButtonContinue(Touchable _sender, PointerEventData _eventData)
+		private void OnButtonRetry(Touchable _sender, PointerEventData _eventData)
 		{
-			SceneManager.LoadScene("Menu");
+			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+		}
+
+		private void OnButtonMenu (Touchable _sender, PointerEventData _eventData)
+		{
+			SceneManager.LoadScene ("Menu");
 		}
 	}
 }
