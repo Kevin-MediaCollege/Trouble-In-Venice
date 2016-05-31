@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Spawns the model of the player and target character.
+	/// </summary>
 	public class CharacterModelSpawner : MonoBehaviour
 	{
 		[SerializeField] private GameObject modelMale;

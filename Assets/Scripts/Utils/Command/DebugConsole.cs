@@ -1,20 +1,18 @@
 ﻿using UnityEngine;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Proeve
 {		
 	/// <summary>
-	/// 
+	/// Debug console UI
 	/// </summary>
 	public class DebugConsole : MonoBehaviour 
 	{
 		/// <summary>
 		/// DebugConsole singleton
 		/// </summary>
-		public static DebugConsole instance;
-		private static List<LogItem> log = init();
+		private static DebugConsole instance;
+		private static List<LogItem> log = Init();
 
 		private Texture2D background;
 		private bool consoleEnabled = false;
@@ -23,23 +21,13 @@ namespace Proeve
 		private float backspaceDelay = 0f;
 		private GUIStyle style = new GUIStyle();
 
-		void Awake()
+		protected void Awake()
 		{
 			instance = this;
 
 			background = new Texture2D(1, 1);
 			background.SetPixel(0, 0, new Color32(0, 0, 0, 120));
 			background.Apply();
-		}
-
-		/// <summary>
-		/// Creates the log
-		/// </summary>
-		public static List<LogItem> init()
-		{
-			List<LogItem> l = new List<LogItem>();
-			for(int i = 0; i < 10; i++) { l.Add(new LogItem("", Color.white)); }
-			return l;
 		}
 
 		protected void OnEnable()
@@ -49,7 +37,7 @@ namespace Proeve
 
 		protected void OnDisable()
 		{
-			if (instance == this)
+			if(instance == this)
 			{
 				instance = null;
 			}
@@ -117,7 +105,7 @@ namespace Proeve
 
 				if(updated)
 				{
-					updateSuggestion();
+					UpdateSuggestion();
 				}
 			}
 		}
@@ -143,28 +131,27 @@ namespace Proeve
 				GUI.Label(new Rect(3f + inputWidth.x, Screen.height - 22f, 600f, 25f), currentSuggestion, style);
 			}
 		}
-			
-		private void updateSuggestion()
+		private void UpdateSuggestion()
 		{
 			if(currentInput.Length > 0)
 			{
 				CommandData cd = DebugCommand.GetCommandSuggestion(currentInput);
 				if(cd != null)
 				{
-					if(currentInput.Length < cd.commandName.Length)
+					if(currentInput.Length < cd.Name.Length)
 					{
-						currentSuggestion = cd.commandName.Remove(0, currentInput.Length) + " " + cd.example;
+						currentSuggestion = cd.Name.Remove(0, currentInput.Length) + " " + cd.ParamExample;
 						return;
 					}
-					else if(cd.example.Length > 0)
+					else if(cd.ParamExample.Length > 0)
 					{
-						string s = currentInput.Remove(0, cd.commandName.Length);
+						string s = currentInput.Remove(0, cd.Name.Length);
 						if(s.Length > 1 && s[0] == ' ')
 						{
 							s = s.Remove(0, 1);
 							s = s[s.Length - 1] == ' ' ? s.Remove(s.Length - 1, 1) : s;
 							int currentParameterCount = s.Split(' ').Length;
-							string[] suggestedParameters = cd.example.Split(' ');
+							string[] suggestedParameters = cd.ParamExample.Split(' ');
 
 							currentSuggestion = "";
 							for(int i = currentParameterCount; i < suggestedParameters.Length; i++)
@@ -174,7 +161,7 @@ namespace Proeve
 						}
 						else
 						{
-							currentSuggestion = s.Length == 1 ? cd.example : " " + cd.example;
+							currentSuggestion = s.Length == 1 ? cd.ParamExample : " " + cd.ParamExample;
 						}
 						return;
 					}
@@ -183,28 +170,21 @@ namespace Proeve
 			currentSuggestion = "";
 		}
 
-		public class LogItem
+		/// <summary>
+		/// Creates the log.
+		/// </summary>
+		private static List<LogItem> Init()
 		{
-			public string message;
-			public Color32 color;
-
-			/// <summary>
-			/// Stores info about a log item
-			/// </summary>
-			/// <param name="_message">log message</param>
-			/// <param name="_color">log color</param>
-			public LogItem(string _message, Color32 _color)
-			{
-				message = _message;
-				color = _color;
-			}
+			List<LogItem> l = new List<LogItem>();
+			for(int i = 0; i < 10; i++) { l.Add(new LogItem("", Color.white)); }
+			return l;
 		}
 
 		/// <summary>
-		/// Adds a new message to the console log
+		/// Adds a new message to the console log.
 		/// </summary>
-		/// <param name="_message">message to log</param>
-		/// <param name="_color">log color</param>
+		/// <param name="_message">message to log.</param>
+		/// <param name="_color">log color.</param>
 		public static void Log(string _message, Color32 _color)
 		{
 			log.RemoveAt(0);
@@ -213,12 +193,32 @@ namespace Proeve
 		}
 
 		/// <summary>
-		/// Adds a new message to the console log
+		/// Adds a new message to the console log.
 		/// </summary>
-		/// <param name="_message">message to log</param>
+		/// <param name="_message">message to log.</param>
 		public static void Log(string _message)
 		{
 			Log(_message, new Color32(255, 255, 255, 255));
+		}
+
+		/// <summary>
+		/// Stores information about a log item.
+		/// </summary>
+		public struct LogItem
+		{
+			public string message;
+			public Color32 color;
+
+			/// <summary>
+			/// Stores info about a log item.
+			/// </summary>
+			/// <param name="_message">log message.</param>
+			/// <param name="_color">log color.</param>
+			public LogItem(string _message, Color32 _color)
+			{
+				message = _message;
+				color = _color;
+			}
 		}
 	}
 }
