@@ -10,7 +10,7 @@ using Utils;
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Manages level select UI.
 	/// </summary>
 	public class ScreenLevelSelect : ScreenBase
 	{
@@ -55,9 +55,6 @@ namespace Proeve
 			UpdatePage ();
 		}
 
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
 		public override void OnScreenEnter()
 		{
 			background.enabled = true;
@@ -76,48 +73,45 @@ namespace Proeve
 			StartCoroutine ("OnFadeIn");
 		}
 
-		private IEnumerator OnFadeIn()
+		public override IEnumerator OnScreenFadeout()
 		{
-			group.alpha = 0f;
-			group.DOFade (1f, 0.3f);
-			yield return new WaitForSeconds (0.3f);
+			group.alpha = 1f;
+			group.DOFade(0f, 0.2f);
+
+			yield return new WaitForSeconds(0.2f);
+		}
+		
+		public override string GetScreenName()
+		{
+			return "ScreenLevelSelect";
 		}
 
-		private void OnButtonPageLeft (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		/// <summary>
+		/// Called by <see cref="LevelItem"/> when a level button has been pressed.
+		/// </summary>
+		/// <param name="_item"></param>
+		public void OnLevelButton(LevelItem _item)
 		{
-			if(currentPage > 0)
+			if(!loading)
 			{
-				currentPage--;
-				UpdatePage();
+				ScreenManager.lastLoadedLevel = _item.levelName;
+				loading = true;
+				StartCoroutine(LoadLevel(_item.levelName));
 			}
 		}
 
-		private void OnButtonPageRight (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		private void UpdatePage()
 		{
-			if(currentPage < maxPages - 1)
-			{
-				currentPage++;
-				UpdatePage();
-			}
-		}
+			button_left.gameObject.SetActive(currentPage > 0 ? true : false);
+			button_right.gameObject.SetActive(currentPage < maxPages - 1 ? true : false);
 
-		void OnButtonDown (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
-		{
-			ScreenManager.SwitchScreen("ScreenMainMenu");
-		}
-
-		public void UpdatePage()
-		{
-			button_left.gameObject.SetActive (currentPage > 0 ? true : false);
-			button_right.gameObject.SetActive (currentPage < maxPages - 1 ? true : false);
-			
 			int levelLenght = LevelManager.Levels.Length;
 			int levelID = 0;
 
 			for(int i = 0; i < 3; i++)
 			{
 				levelID = (currentPage * 3) + i;
-				if ((currentPage * 3) + i < levelLenght) 
+				if((currentPage * 3) + i < levelLenght)
 				{
 					items[i].rect.gameObject.SetActive(true);
 					items[i].levelName = LevelManager.Levels[levelID].levelName;
@@ -139,24 +133,37 @@ namespace Proeve
 						items[i].level.color = new Color(0.5f, 0.5f, 0.5f, 1f);
 					}
 				}
-				else 
+				else
 				{
 					items[i].rect.gameObject.SetActive(false);
 				}
 			}
 		}
 
-		public void OnLevelButton(LevelItem _item)
+		private void OnButtonPageLeft(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
 		{
-			if(!loading)
+			if(currentPage > 0)
 			{
-				ScreenManager.lastLoadedLevel = _item.levelName;
-				loading = true;
-				StartCoroutine (loadLevel (_item.levelName));
+				currentPage--;
+				UpdatePage();
 			}
 		}
 
-		private IEnumerator loadLevel(string _name)
+		private void OnButtonPageRight(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		{
+			if(currentPage < maxPages - 1)
+			{
+				currentPage++;
+				UpdatePage();
+			}
+		}
+
+		private void OnButtonDown(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		{
+			ScreenManager.SwitchScreen("ScreenMainMenu");
+		}
+
+		private IEnumerator LoadLevel(string _name)
 		{
 			group.alpha = 1f;
 			group.DOFade (0f, 0.2f);
@@ -166,34 +173,15 @@ namespace Proeve
 			SceneManager.LoadScene (_name);
 		}
 
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
-		public override IEnumerator OnScreenFadeout()
+		private IEnumerator OnFadeIn()
 		{
-			group.alpha = 1f;
-			group.DOFade (0f, 0.2f);
-
-			yield return new WaitForSeconds (0.2f);
-		}
-
-		/// <summary>
-		/// Called after OnScreenFadeout
-		/// </summary>
-		public override void OnScreenExit()
-		{
-		}
-
-		/// <summary>
-		/// Returns name of the screen
-		/// </summary>
-		public override string GetScreenName()
-		{
-			return "ScreenLevelSelect";
+			group.alpha = 0f;
+			group.DOFade(1f, 0.3f);
+			yield return new WaitForSeconds(0.3f);
 		}
 	}
 
-	[System.Serializable]
+	[Serializable]
 	public class LevelItem
 	{
 		public RectTransform rect;
@@ -212,19 +200,23 @@ namespace Proeve
 		[System.NonSerialized]
 		public ScreenLevelSelect levelSelect;
 
-		public void Init(ScreenLevelSelect _screen)
-		{
-			if (Application.isMobilePlatform) { button.OnPointerUpEvent += OnButton; } else { button.OnPointerDownEvent += OnButton; }
-			levelSelect = _screen;
-			locked = false;
-		}
-
+		/// <summary>
+		/// Set the amount of stars received for the level.
+		/// </summary>
+		/// <param name="_stars"></param>
 		public void SetStars(int _stars)
 		{
 			for(int i = 0; i < 3; i++)
 			{
-				stars [i].enabled = i < _stars ? true : false;
+				stars[i].enabled = i < _stars ? true : false;
 			}
+		}
+
+		private void Init(ScreenLevelSelect _screen)
+		{
+			if (Application.isMobilePlatform) { button.OnPointerUpEvent += OnButton; } else { button.OnPointerDownEvent += OnButton; }
+			levelSelect = _screen;
+			locked = false;
 		}
 
 		private void OnButton(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
