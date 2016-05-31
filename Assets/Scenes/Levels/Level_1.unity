@@ -323,6 +323,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audio: {fileID: 11400000, guid: 9676b1fb5b5dc4147ab17b6c42c533d7, type: 2}
   node: {fileID: 115314982}
+--- !u!1 &120645907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 120645908}
+  - 114: {fileID: 120645909}
+  m_Layer: 0
+  m_Name: Target NPC(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &120645908
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 120645907}
+  m_LocalRotation: {x: -0.7071066, y: 0, z: 0, w: 0.707107}
+  m_LocalPosition: {x: 0, y: 0, z: -0.7}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_Children: []
+  m_Father: {fileID: 594643639}
+  m_RootOrder: 0
+--- !u!114 &120645909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 120645907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3861479597d5ee542b687712cdc4aeaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelMale: {fileID: 100002, guid: 24ce7e3da9624fc4396b61e83cc7ef82, type: 3}
+  modelFemale: {fileID: 100000, guid: 898a3ab0f4dd42c41b8a72fdc3d7a068, type: 3}
 --- !u!1 &181352658
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +652,7 @@ MonoBehaviour:
   minAngle: 10
   minZoom: 8
   maxZoom: 20
+  fieldOfView3D: 70
   cutsceneUpdateInEditor: 0
   cutsceneAngle: 40
   cutsceneRotation: -67
@@ -624,6 +666,7 @@ MonoBehaviour:
   orthographicDistance: 10
   topdownUpdateInEditor: 0
   topDownDistance: 10
+  fieldOfViewTopDown: 70
 --- !u!4 &286633834
 Transform:
   m_ObjectHideFlags: 0
@@ -1068,7 +1111,8 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: -19.5, y: 0, z: 1.5}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_Children: []
+  m_Children:
+  - {fileID: 120645908}
   m_Father: {fileID: 1332691486}
   m_RootOrder: 9
 --- !u!114 &594643640
@@ -1566,11 +1610,11 @@ RectTransform:
   - {fileID: 269335059}
   m_Father: {fileID: 637526167}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 130}
-  m_Pivot: {x: 0.5, y: 1}
+  m_SizeDelta: {x: 0, y: 90}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &862611860
 MonoBehaviour:
   m_ObjectHideFlags: 0
