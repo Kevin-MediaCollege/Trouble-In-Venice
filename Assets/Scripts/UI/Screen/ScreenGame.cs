@@ -10,6 +10,9 @@ namespace Proeve
 	{
 		public Touchable button_reset;
 		public Touchable button_options;
+		public Touchable button_camera;
+
+		private int cameraMode;
 
 		protected void Awake()
 		{
@@ -17,11 +20,28 @@ namespace Proeve
 			{ 
 				button_reset.OnPointerUpEvent += OnButtonReset;
 				button_options.OnPointerUpEvent += OnButtonOptions;
+				button_camera.OnPointerUpEvent += OnButtonCamera;
 			} 
 			else 
 			{
 				button_reset.OnPointerDownEvent += OnButtonReset;
 				button_options.OnPointerDownEvent += OnButtonOptions;
+				button_camera.OnPointerDownEvent += OnButtonCamera;
+			}
+		}
+
+		protected void Start()
+		{
+			cameraMode = 0;
+			GameCamera.instance.setCameraMode (cameraMode);
+		}
+
+		private void OnButtonCamera (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		{
+			if(!GameCamera.instance.cutscene)
+			{
+				cameraMode = cameraMode == 0 ? 2 : 0;
+				GameCamera.instance.setCameraMode (cameraMode);
 			}
 		}
 

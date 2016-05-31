@@ -12,6 +12,8 @@ namespace Proeve
 	/// </summary>
 	public class GameCamera : MonoBehaviour
 	{
+		public static GameCamera instance;
+
 		[Header("Camera Gameobject")]
 		public Camera cam;
 
@@ -22,6 +24,10 @@ namespace Proeve
 		[Header("Camera Zoom Settings")]
 		public float minZoom = 8f;
 		public float maxZoom = 20f;
+
+		[Header("Field of view 3D")]
+		[Range(20f, 120f)]
+		public float fieldOfView3D = 70f;
 
 		[Header("cutscene camera start position")]
 		public bool cutsceneUpdateInEditor = false;
@@ -52,8 +58,11 @@ namespace Proeve
 		public bool topdownUpdateInEditor = false;
 		[Range(4f, 30f)]
 		public float topDownDistance = 10f;
+		[Range(20f, 120f)]
+		public float fieldOfViewTopDown = 70f;
 
-		private bool cutscene;
+		[System.NonSerialized]
+		public bool cutscene;
 		private CameraInput cameraInput;
 
 		private float currentAngle;
@@ -65,6 +74,8 @@ namespace Proeve
 
 		protected void Awake()
 		{
+			instance = this;
+
 			cutscene = false;
 			cameraInput = new CameraInput();
 			StartCoroutine("CutsceneAnimation");
@@ -97,6 +108,7 @@ namespace Proeve
 		{
 			cutscene = true;
 
+			cam.fieldOfView = fieldOfView3D;
 			float fixedRotation = cutsceneRotation;
 			fixedRotation = fixedRotation > startRotation + 180f ? fixedRotation - 360f : fixedRotation < startRotation - 180f ? fixedRotation + 360f : fixedRotation;
 			transform.rotation = SettingsToQuaternion(cutsceneAngle, fixedRotation);
@@ -108,6 +120,28 @@ namespace Proeve
 			cutscene = false;
 		}
 
+		public void setCameraMode(int _mode)
+		{
+			cameraMode = _mode;
+
+			if(cameraMode == 1)
+			{
+				cam.orthographic = true;
+				cam.orthographicSize = 15f;
+			}
+			else if(cameraMode == 2)
+			{
+				cam.orthographic = false;
+				cam.fieldOfView = fieldOfViewTopDown;
+			}
+			else
+			{
+				cam.orthographic = false;
+				cam.fieldOfView = fieldOfView3D;
+				SetCameraPosition(currentAngle, currentRotation, currentZoom);
+			}
+		}
+
 		protected void Update()
 		{
 			if(!inputEnabled || ScreenManager.GetCurrentScreenName() != "ScreenGame")
@@ -117,26 +151,6 @@ namespace Proeve
 
 			if(!cutscene)
 			{
-				if(Input.GetKeyDown(KeyCode.Space))
-				{
-					cameraMode = cameraMode == 0 ? 1 : cameraMode == 1 ? 2 : 0;
-
-					if(cameraMode == 1)
-					{
-						cam.orthographic = true;
-						cam.orthographicSize = 15f;
-					}
-					else if(cameraMode == 2)
-					{
-						cam.orthographic = false;
-					}
-					else
-					{
-						cam.orthographic = false;
-						SetCameraPosition(currentAngle, currentRotation, currentZoom);
-					}
-				}
-
 				if (cameraMode == 1 || cameraMode == 2)
 				{
 					cameraInput.UpdateInput();
@@ -189,15 +203,18 @@ namespace Proeve
 				cam.orthographic = false;
 				SetCameraPosition(90f, 0f, 0f);
 				cam.transform.position = new Vector3 (cam.transform.position.x, topDownDistance, cam.transform.position.z);
+				cam.fieldOfView = fieldOfViewTopDown;
 			}
 			else if(cutsceneUpdateInEditor)
 			{
 				cam.orthographic = false;
+				cam.fieldOfView = fieldOfView3D;
 				SetCameraPosition(cutsceneAngle, cutsceneRotation, cutsceneZoom);
 			}
 			else if(startUpdateInEditor)
 			{
 				cam.orthographic = false;
+				cam.fieldOfView = fieldOfView3D;
 				SetCameraPosition(startAngle, startRotation, startZoom);
 			}
 		}
