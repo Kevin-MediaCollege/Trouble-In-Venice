@@ -10,6 +10,8 @@ namespace Proeve
 
 		public override bool getStar()
 		{
+			Debug.Log ("Lenght = " + StatTracker.GetTracker<TurnCountTracker> ().GetValue ());
+
 			if (numberOfTurns <= StatTracker.GetTracker<TurnCountTracker> ().GetValue ())
 			{
 				return true;

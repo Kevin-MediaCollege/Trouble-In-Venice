@@ -9,6 +9,7 @@ namespace Proeve
 	public class ChallengesManager : MonoBehaviour
 	{
 		public static ChallengesManager instance;
+		[HideInInspector]
 		public int stars = 0;
 		public ChallengeBase[] challenges;
 
