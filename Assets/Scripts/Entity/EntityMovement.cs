@@ -160,13 +160,14 @@ namespace Proeve
 				yield return null;
 			}
 			
-			to.AddEntity(entity);
 			onMoveEvent(from, to);
 
 			if(entity.HasTag("Player"))
 			{
 				GlobalEvents.Invoke(new PlayerMovedEvent(from, to));
 			}
+
+			to.AddEntity(entity);
 		}
 	}
 }
