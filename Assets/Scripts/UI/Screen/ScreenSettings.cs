@@ -63,6 +63,7 @@ namespace Proeve
 		public override void OnScreenEnter()
 		{
 			StartCoroutine ("OnFadeIn");
+
 		}
 
 		public override IEnumerator OnScreenFadeout()
@@ -75,6 +76,13 @@ namespace Proeve
 		public override string GetScreenName()
 		{
 			return "ScreenSettings";
+		}
+
+		private void Init()
+		{
+			float value = 0.5f; //0f - 1f
+			imageMusic.rectTransform.anchoredPosition = new Vector2 (rectMusic.anchoredPosition.x - 270f + (value * 540f), imageMusic.rectTransform.anchoredPosition.y);
+			imageSound.rectTransform.anchoredPosition = new Vector2 (rectSound.anchoredPosition.x - 270f + (value * 540f), imageSound.rectTransform.anchoredPosition.y);
 		}
 
 		private void OnSliderMusic(Touchable _sender, PointerEventData _eventData)
