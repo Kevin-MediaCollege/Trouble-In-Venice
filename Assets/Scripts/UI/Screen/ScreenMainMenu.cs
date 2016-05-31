@@ -3,88 +3,93 @@ using DG.Tweening;
 using UnityEngine;
 using System.Collections;
 using Utils;
+using UnityEngine.Serialization;
+using UnityEngine.EventSystems;
 
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Manges main menu screen UI.
 	/// </summary>
 	public class ScreenMainMenu : ScreenBase
 	{
-		public Touchable button_play;
-		public Touchable button_settings;
-		public Touchable button_credits;
-		public CanvasGroup group;
+		[SerializeField, FormerlySerializedAs("button_play")] private Touchable buttonPlay;
+		[SerializeField, FormerlySerializedAs("button_settings")] private Touchable buttonSettings;
+		[SerializeField, FormerlySerializedAs("button_credits")] private Touchable buttonCredits;
 
-		protected void Awake()
+		[SerializeField] private CanvasGroup group;
+
+		protected void OnEnable()
 		{
-			if (Application.isMobilePlatform)
+			if(Application.isMobilePlatform)
 			{ 
-				button_play.OnPointerUpEvent += OnButtonPlay; 
-				button_settings.OnPointerUpEvent += OnButtonSettings; 
-				button_credits.OnPointerUpEvent += OnButtonCredits; 
+				buttonPlay.OnPointerUpEvent += OnButtonPlay; 
+				buttonSettings.OnPointerUpEvent += OnButtonSettings; 
+				buttonCredits.OnPointerUpEvent += OnButtonCredits; 
 			} 
 			else 
 			{ 
-				button_play.OnPointerDownEvent += OnButtonPlay;
-				button_settings.OnPointerDownEvent += OnButtonSettings;
-				button_credits.OnPointerDownEvent += OnButtonCredits;
+				buttonPlay.OnPointerDownEvent += OnButtonPlay;
+				buttonSettings.OnPointerDownEvent += OnButtonSettings;
+				buttonCredits.OnPointerDownEvent += OnButtonCredits;
 			}
 		}
 
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
+		protected void OnDisable()
+		{
+			if(Application.isMobilePlatform)
+			{
+				buttonPlay.OnPointerUpEvent -= OnButtonPlay;
+				buttonSettings.OnPointerUpEvent -= OnButtonSettings;
+				buttonCredits.OnPointerUpEvent -= OnButtonCredits;
+			}
+			else
+			{
+				buttonPlay.OnPointerDownEvent -= OnButtonPlay;
+				buttonSettings.OnPointerDownEvent -= OnButtonSettings;
+				buttonCredits.OnPointerDownEvent -= OnButtonCredits;
+			}
+		}
+
 		public override void OnScreenEnter()
 		{
-			StartCoroutine ("OnFadeIn");
+			StartCoroutine("OnFadeIn");
+		}
+
+		public override IEnumerator OnScreenFadeout()
+		{
+			group.alpha = 1f;
+			group.DOFade (0f, 0.3f);
+
+			yield return new WaitForSeconds (0.3f);
+		}
+
+		public override string GetScreenName()
+		{
+			return "ScreenMainMenu";
+		}
+
+		private void OnButtonPlay(Touchable _sender, PointerEventData _eventData)
+		{
+			ScreenManager.SwitchScreen ("ScreenCharacterSelection");
+		}
+
+		private void OnButtonSettings(Touchable _sender, PointerEventData _eventData)
+		{
+			ScreenManager.SwitchScreen ("ScreenSettings");
+		}
+
+		private void OnButtonCredits(Touchable _sender, PointerEventData _eventData)
+		{
+			ScreenManager.SwitchScreen ("ScreenCredits");
 		}
 
 		private IEnumerator OnFadeIn()
 		{
 			group.alpha = 0f;
 			group.DOFade (1f, 0.3f);
+
 			yield return new WaitForSeconds (0.3f);
-		}
-
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
-		public override IEnumerator OnScreenFadeout()
-		{
-			group.alpha = 1f;
-			group.DOFade (0f, 0.3f);
-			yield return new WaitForSeconds (0.3f);
-		}
-
-		/// <summary>
-		/// Called after OnScreenFadeout
-		/// </summary>
-		public override void OnScreenExit()
-		{
-		}
-
-		private void OnButtonPlay(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
-		{
-			ScreenManager.SwitchScreen ("ScreenCharacterSelection");
-		}
-
-		private void OnButtonSettings(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
-		{
-			ScreenManager.SwitchScreen ("ScreenSettings");
-		}
-
-		private void OnButtonCredits(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
-		{
-			ScreenManager.SwitchScreen ("ScreenCredits");
-		}
-
-		/// <summary>
-		/// Returns name of the screen
-		/// </summary>
-		public override string GetScreenName()
-		{
-			return "ScreenMainMenu";
 		}
 	}
 }

@@ -1,38 +1,79 @@
-﻿using DG;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Utils;
+using UnityEngine.Serialization;
+using UnityEngine.EventSystems;
 
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Manages credits screen UI.
 	/// </summary>
 	public class ScreenCredits : ScreenBase
 	{
-		public Touchable button_back;
-		public CanvasGroup group;
-		public Touchable button_easteregg;
+		[SerializeField, FormerlySerializedAs("button_back")] private Touchable buttonBack;		
+		[SerializeField, FormerlySerializedAs("button_easteregg")] private Touchable buttonEasterEgg;
 
-		private int easteregg;
+		[SerializeField] private CanvasGroup group;
 
-		protected void Awake()
+		private int easterEggCount;
+
+		protected void OnEnable()
 		{
-			if (Application.isMobilePlatform) { button_back.OnPointerUpEvent += OnButtonBack; } else { button_back.OnPointerDownEvent += OnButtonBack; }
+			if(Application.isMobilePlatform)
+			{
+				buttonBack.OnPointerUpEvent += OnButtonBack;
+			}
+			else
+			{
+				buttonBack.OnPointerDownEvent += OnButtonBack;
+			}
 
-			button_easteregg.OnPointerDownEvent += Button_easteregg_OnPointerDownEvent;
+			buttonEasterEgg.OnPointerDownEvent += OnButtonEasterEgg;
 		}
 
-		void Button_easteregg_OnPointerDownEvent (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		protected void OnDisable()
 		{
-			easteregg++;
-			Debug.Log ("" + easteregg);
-
-			if(easteregg == 10)
+			if(Application.isMobilePlatform)
 			{
-				Text[] texts = ScreenManager.instance.GetComponentsInChildren<Text> (true);
+				buttonBack.OnPointerUpEvent -= OnButtonBack;
+			}
+			else
+			{
+				buttonBack.OnPointerDownEvent -= OnButtonBack;
+			}
+
+			buttonEasterEgg.OnPointerDownEvent -= OnButtonEasterEgg;
+		}
+
+		public override void OnScreenEnter()
+		{
+			StartCoroutine("OnFadeIn");
+		}
+
+		public override IEnumerator OnScreenFadeout()
+		{
+			group.alpha = 1f;
+			group.DOFade(0f, 0.2f);
+
+			yield return new WaitForSeconds(0.2f);
+		}
+
+		public override string GetScreenName()
+		{
+			return "ScreenCredits";
+		}
+
+		private void OnButtonEasterEgg(Touchable _sender, PointerEventData _eventData)
+		{
+			easterEggCount++;
+
+			if(easterEggCount == 10)
+			{
+				Text[] texts = ScreenManager.instance.GetComponentsInChildren<Text>(true);
+
 				for(int i = 0; i < texts.Length; i++)
 				{
 					texts[i].text = "ted is koning";
@@ -40,51 +81,16 @@ namespace Proeve
 			}
 		}
 
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
-		public override void OnScreenEnter()
+		private void OnButtonBack(Touchable _sender, PointerEventData _eventData)
 		{
-			StartCoroutine ("OnFadeIn");
+			ScreenManager.SwitchScreen("ScreenMainMenu");
 		}
 
 		private IEnumerator OnFadeIn()
 		{
 			group.alpha = 0f;
-			group.DOFade (1f, 0.3f);
-			yield return new WaitForSeconds (0.3f);
-		}
-
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
-		public override IEnumerator OnScreenFadeout()
-		{
-			group.alpha = 1f;
-			group.DOFade (0f, 0.2f);
-
-			yield return new WaitForSeconds (0.2f);
-		}
-
-		/// <summary>
-		/// Called after OnScreenFadeout
-		/// </summary>
-		public override void OnScreenExit()
-		{
-			
-		}
-
-		private void OnButtonBack(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
-		{
-			ScreenManager.SwitchScreen ("ScreenMainMenu");
-		}
-
-		/// <summary>
-		/// Returns name of the screen
-		/// </summary>
-		public override string GetScreenName()
-		{
-			return "ScreenCredits";
+			group.DOFade(1f, 0.3f);
+			yield return new WaitForSeconds(0.3f);
 		}
 	}
 }

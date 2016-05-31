@@ -396,7 +396,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1005485987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ef399b12cc33b648bb66a366cba8eb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c0da602d327c3144b2ae9fe43c1f10a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   screenList:
@@ -520,8 +520,8 @@ MonoBehaviour:
     alphaGroup: {fileID: 1741451010}
     rect: {fileID: 1741451007}
   logoAlphaGroup: {fileID: 2139753377}
-  logoRect: {fileID: 2139753374}
   overlayAlphaGroup: {fileID: 1290000875}
+  logoRect: {fileID: 2139753374}
   scream: {fileID: 11400000, guid: a49fb753ef61b884f9691f32703263d6, type: 2}
 --- !u!224 &1125425443
 RectTransform:

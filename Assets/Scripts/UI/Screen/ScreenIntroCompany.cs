@@ -1,5 +1,4 @@
-﻿using DG;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -10,27 +9,29 @@ using Snakybo.Audio;
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Manages company (splash) screen UI.
 	/// </summary>
 	public class ScreenIntroCompany : ScreenBase
 	{
-		public GoatPrint[] printList;
-		public CanvasGroup logoAlphaGroup;
-		public RectTransform logoRect;
-		public CanvasGroup overlayAlphaGroup;
-		public AudioObject scream;
+		[SerializeField] private GoatPrint[] printList;
 
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
+		[SerializeField] private CanvasGroup logoAlphaGroup;
+		[SerializeField] private CanvasGroup overlayAlphaGroup;
+
+		[SerializeField] private RectTransform logoRect;
+		
+		[SerializeField] private AudioObject scream;
+
 		public override void OnScreenEnter()
 		{
-			StartCoroutine("IntroAnimation");
+			StartCoroutine(IntroAnimation());
 		}
 
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
+		public override string GetScreenName()
+		{
+			return "ScreenIntroCompany";
+		}
+
 		private IEnumerator IntroAnimation()
 		{
 			//hide everything
@@ -107,22 +108,13 @@ namespace Proeve
 
 			scream.Play();
 		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		public override string GetScreenName()
-		{
-			return "ScreenIntroCompany";
-		}
 	}
 	
 	/// <summary>
 	/// Returns name of the screen
 	/// </summary>
 	[Serializable]
-	public class GoatPrint
+	public struct GoatPrint
 	{
 		public Image image;
 		public CanvasGroup alphaGroup;

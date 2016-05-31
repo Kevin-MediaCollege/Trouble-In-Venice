@@ -2192,9 +2192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3880d8aba69e81942911fa79c454c19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button_play: {fileID: 299479409}
-  button_settings: {fileID: 733924382}
-  button_credits: {fileID: 325737075}
+  buttonPlay: {fileID: 299479409}
+  buttonSettings: {fileID: 733924382}
+  buttonCredits: {fileID: 325737075}
   group: {fileID: 1883156262}
 --- !u!224 &625768852
 RectTransform:
@@ -2929,9 +2929,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b602d2dd95c167458deb08ce9e024da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  group_main: {fileID: 2037918110}
-  group_anyKey: {fileID: 1593613767}
-  group_overlay: {fileID: 1193674624}
+  groupMain: {fileID: 2037918110}
+  groupAnyKey: {fileID: 1593613767}
+  groupOverlay: {fileID: 1193674624}
   title: {fileID: 1203617291}
   text: {fileID: 27603393}
   background: {fileID: 921067102}
@@ -3282,9 +3282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23915a0d4c11e744db4e248b6613af67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button_back: {fileID: 1449131221}
+  buttonBack: {fileID: 1449131221}
+  buttonEasterEgg: {fileID: 1881382103}
   group: {fileID: 2019095592}
-  button_easteregg: {fileID: 1881382103}
 --- !u!224 &1004205035
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3344,40 +3344,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e8bd6bc5e823764fa1f621b989f31d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button_left: {fileID: 1480669701}
-  button_right: {fileID: 265971741}
-  group: {fileID: 247187839}
-  button_back: {fileID: 427181686}
-  background: {fileID: 921067102}
-  loadingText: {fileID: 294195511}
+  buttonLeft: {fileID: 1480669701}
+  buttonRight: {fileID: 265971741}
+  buttonBack: {fileID: 427181686}
   items:
-  - rect: {fileID: 1322485745}
-    level: {fileID: 2121635878}
-    button: {fileID: 1322485746}
-    stars:
+  - stars:
     - {fileID: 581196894}
     - {fileID: 1346525539}
     - {fileID: 1929846212}
-    debugText: {fileID: 1219475497}
+    rect: {fileID: 1322485745}
+    level: {fileID: 2121635878}
     imageLock: {fileID: 966550180}
-  - rect: {fileID: 926973789}
-    level: {fileID: 1585940969}
-    button: {fileID: 926973790}
-    stars:
+    debugText: {fileID: 1219475497}
+    button: {fileID: 1322485746}
+  - stars:
     - {fileID: 500038464}
     - {fileID: 759284993}
     - {fileID: 1764205840}
-    debugText: {fileID: 510689055}
+    rect: {fileID: 926973789}
+    level: {fileID: 1585940969}
     imageLock: {fileID: 923062525}
-  - rect: {fileID: 1993064419}
-    level: {fileID: 494670985}
-    button: {fileID: 1993064420}
-    stars:
+    debugText: {fileID: 510689055}
+    button: {fileID: 926973790}
+  - stars:
     - {fileID: 1271889521}
     - {fileID: 1351779853}
     - {fileID: 652346367}
-    debugText: {fileID: 385732851}
+    rect: {fileID: 1993064419}
+    level: {fileID: 494670985}
     imageLock: {fileID: 1580682677}
+    debugText: {fileID: 385732851}
+    button: {fileID: 1993064420}
+  group: {fileID: 247187839}
+  background: {fileID: 921067102}
+  loadingText: {fileID: 294195511}
 --- !u!224 &1010231860
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4706,13 +4706,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab60e39952b4e60448da1c5263bc7444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button_back: {fileID: 1986775718}
-  button_music: {fileID: 265876273}
-  button_sounds: {fileID: 1133265570}
-  rect_music: {fileID: 731643067}
-  rect_sound: {fileID: 191148769}
-  image_music: {fileID: 554021768}
-  image_sound: {fileID: 1124250444}
+  buttonBack: {fileID: 1986775718}
+  buttonMusic: {fileID: 265876273}
+  buttonSounds: {fileID: 1133265570}
+  rectMusic: {fileID: 731643067}
+  rectSound: {fileID: 191148769}
+  imageMusic: {fileID: 554021768}
+  imageSound: {fileID: 1124250444}
   group: {fileID: 2128317388}
 --- !u!224 &1448109956
 RectTransform:
@@ -6035,7 +6035,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1922924497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ef399b12cc33b648bb66a366cba8eb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c0da602d327c3144b2ae9fe43c1f10a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   screenList:

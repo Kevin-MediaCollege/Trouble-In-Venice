@@ -1,55 +1,40 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System.Collections;
+using UnityEngine.Serialization;
 using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Manages challenge screen UI.
+	/// </summary>
 	public class ScreenChallenge : ScreenBase
 	{
-		public Touchable button_start;
+		[SerializeField, FormerlySerializedAs("button_start")] private Touchable buttonStart;
 
-		protected void Awake()
+		protected void OnEnable()
 		{
-			button_start.OnPointerDownEvent += OnButtonStart;
+			buttonStart.OnPointerDownEvent += OnButtonStart;
 		}
 
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
+		protected void OnDisable()
+		{
+			buttonStart.OnPointerDownEvent -= OnButtonStart;
+		}
+
 		public override void OnScreenEnter()
 		{
 			GlobalEvents.Invoke(new SetInputEvent(false));
 		}
 
-		void OnButtonStart (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
-		{
-			ScreenManager.SwitchScreen ("ScreenGame");
-			GlobalEvents.Invoke(new SetInputEvent(true));
-		}
-
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
-		public override IEnumerator OnScreenFadeout()
-		{
-			yield break;
-		}
-
-		/// <summary>
-		/// Called after OnScreenFadeout
-		/// </summary>
-		public override void OnScreenExit()
-		{
-		}
-
-		/// <summary>
-		/// Returns name of the screen
-		/// </summary>
 		public override string GetScreenName()
 		{
 			return "ScreenChallenge";
+		}
+
+		private void OnButtonStart(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		{
+			ScreenManager.SwitchScreen ("ScreenGame");
+			GlobalEvents.Invoke(new SetInputEvent(true));
 		}
 	}
 }

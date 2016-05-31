@@ -4,37 +4,26 @@ using System.Collections;
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Manages all screens.
 	/// </summary>
 	public class ScreenManager : MonoBehaviour
 	{
-		/// <summary>
-		/// ScreenManager singleton
-		/// </summary>
 		public static ScreenManager instance;
 
-		/// <summary>
-		/// List of screens
-		/// </summary>
-		public ScreenBase[] screenList;
-		private int screenListLenght;
-		private ScreenBase currentScreen;
-
-		/// <summary>
-		/// ScreenBase to load on Awake
-		/// </summary>
-		public string startScreen;
-		private bool switching;
-
 		public static string lastLoadedLevel = "";
+
+		[SerializeField] private ScreenBase[] screenList;
+		[SerializeField] private string startScreen;
+
+		private ScreenBase currentScreen;
+		private bool switching;
 
 		protected void Awake()
 		{
 			instance = this;
 			switching = false;
-			screenListLenght = screenList.Length;
 
-			for(int i = 0; i < screenListLenght; i++)
+			for(int i = 0; i < screenList.Length; i++)
 			{
 				screenList[i].gameObject.SetActive(false);
 			}
@@ -62,49 +51,9 @@ namespace Proeve
 			DebugCommand.UnregisterCommand(OnSetScreenCommand);
 		}
 
-		/// <summary>
-		/// Switch to a different ScreenBase
-		/// </summary>
-		/// <param name="_screen">Name of the screen to switch to</param>
-		public static bool SwitchScreen(string _screen)
-		{
-			ScreenBase nextScreen;
-			if(!instance.switching && (nextScreen = instance.GetScreenByName(_screen)) != null)
-			{
-				instance.switching = true;
-				instance.StartCoroutine(instance.SetScreen(nextScreen));
-				return true;
-			}
-			return false;
-		}
-
-		private IEnumerator SetScreen(ScreenBase _screen)
-		{
-			if(currentScreen != null)
-			{
-				yield return currentScreen.OnScreenFadeout();
-				currentScreen.OnScreenExit();
-				currentScreen.gameObject.SetActive(false);
-				currentScreen = null;
-			}
-
-			yield return null;
-
-			currentScreen = _screen;
-			currentScreen.gameObject.SetActive(true);
-			currentScreen.OnScreenEnter();
-
-			switching = false;
-		}
-
-		public static string GetCurrentScreenName()
-		{
-			return instance != null ? instance.currentScreen != null ? instance.currentScreen.GetScreenName() : "NULL" : "NULL";
-		}
-			
 		private ScreenBase GetScreenByName(string _name)
 		{
-			for(int i = 0; i < screenListLenght; i++)
+			for(int i = 0; i < screenList.Length; i++)
 			{
 				if(_name == screenList[i].GetScreenName())
 				{
@@ -129,6 +78,56 @@ namespace Proeve
 					DebugConsole.Log("Cannot switch to screen: " + _params[0], new Color32(255, 0, 0, 255));
 				}
 			}
+		}
+
+		private IEnumerator SetScreen(ScreenBase _screen)
+		{
+			if(currentScreen != null)
+			{
+				yield return currentScreen.OnScreenFadeout();
+				currentScreen.OnScreenExit();
+				currentScreen.gameObject.SetActive(false);
+				currentScreen = null;
+			}
+
+			yield return null;
+
+			currentScreen = _screen;
+			currentScreen.gameObject.SetActive(true);
+			currentScreen.OnScreenEnter();
+
+			switching = false;
+		}
+
+		/// <summary>
+		/// Switch to a different screen.
+		/// </summary>
+		/// <remarks>
+		/// The screen name must be equal to <see cref="ScreenBase.GetScreenName"/>.
+		/// </remarks>
+		/// <param name="_screen">The name of the screen to switch to.</param>
+		public static bool SwitchScreen(string _screen)
+		{
+			ScreenBase nextScreen;
+
+			if(!instance.switching && (nextScreen = instance.GetScreenByName(_screen)) != null)
+			{
+				instance.switching = true;
+				instance.StartCoroutine(instance.SetScreen(nextScreen));
+
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Get the name of the current screen.
+		/// </summary>
+		/// <returns>The name of the current screen.</returns>
+		public static string GetCurrentScreenName()
+		{
+			return instance != null ? instance.currentScreen != null ? instance.currentScreen.GetScreenName() : "NULL" : "NULL";
 		}
 	}
 }

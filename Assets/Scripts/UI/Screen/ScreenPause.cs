@@ -1,70 +1,63 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using Utils;
+using UnityEngine.Serialization;
+using UnityEngine.EventSystems;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Manages the pause screen UI.
+	/// </summary>
 	public class ScreenPause : ScreenBase
 	{
-		public Touchable button_quit;
-		public Touchable button_resume;
+		[SerializeField, FormerlySerializedAs("button_quit")] private Touchable buttonQuit;
+		[SerializeField, FormerlySerializedAs("button_resume")] private Touchable buttonResume;
 
-		protected void Awake()
+		protected void OnEnable()
 		{
 			if (Application.isMobilePlatform)
 			{ 
-				button_quit.OnPointerUpEvent += OnButtonQuit;
-				button_resume.OnPointerUpEvent += OnButtonResume;
+				buttonQuit.OnPointerUpEvent += OnButtonQuit;
+				buttonResume.OnPointerUpEvent += OnButtonResume;
 			} 
 			else 
 			{
-				button_quit.OnPointerDownEvent += OnButtonQuit;
-				button_resume.OnPointerDownEvent += OnButtonResume;
+				buttonQuit.OnPointerDownEvent += OnButtonQuit;
+				buttonResume.OnPointerDownEvent += OnButtonResume;
 			}
 		}
-		
-		private void OnButtonQuit(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+
+		protected void OnDisable()
+		{
+			if(Application.isMobilePlatform)
+			{
+				buttonQuit.OnPointerUpEvent -= OnButtonQuit;
+				buttonResume.OnPointerUpEvent -= OnButtonResume;
+			}
+			else
+			{
+				buttonQuit.OnPointerDownEvent -= OnButtonQuit;
+				buttonResume.OnPointerDownEvent -= OnButtonResume;
+			}
+		}
+
+		public override string GetScreenName()
+		{
+			return "ScreenPause";
+		}
+
+		private void OnButtonQuit(Touchable _sender, PointerEventData _eventData)
 		{
 			SceneManager.LoadScene ("Menu");
 		}
 
-		private void OnButtonResume(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		private void OnButtonResume(Touchable _sender, PointerEventData _eventData)
 		{
 			GlobalEvents.Invoke(new SetInputEvent(true));
 
-			ScreenManager.SwitchScreen ("ScreenGame");
-		}
-
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
-		public override void OnScreenEnter()
-		{
-		}
-
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
-		public override IEnumerator OnScreenFadeout()
-		{
-			yield break;
-		}
-
-		/// <summary>
-		/// Called after OnScreenFadeout
-		/// </summary>
-		public override void OnScreenExit()
-		{
-		}
-
-		/// <summary>
-		/// Returns name of the screen
-		/// </summary>
-		public override string GetScreenName()
-		{
-			return "ScreenPause";
+			ScreenManager.SwitchScreen("ScreenGame");
 		}
 	}
 }

@@ -1,32 +1,51 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
 using Utils;
+using UnityEngine.Serialization;
+using UnityEngine.EventSystems;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Manages ingame UI.
+	/// </summary>
 	public class ScreenGame : ScreenBase 
 	{
-		public Touchable button_reset;
-		public Touchable button_options;
-		public Touchable button_camera;
+		[SerializeField, FormerlySerializedAs("button_reset")] private Touchable buttonReset;
+		[SerializeField, FormerlySerializedAs("button_options")] private Touchable buttonOptions;
+		[SerializeField, FormerlySerializedAs("button_camera")] private Touchable buttonCamera;
 
 		private int cameraMode;
 
-		protected void Awake()
+		protected void OnEnable()
 		{
-			if (Application.isMobilePlatform)
+			if(Application.isMobilePlatform)
 			{ 
-				button_reset.OnPointerUpEvent += OnButtonReset;
-				button_options.OnPointerUpEvent += OnButtonOptions;
-				button_camera.OnPointerUpEvent += OnButtonCamera;
+				buttonReset.OnPointerUpEvent += OnButtonReset;
+				buttonOptions.OnPointerUpEvent += OnButtonOptions;
+				buttonCamera.OnPointerUpEvent += OnButtonCamera;
 			} 
 			else 
 			{
-				button_reset.OnPointerDownEvent += OnButtonReset;
-				button_options.OnPointerDownEvent += OnButtonOptions;
-				button_camera.OnPointerDownEvent += OnButtonCamera;
+				buttonReset.OnPointerDownEvent += OnButtonReset;
+				buttonOptions.OnPointerDownEvent += OnButtonOptions;
+				buttonCamera.OnPointerDownEvent += OnButtonCamera;
+			}
+		}
+
+		protected void OnDisable()
+		{
+			if(Application.isMobilePlatform)
+			{
+				buttonReset.OnPointerUpEvent -= OnButtonReset;
+				buttonOptions.OnPointerUpEvent -= OnButtonOptions;
+				buttonCamera.OnPointerUpEvent -= OnButtonCamera;
+			}
+			else
+			{
+				buttonReset.OnPointerDownEvent -= OnButtonReset;
+				buttonOptions.OnPointerDownEvent -= OnButtonOptions;
+				buttonCamera.OnPointerDownEvent -= OnButtonCamera;
 			}
 		}
 
@@ -36,55 +55,30 @@ namespace Proeve
 			GameCamera.instance.setCameraMode (cameraMode);
 		}
 
-		private void OnButtonCamera (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		public override string GetScreenName()
+		{
+			return "ScreenGame";
+		}
+
+		private void OnButtonCamera(Touchable _sender, PointerEventData _eventData)
 		{
 			if(!GameCamera.instance.cutscene)
 			{
 				cameraMode = cameraMode == 0 ? 2 : 0;
-				GameCamera.instance.setCameraMode (cameraMode);
+				GameCamera.instance.setCameraMode(cameraMode);
 			}
 		}
 
-		private void OnButtonReset(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		private void OnButtonReset(Touchable _sender, PointerEventData _eventData)
 		{
-			SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
 
-		private void OnButtonOptions(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		private void OnButtonOptions(Touchable _sender, PointerEventData _eventData)
 		{
 			GlobalEvents.Invoke(new SetInputEvent(false));
 
-			ScreenManager.SwitchScreen ("ScreenPause");
-		}
-
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
-		public override void OnScreenEnter()
-		{
-		}
-
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
-		public override IEnumerator OnScreenFadeout()
-		{
-			yield break;
-		}
-
-		/// <summary>
-		/// Called after OnScreenFadeout
-		/// </summary>
-		public override void OnScreenExit()
-		{
-		}
-
-		/// <summary>
-		/// Returns name of the screen
-		/// </summary>
-		public override string GetScreenName()
-		{
-			return "ScreenGame";
+			ScreenManager.SwitchScreen("ScreenPause");
 		}
 	}
 }

@@ -4,68 +4,67 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Utils;
+using UnityEngine.Serialization;
+using UnityEngine.EventSystems;
 
 namespace Proeve
 {
 	/// <summary>
-	/// 
+	/// Manages the settings screen UI.
 	/// </summary>
 	public class ScreenSettings : ScreenBase
 	{
-		public Touchable button_back;
-		public Touchable button_music;
-		public Touchable button_sounds;
+		[SerializeField, FormerlySerializedAs("button_back")] private Touchable buttonBack;
+		[SerializeField, FormerlySerializedAs("button_music")] private Touchable buttonMusic;
+		[SerializeField, FormerlySerializedAs("button_sounds")] private Touchable buttonSounds;
 
-		public RectTransform rect_music;
-		public RectTransform rect_sound;
+		[SerializeField, FormerlySerializedAs("rect_music")] private RectTransform rectMusic;
+		[SerializeField, FormerlySerializedAs("rect_sound")] private RectTransform rectSound;
 
-		public Image image_music;
-		public Image image_sound;
+		[SerializeField, FormerlySerializedAs("image_music")] private Image imageMusic;
+		[SerializeField, FormerlySerializedAs("image_sound")] private Image imageSound;
 
-		public CanvasGroup group;
+		[SerializeField] private CanvasGroup group;
 
-		protected void Awake()
+		protected void OnEnable()
 		{
-			if (Application.isMobilePlatform) { button_back.OnPointerUpEvent += OnButtonBack; } else { button_back.OnPointerDownEvent += OnButtonBack; }
+			if(Application.isMobilePlatform)
+			{
+				buttonBack.OnPointerUpEvent += OnButtonBack;
+			}
+			else
+			{
+				buttonBack.OnPointerDownEvent += OnButtonBack;
+			}
 
-			button_music.OnPointerDownEvent += OnSliderMusic;
-			button_music.OnPointerMoveEvent += OnSliderMusic;
-			button_sounds.OnPointerDownEvent += OnSliderSound;
-			button_sounds.OnPointerMoveEvent += OnSliderSound;
+			buttonMusic.OnPointerDownEvent += OnSliderMusic;
+			buttonMusic.OnPointerMoveEvent += OnSliderMusic;
+			buttonSounds.OnPointerDownEvent += OnSliderSound;
+			buttonSounds.OnPointerMoveEvent += OnSliderSound;
 		}
 
-		private void OnSliderMusic (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		protected void OnDisable()
 		{
-			float value = ((((_eventData.position.x / Screen.width) * 1920f) - 960f - rect_music.anchoredPosition.x + 270f) / 540f);
-			value = Mathf.Clamp01 (value);
-			image_music.rectTransform.anchoredPosition = new Vector2 (rect_music.anchoredPosition.x - 270f + (value * 540f), image_music.rectTransform.anchoredPosition.y);
+			if(Application.isMobilePlatform)
+			{
+				buttonBack.OnPointerUpEvent -= OnButtonBack;
+			}
+			else
+			{
+				buttonBack.OnPointerDownEvent -= OnButtonBack;
+			}
+
+			buttonMusic.OnPointerDownEvent -= OnSliderMusic;
+			buttonMusic.OnPointerMoveEvent -= OnSliderMusic;
+			buttonSounds.OnPointerDownEvent -= OnSliderSound;
+			buttonSounds.OnPointerMoveEvent -= OnSliderSound;
 		}
 
-		private void OnSliderSound (Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
-		{
-			float value = ((((_eventData.position.x / Screen.width) * 1920f) - 960f - rect_sound.anchoredPosition.x + 270f) / 540f);
-			value = Mathf.Clamp01 (value);
-			image_sound.rectTransform.anchoredPosition = new Vector2 (rect_sound.anchoredPosition.x - 270f + (value * 540f), image_sound.rectTransform.anchoredPosition.y);
-		}
-
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
 		public override void OnScreenEnter()
 		{
 			StartCoroutine ("OnFadeIn");
 		}
 
-		private IEnumerator OnFadeIn()
-		{
-			group.alpha = 0f;
-			group.DOFade (1f, 0.3f);
-			yield return new WaitForSeconds (0.3f);
-		}
-
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
 		public override IEnumerator OnScreenFadeout()
 		{
 			group.alpha = 1f;
@@ -73,11 +72,23 @@ namespace Proeve
 			yield return new WaitForSeconds (0.3f);
 		}
 
-		/// <summary>
-		/// Called after OnScreenFadeout
-		/// </summary>
-		public override void OnScreenExit()
+		public override string GetScreenName()
 		{
+			return "ScreenSettings";
+		}
+
+		private void OnSliderMusic(Touchable _sender, PointerEventData _eventData)
+		{
+			float value = ((((_eventData.position.x / Screen.width) * 1920f) - 960f - rectMusic.anchoredPosition.x + 270f) / 540f);
+			value = Mathf.Clamp01 (value);
+			imageMusic.rectTransform.anchoredPosition = new Vector2 (rectMusic.anchoredPosition.x - 270f + (value * 540f), imageMusic.rectTransform.anchoredPosition.y);
+		}
+
+		private void OnSliderSound (Touchable _sender, PointerEventData _eventData)
+		{
+			float value = ((((_eventData.position.x / Screen.width) * 1920f) - 960f - rectSound.anchoredPosition.x + 270f) / 540f);
+			value = Mathf.Clamp01 (value);
+			imageSound.rectTransform.anchoredPosition = new Vector2 (rectSound.anchoredPosition.x - 270f + (value * 540f), imageSound.rectTransform.anchoredPosition.y);
 		}
 
 		private void OnButtonBack(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
@@ -85,12 +96,11 @@ namespace Proeve
 			ScreenManager.SwitchScreen ("ScreenMainMenu");
 		}
 
-		/// <summary>
-		/// Returns name of the screen
-		/// </summary>
-		public override string GetScreenName()
+		private IEnumerator OnFadeIn()
 		{
-			return "ScreenSettings";
+			group.alpha = 0f;
+			group.DOFade (1f, 0.3f);
+			yield return new WaitForSeconds (0.3f);
 		}
 	}
 }

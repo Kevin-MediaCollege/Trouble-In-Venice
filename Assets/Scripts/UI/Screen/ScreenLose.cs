@@ -1,60 +1,50 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.Collections;
 using Utils;
+using UnityEngine.Serialization;
+using UnityEngine.EventSystems;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Manages lose screen UI.
+	/// </summary>
 	public class ScreenLose : ScreenBase
 	{
-		public Touchable temp_button;
+		[SerializeField, FormerlySerializedAs("temp_button")] private Touchable buttonContinue;
 
-		protected void Awake()
+		protected void OnEnable()
 		{
-			if (Application.isMobilePlatform)
+			if(Application.isMobilePlatform)
 			{ 
-				temp_button.OnPointerUpEvent += OnButtonTemp;
+				buttonContinue.OnPointerUpEvent += OnButtonContinue;
 			} 
 			else 
 			{
-				temp_button.OnPointerDownEvent += OnButtonTemp;
+				buttonContinue.OnPointerDownEvent += OnButtonContinue;
 			}
 		}
 
-		private void OnButtonTemp(Touchable _sender, UnityEngine.EventSystems.PointerEventData _eventData)
+		protected void OnDisable()
 		{
-			SceneManager.LoadScene ("Menu");
+			if(Application.isMobilePlatform)
+			{
+				buttonContinue.OnPointerUpEvent += OnButtonContinue;
+			}
+			else
+			{
+				buttonContinue.OnPointerDownEvent += OnButtonContinue;
+			}
 		}
 
-		/// <summary>
-		/// Called when switched to this screen
-		/// </summary>
-		public override void OnScreenEnter()
-		{
-		}
-
-		/// <summary>
-		/// Called when switched to other screen
-		/// </summary>
-		public override IEnumerator OnScreenFadeout()
-		{
-			yield break;
-		}
-
-		/// <summary>
-		/// Called after OnScreenFadeout
-		/// </summary>
-		public override void OnScreenExit()
-		{
-		}
-
-		/// <summary>
-		/// Returns name of the screen
-		/// </summary>
 		public override string GetScreenName()
 		{
 			return "ScreenLose";
+		}
+
+		private void OnButtonContinue(Touchable _sender, PointerEventData _eventData)
+		{
+			SceneManager.LoadScene("Menu");
 		}
 	}
 }
