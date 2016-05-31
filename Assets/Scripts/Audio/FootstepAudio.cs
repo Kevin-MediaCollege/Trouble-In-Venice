@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using Snakybo.Audio;
+﻿using Snakybo.Audio;
 using UnityEngine;
 using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Plays footstep audio if the player enters the attached <see cref="GridNode"/>.
+	/// </summary>
 	public class FootstepAudio : MonoBehaviour
 	{
 		[SerializeField] private new AudioObject audio;

@@ -4,6 +4,9 @@ using Utils;
 
 namespace Proeve
 {
+	/// <summary>
+	/// Event to enable and disable user input.
+	/// </summary>
 	public class SetInputEvent : IEvent
 	{
 		/// <summary>

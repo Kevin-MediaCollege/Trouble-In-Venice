@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Proeve
 {
+	/// <summary>
+	/// A draw bridge link pickup connection.
+	/// </summary>
 	public class LinkPickupConnectionDrawBridge : LinkPickupConnection
 	{
 		[SerializeField] private GridNode[] nodes;

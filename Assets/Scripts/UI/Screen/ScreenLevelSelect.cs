@@ -207,6 +207,10 @@ namespace Proeve
 		}
 	}
 
+	/// <summary>
+	///  Represents a single level select item.
+	/// </summary>
+
 	[Serializable]
 	public class LevelItem
 	{

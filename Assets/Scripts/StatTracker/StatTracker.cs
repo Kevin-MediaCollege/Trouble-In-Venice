@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 namespace Proeve
 {
+	/// <summary>
+	/// In-game statistics tracker
+	/// </summary>
 	public class StatTracker : MonoBehaviour
 	{
 		private static List<ITracker> trackers;
@@ -30,6 +33,11 @@ namespace Proeve
 			}
 		}
 
+		/// <summary>
+		/// Get the instance of a tracker.
+		/// </summary>
+		/// <typeparam name="T">The type of the tracker, must implement <see cref="ITracker"/>.</typeparam>
+		/// <returns>The instance of <code>T</code>.</returns>
 		public static T GetTracker<T>() where T : ITracker
 		{
 			foreach(ITracker tracker in trackers)

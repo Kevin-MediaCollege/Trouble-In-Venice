@@ -6,6 +6,9 @@ using UnityEditor;
 
 namespace Utils
 {
+	/// <summary>
+	/// Data for Google Analytics settings.
+	/// </summary>
     public class GoogleAnalyticsData : ScriptableObjectSingleton<GoogleAnalyticsData>
     {
         [Tooltip("The tracking code to be used for Android. Example value: UAXXXXY.")]

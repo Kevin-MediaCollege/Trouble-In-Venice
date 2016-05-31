@@ -1,13 +1,20 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class FaceTowardsCamera : MonoBehaviour
+namespace Proeve
 {
-	protected void LateUpdate()
+	/// <summary>
+	/// Component to make an object face the camera.
+	/// </summary>
+	public class FaceTowardsCamera : MonoBehaviour
 	{
-		Vector3 cameraPosition = Camera.main.transform.position;
-		Vector3 targetPostition = new Vector3(cameraPosition.x, transform.position.y, cameraPosition.z);
+		[SerializeField] private bool constrainY;
+		
+		protected void LateUpdate()
+		{
+			Vector3 cameraPosition = Camera.main.transform.position;
+			Vector3 targetPostition = new Vector3(cameraPosition.x, constrainY ? transform.position.y : cameraPosition.y, cameraPosition.z);
 
-		transform.LookAt(targetPostition);
+			transform.LookAt(targetPostition);
+		}
 	}
 }
