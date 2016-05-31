@@ -64,6 +64,7 @@ namespace Proeve
 		/// </summary>
 		public override string GetScreenName()
 		{
+			return "ScreenCharacterSelection";
 		}
 	}
 }
