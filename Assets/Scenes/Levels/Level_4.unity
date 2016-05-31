@@ -731,6 +731,7 @@ MonoBehaviour:
   minAngle: 10
   minZoom: 8
   maxZoom: 30
+  fieldOfView3D: 70
   cutsceneUpdateInEditor: 0
   cutsceneAngle: 40
   cutsceneRotation: -67
@@ -744,6 +745,7 @@ MonoBehaviour:
   orthographicDistance: 30
   topdownUpdateInEditor: 0
   topDownDistance: 24.1
+  fieldOfViewTopDown: 70
 --- !u!4 &286633834
 Transform:
   m_ObjectHideFlags: 0
@@ -1425,8 +1427,8 @@ GameObject:
   - 65: {fileID: 594643641}
   - 114: {fileID: 594643640}
   - 114: {fileID: 594643644}
-  - 114: {fileID: 594643643}
   - 114: {fileID: 594643645}
+  - 114: {fileID: 594643643}
   m_Layer: 0
   m_Name: Grid Node 10
   m_TagString: Untagged
@@ -1443,7 +1445,8 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071067}
   m_LocalPosition: {x: -19.5, y: 0, z: 1.5}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_Children: []
+  m_Children:
+  - {fileID: 891980861}
   m_Father: {fileID: 1332691486}
   m_RootOrder: 9
 --- !u!114 &594643640
@@ -1845,6 +1848,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audio: {fileID: 11400000, guid: 9676b1fb5b5dc4147ab17b6c42c533d7, type: 2}
   node: {fileID: 804731771}
+--- !u!1 &891980860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 891980861}
+  - 114: {fileID: 891980862}
+  m_Layer: 0
+  m_Name: Target NPC(Clone)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &891980861
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 891980860}
+  m_LocalRotation: {x: -0.7071066, y: 0, z: 0, w: 0.707107}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_Children: []
+  m_Father: {fileID: 594643639}
+  m_RootOrder: 0
+--- !u!114 &891980862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 891980860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3861479597d5ee542b687712cdc4aeaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelMale: {fileID: 135734, guid: 0678d4964d37e5a4e9009e3f2dd78b43, type: 2}
+  modelFemale: {fileID: 122612, guid: 4b10b1b7cb897ae41bc527574b6b0e28, type: 2}
 --- !u!1 &942230649
 GameObject:
   m_ObjectHideFlags: 0
