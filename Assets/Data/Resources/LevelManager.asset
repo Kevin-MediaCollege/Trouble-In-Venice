@@ -27,9 +27,6 @@ MonoBehaviour:
   - levelName: Level_4
     levelImage: {fileID: 21300000, guid: 2c88c1c6426e53b42ae292b662c0d3ea, type: 3}
     maxStars: 2
-  - levelName: Level_14
-    levelImage: {fileID: 21300000, guid: 2c88c1c6426e53b42ae292b662c0d3ea, type: 3}
-    maxStars: 3
   - levelName: Level_5
     levelImage: {fileID: 21300000, guid: 31811ffc0b3eeb1448f1c81ef844401d, type: 3}
     maxStars: 2
